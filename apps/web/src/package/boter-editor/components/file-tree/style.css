@@ -1,0 +1,25 @@
+.botere-file-icon {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+.botere-file {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: auto;
+}
+
+.botere-file:hover {
+  background-color: #242424;
+}
+
+.botere-file-selected {
+  background-color: #242424;
+}

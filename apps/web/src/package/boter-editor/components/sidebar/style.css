@@ -1,0 +1,11 @@
+.botere-aside {
+  display: block;
+  width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 2px solid;
+  border-color: #242424;
+  padding-top: 3px;
+  background-color: #151515;
+  color: white;
+}

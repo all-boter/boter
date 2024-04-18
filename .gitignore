@@ -44,3 +44,5 @@ yarn-error.log*
 /apps/.env.production.local
 /apps/.env.local
 mock/
+
+.vscode/
