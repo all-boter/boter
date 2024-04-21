@@ -26,5 +26,6 @@ export const muiGreen = {
 }
 
 export const lightBlue = {
+  100: '#b3e5fc',
   900: '#01579b'
 }

@@ -58,6 +58,7 @@ instance.interceptors.response.use(
     const token = Cookies.get('token');
     if (newToken && newToken !== token) {
       Cookies.set('token', newToken);
+      Cookies.set('exp', response.headers.exp);
     }
 
     return response;
@@ -88,10 +89,10 @@ export const fetchWithAuth = async <T>(
     return response.data;
   } catch (error: any) {
     const res = error as AxiosError;
-    console.log('fetchWithAuth error', res.response);
     if (res.response?.status === 401) {
       Cookies.remove('token');
-      window.location.href = '/login';
+      Cookies.remove('exp');
+      window.location.href = '/';
       return { code: 0, msg: res.response.statusText } as ResType<T>;
     }
 
