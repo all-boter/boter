@@ -12,6 +12,5 @@ export function isJwtExpired(exp: number): boolean {
   const expirationTime = exp * 1000;
   const currentTime = Date.now();
 
-  console.log('%c=is','color:red', { exp,expirationTime,currentTime})
   return currentTime < expirationTime;
 }

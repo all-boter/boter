@@ -43,10 +43,9 @@ export const EditorModal = (props: IModal) => {
     console.log('%c=onRefreshGithubApp', 'color:red', res)
   }
 
-  return <div>
-    <Modal {...props}>
-      <ModalContent sx={{ width: 400 }}>
-        {/* 
+  return <Modal {...props}>
+    <ModalContent sx={{ width: 400 }}>
+      {/* 
           <h2 id="unstyled-modal-title" className="modal-title">
             Text in a modal
           </h2>
@@ -54,12 +53,11 @@ export const EditorModal = (props: IModal) => {
             Aliquid amet deserunt earum!
           </p>
         */}
-        <button onClick={() => onGetGithubOauth()}>Connect Github</button>
-        <button onClick={() => onRefreshGithubApp()}>Refresh Github App</button>
-        <button onClick={() => onInstallGithubApp()}>Install Github App</button>
-      </ModalContent>
-    </Modal>
-  </div>
+      <button onClick={() => onGetGithubOauth()}>Connect Github</button>
+      <button onClick={() => onRefreshGithubApp()}>Refresh Github App</button>
+      <button onClick={() => onInstallGithubApp()}>Install Github App</button>
+    </ModalContent>
+  </Modal>
 }
 
 const ModalContent = styled('div')(
