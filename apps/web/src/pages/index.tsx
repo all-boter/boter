@@ -1,16 +1,15 @@
 import React from 'react';
 import Box from '@mui/system/Box';
-import logo from "../assets/logo.svg"
 import { HomeBtns } from '../components/views/homeBtns';
+import { Logo } from '../components/views/logo';
 
 function App() {
 
   return (
     <Box sx={{ bgcolor: '#111827', height: '100%' }}>
       <Box>
-        <Box component={'nav'} sx={{ display: 'flex', alignItems: 'center', height: '68px', pl: 1, color: '#f3f4f6', fontSize: 24 }}>
-          <Box component={'img'} src={logo} sx={{ width: 28, height: 28, pr: '2px' }} />
-          Boter
+        <Box component={'nav'} className='y-center' sx={{ height: '68px', pl: 1 }}>
+          <Logo />
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '70vh' }}>

@@ -17,9 +17,35 @@ body {
 }
 
 .activeNavLink {
-  color: goldenrod;
+  color: #FCD535 !important;
 }
 
-.pendingNavLink {
-  color: red;
+.navLink {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 8px 20px;
+  text-decoration: none;
+  color: #FFF;
+}
+
+.navLink:hover {
+  background-color: #374151;
+  opacity: 0.9;
+}
+
+.xy-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.x-center {
+  display: flex;
+  justify-content: center;
+}
+
+.y-center {
+  display: flex;
+  align-items: center;
 }

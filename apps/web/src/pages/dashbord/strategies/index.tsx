@@ -32,9 +32,10 @@ export const Dashbord = () => {
     navigate('/editor');
   }
 
-  return <Box sx={{display: 'flex',flexDirection: 'row'}}>
+  return <Box sx={{display: 'flex',flexDirection: 'row',height: '100%',background: '#1e293b'}}>
     <Sidebar />
-    <Box>
+
+    <Box sx={{pl: '20px',pt: '20px'}}>
       dashbord
       <button onClick={onAuthVerify}>auth verify</button>
 

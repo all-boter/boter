@@ -3,11 +3,11 @@ import { Sidebar } from "../../../components/views/Sidebar"
 
 export const Bots = () => {
 
-  return <Box>
-      <Sidebar />
+  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', background: '#1e293b' }}>
+    <Sidebar />
 
-      <Box>
-        Bots
-      </Box>
+    <Box sx={{pl: '20px',pt: '20px'}}>
+      Bots
+    </Box>
   </Box>
 }
