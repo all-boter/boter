@@ -1,6 +1,9 @@
 import { styled, css } from '@mui/system';
 import { muiGrey } from '@/components/basics/muiColor';
 import { Modal } from '@/components/basics/modal';
+import { DynamicFormProvider, FormItem, FormSchema } from '@/components/basics/DynamicFormProvider';
+import { Form, Formik } from 'formik';
+import { useCallback } from 'react';
 
 interface IModal {
   isOpen: boolean
@@ -8,11 +11,64 @@ interface IModal {
   handleClose: () => void
 }
 
+const formSchema: FormSchema[] = [
+  {
+    type: 'Input',
+    id: 'name',
+    label: 'name:',
+    control: {
+      value: '',
+      defaultValue: '',
+      placeholder: 'input something',
+    },
+  },
+]
+
+const onSubmit = () => {
+  console.log('%c=onSubmit', 'color:red',)
+}
+
+const formValues = {
+  name: 'test'
+}
+
 export const CreateStg = (props: IModal) => {
+
+  const renderFormItem = useCallback(
+    (
+      formItem: FormItem,
+      values: { [key: string]: any },
+    ) => {
+      return DynamicFormProvider.of(formItem)
+    },
+    [],
+  )
 
   return <Modal {...props}>
     <ModalContent sx={{ width: 400 }}>
-      test
+      test:
+      <Formik
+        initialValues={formValues}
+        // validationSchema={validationSchema}
+        validateOnMount
+        onSubmit={onSubmit}
+      >
+        {({ values, errors, isValid }) => (
+          <Form>
+            <div>
+              {formSchema.map((formItem, index) => {
+                return (
+                  <div key={index}>
+                    {renderFormItem(formItem, values)}
+                  </div>
+                )
+              })}
+
+              <button type='submit'>submit</button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </ModalContent>
   </Modal>
 }
