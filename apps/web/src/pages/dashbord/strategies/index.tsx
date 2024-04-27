@@ -1,17 +1,17 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from "@mui/system"
-import { AppDispatch } from '../../../store';
-import { authVerifyApi } from "../../../services/userApi";
-import { SUCCESS } from "../../../common/constants";
-import { appSlice } from '../../../store/appSlice';
 import { useNavigate } from 'react-router-dom';
-import ButtonOrgin from '../../../components/basics/buttonOrgin';
-import { Input } from '../../../components/basics/input';
-import { InputOrgin } from '../../../components/basics/inputOrgin';
-import { Sidebar } from '../../../components/views/Sidebar';
-import { Button } from '../../../components/basics/button';
-import { CreateStg } from '../../../components/views/modal/createStg';
-import { useState } from 'react';
+import { CreateStg } from '@/components/views/modal/createStg';
+import { Button } from '@/components/basics/button';
+import { Sidebar } from '@/components/views/Sidebar';
+import { InputOrgin } from '@/components/basics/inputOrgin';
+import { Input } from '@/components/basics/input';
+import ButtonOrgin from '@/components/basics/buttonOrgin';
+import { appSlice } from '@/store/appSlice';
+import { AppDispatch } from '@/store';
+import { SUCCESS } from '@/common/constants';
+import { authVerifyApi } from '@/services/userApi';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();

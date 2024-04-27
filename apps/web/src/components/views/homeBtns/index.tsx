@@ -3,12 +3,12 @@ import { Box, styled } from '@mui/system';
 import Cookies from 'js-cookie';
 import { muiGreen } from '../../basics/muiColor';
 import { Loginbtn } from '../loginBtn';
-import { githubAuthUrl, googleAuthUrl } from '../../../common/constants';
 import { useNavigate } from 'react-router-dom';
-import gitHubIcon from "../../../assets/gitHub.svg"
-import googleIcon from "../../../assets/google.svg"
-import launchIcon from "../../../assets/launch.svg"
-import { isJwtExpired } from '../../../common';
+import gitHubIcon from "@assets/gitHub.svg"
+import googleIcon from "@assets/google.svg"
+import launchIcon from "@assets/launch.svg"
+import { isJwtExpired } from '@/common';
+import { githubAuthUrl, googleAuthUrl } from '@/common/constants';
 
 const LaunchBtn = styled('a')(
   ({ theme }) => `

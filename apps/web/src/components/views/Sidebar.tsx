@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system"
 import { Logo } from "./logo";
 import { StgIcon } from "../icon/stgIcon";
-import { BotIcon } from "../icon/botIcon";
 import { mainColor } from "../basics/muiColor";
+import { BotIcon } from "../icon/botIcon";
 
 export const Sidebar = () => {
   return <Box sx={{ display: 'flex', flexDirection: 'column', width: '15%', minWidth: '280px', borderRight: '1px solid #374151' }}>

@@ -1,4 +1,4 @@
-import { User } from '../store/appSlice'
+import { User } from '@/store/appSlice';
 import { ResType, fetchWithAuth } from './base'
 
 export interface IGithubToken {

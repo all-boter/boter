@@ -1,6 +1,6 @@
+import { googleAuthUrl } from "@/common/constants"
+import { authTestApi } from "@/services/userApi"
 import Cookies from "js-cookie"
-import { googleAuthUrl } from "../../common/constants"
-import { authTestApi } from "../../services/userApi"
 
 export const Login = () => {
   const onTestReq = async () => {

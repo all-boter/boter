@@ -1,8 +1,8 @@
-import { Modal } from '../../../basics/modal';
-import { githubAppName, githubAuthUrl } from "../../../../common/constants"
-import { getGithubToken } from '../../../../services/userApi';
 import { styled, css } from '@mui/system';
-import { muiGrey } from '../../../basics/muiColor';
+import { muiGrey } from '@/components/basics/muiColor';
+import { getGithubToken } from '@/services/userApi';
+import { githubAppName, githubAuthUrl } from '@/common/constants';
+import { Modal } from '@/components/basics/modal';
 
 interface IModal {
   isOpen: boolean

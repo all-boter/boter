@@ -1,4 +1,4 @@
-import { Button as BaseButton, ButtonOwnProps, ButtonProps, ButtonTypeMap, buttonClasses } from '@mui/base/Button'
+import { Button as BaseButton, ButtonProps, buttonClasses } from '@mui/base/Button'
 import { styled } from '@mui/system';
 import { mainColor, muiBlue, muiGrey } from '../muiColor';
 

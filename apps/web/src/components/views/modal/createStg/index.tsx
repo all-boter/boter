@@ -1,6 +1,6 @@
 import { styled, css } from '@mui/system';
-import { Modal } from '../../../basics/modal';
-import { muiGrey } from '../../../basics/muiColor';
+import { muiGrey } from '@/components/basics/muiColor';
+import { Modal } from '@/components/basics/modal';
 
 interface IModal {
   isOpen: boolean

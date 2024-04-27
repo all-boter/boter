@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/system/Box';
-import { HomeBtns } from '../components/views/homeBtns';
-import { Logo } from '../components/views/logo';
+import { Logo } from '@/components/views/logo';
+import { HomeBtns } from '@/components/views/homeBtns';
 
 function App() {
 

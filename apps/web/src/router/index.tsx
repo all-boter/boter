@@ -1,11 +1,11 @@
+import App from "@/pages";
 import { Route, BrowserRouter as Router, Routes, Outlet } from "react-router-dom";
-import App from "../pages";
-import { Editor } from "../pages/editor";
-import { Dashbord } from "../pages/dashbord/strategies";
 import { PrivateRoute } from "./privateRoute";
-import PageNotFound from "../pages/pageNotFound";
-import { Bots } from "../pages/dashbord/bots";
-import { Detail } from "../pages/dashbord/strategies/detail";
+import { Editor } from "@/pages/editor";
+import { Dashbord } from "@/pages/dashbord/strategies";
+import { Bots } from "@/pages/dashbord/bots";
+import { Detail } from "@/pages/dashbord/strategies/detail";
+import PageNotFound from "@/pages/pageNotFound";
 
 export default function AppRouter() {
   return (

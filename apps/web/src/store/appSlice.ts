@@ -1,5 +1,5 @@
+import { GithubRepository } from "@/services/githubService";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GithubRepository } from "../services/githubService";
 
 export interface User {
   id: string;

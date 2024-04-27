@@ -1,4 +1,4 @@
-import { BoterEditor } from "../../package/boter-editor/editor"
+import { BoterEditor } from "@/package/boter-editor/editor"
 
 interface IEditor { }
 

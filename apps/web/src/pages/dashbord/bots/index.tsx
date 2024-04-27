@@ -1,6 +1,5 @@
 import { Box } from "@mui/system"
-import { Sidebar } from "../../../components/views/Sidebar"
-import { Button } from "@mui/base/Button"
+import { Sidebar } from "@/components/views/Sidebar"
 
 export const Bots = () => {
 

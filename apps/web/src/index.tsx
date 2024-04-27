@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from "react-redux";
 import ReactDOM from 'react-dom/client';
+import { ThemeProvider, createTheme } from '@mui/system';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './router';
 import store from './store'
 import './index.css';
-import { ThemeProvider, createTheme } from '@mui/system';
 
 declare module '@mui/system' {
   interface BreakpointOverrides {

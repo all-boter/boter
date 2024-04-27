@@ -1,10 +1,9 @@
 import { Octokit } from 'octokit'
 import { Repository } from './userApi'
-import { FAIL, SUCCESS } from '../common/constants'
-import { IDirectory, IModule } from '../package/boter-editor/boter-db'
-import { mockTreeContainCode } from '../common/mock/mock-tree-contain-code'
 import { nanoid } from 'nanoid'
-import { mockTreeContainCode_penx } from '../common/mock/mock-penx-101-tree-contain-code'
+import { IDirectory, IModule } from '@/package/boter-editor/boter-db'
+import { FAIL, SUCCESS } from '@/common/constants'
+import { mockTreeContainCode_penx } from '@/common/mock/mock-penx-101-tree-contain-code'
 
 interface SharedParams {
   owner: string
