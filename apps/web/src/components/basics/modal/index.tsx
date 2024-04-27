@@ -10,11 +10,11 @@ interface IModal {
   children: JSX.Element
 }
 
-export default function ModalUnstyled(props: IModal) {
+export function Modal(props: IModal) {
   const { isOpen, handleClose, handleOpen, children } = props
 
   return (
-    <Modal
+    <StyledModal
       aria-labelledby="unstyled-modal-title"
       aria-describedby="unstyled-modal-description"
       open={isOpen}
@@ -22,7 +22,7 @@ export default function ModalUnstyled(props: IModal) {
       slots={{ backdrop: StyledBackdrop }}
     >
       {children}
-    </Modal>
+    </StyledModal>
   );
 }
 
@@ -40,7 +40,7 @@ const Backdrop = React.forwardRef<
   );
 });
 
-const Modal = styled(BaseModal)`
+const StyledModal = styled(BaseModal)`
   position: fixed;
   z-index: 1300;
   inset: 0;

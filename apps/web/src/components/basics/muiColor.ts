@@ -25,6 +25,11 @@ export const muiGreen = {
   'A400': '#00e676'
 }
 
+export const mainColor = { 
+  100: '#FCD535',
+  101: '#202630'
+}!
+
 export const lightBlue = {
   100: '#b3e5fc',
   900: '#01579b'

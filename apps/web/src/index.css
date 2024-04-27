@@ -16,10 +16,6 @@ body {
   height: 100%;
 }
 
-.activeNavLink {
-  color: #FCD535 !important;
-}
-
 .navLink {
   display: flex;
   align-items: center;

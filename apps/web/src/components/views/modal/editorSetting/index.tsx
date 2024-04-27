@@ -1,7 +1,8 @@
-import Modal from '../../basics/modal';
-import { githubAppName, githubAuthUrl } from "../../../common/constants"
-import { getGithubToken } from '../../../services/userApi';
+import { Modal } from '../../../basics/modal';
+import { githubAppName, githubAuthUrl } from "../../../../common/constants"
+import { getGithubToken } from '../../../../services/userApi';
 import { styled, css } from '@mui/system';
+import { muiGrey } from '../../../basics/muiColor';
 
 interface IModal {
   isOpen: boolean
@@ -10,20 +11,7 @@ interface IModal {
   uid: string
 }
 
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
-
-export const EditorModal = (props: IModal) => {
+export const EditorSetting = (props: IModal) => {
   const { uid } = props
 
   const onGetGithubOauth = async () => {
@@ -70,13 +58,13 @@ const ModalContent = styled('div')(
     flex-direction: column;
     gap: 8px;
     overflow: hidden;
-    background-color: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+    background-color: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
     border-radius: 8px;
-    border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+    border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
     box-shadow: 0 4px 12px
       ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};
     padding: 24px;
-    color: ${theme.palette.mode === 'dark' ? grey[50] : grey[900]};
+    color: ${theme.palette.mode === 'dark' ? muiGrey[50] : muiGrey[900]};
 
     & .modal-title {
       margin: 0;
@@ -88,7 +76,7 @@ const ModalContent = styled('div')(
       margin: 0;
       line-height: 1.5rem;
       font-weight: 400;
-      color: ${theme.palette.mode === 'dark' ? grey[400] : grey[800]};
+      color: ${theme.palette.mode === 'dark' ? muiGrey[400] : muiGrey[800]};
       margin-bottom: 4px;
     }
   `,

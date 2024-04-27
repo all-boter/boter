@@ -4,7 +4,7 @@ import { SUCCESS } from "../../../../common/constants"
 import { IGithubInstallation, Repository, getRepos, getGithubInsByuid } from '../../../../services/userApi';
 import { GitHubTree, GithubService } from '../../../../services/githubService';
 import { Settings } from 'lucide-react'
-import { EditorModal } from '../../../../components/views/editorModal';
+import { EditorSetting } from '../../../../components/views/modal/editorSetting';
 import Select from '../../../../components/basics/select';
 import { penx_mock } from '../../../../common/mock/mockTree';
 import { mockRespos1 } from '../../../../common/mock/mock-respos';
@@ -108,6 +108,6 @@ export const Github = () => {
 
     <Select onChange={onChangeSelect} options={repos} value={repository} label='name' id='id' />
 
-    <EditorModal uid={user.id} isOpen={settingOpen} handleClose={() => setSettingOpen(false)} />
+    <EditorSetting uid={user.id} isOpen={settingOpen} handleClose={() => setSettingOpen(false)} />
   </div>
 }

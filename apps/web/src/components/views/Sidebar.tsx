@@ -3,6 +3,7 @@ import { Box } from "@mui/system"
 import { Logo } from "./logo";
 import { StgIcon } from "../icon/stgIcon";
 import { BotIcon } from "../icon/botIcon";
+import { mainColor } from "../basics/muiColor";
 
 export const Sidebar = () => {
   return <Box sx={{ display: 'flex', flexDirection: 'column', width: '15%', minWidth: '280px', borderRight: '1px solid #374151' }}>
@@ -16,7 +17,7 @@ export const Sidebar = () => {
     >
       {({ isActive }) => (
         <>
-          <BotIcon fill={isActive ? '#FCD535' : '#FFF'} />
+          <BotIcon fill={isActive ? mainColor[100] : '#FFF'} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
         </>
       )}
@@ -28,7 +29,7 @@ export const Sidebar = () => {
     >
       {({ isActive }) => (
         <>
-          <StgIcon fill={isActive ? '#FCD535' : '#FFF'} />
+          <StgIcon fill={isActive ? mainColor[100] : '#FFF'} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Strategies</Box>
         </>
       )}

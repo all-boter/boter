@@ -6,14 +6,17 @@ import { SUCCESS } from "../../../common/constants";
 import { appSlice } from '../../../store/appSlice';
 import { useNavigate } from 'react-router-dom';
 import ButtonOrgin from '../../../components/basics/buttonOrgin';
-import Button from '../../../components/basics/button';
 import { Input } from '../../../components/basics/input';
 import { InputOrgin } from '../../../components/basics/inputOrgin';
 import { Sidebar } from '../../../components/views/Sidebar';
+import { Button } from '../../../components/basics/button';
+import { CreateStg } from '../../../components/views/modal/createStg';
+import { useState } from 'react';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const [isOpenCreateStg, openCreateStg] = useState(false);
 
   const authVerifyUtil = async () => {
     const res = await authVerifyApi()
@@ -32,19 +35,34 @@ export const Dashbord = () => {
     navigate('/editor');
   }
 
-  return <Box sx={{display: 'flex',flexDirection: 'row',height: '100%',background: '#1e293b'}}>
+  const onCreateStg =()=>{
+    console.log('%c=onCreateStg','color:red')
+    openCreateStg(true)
+  }
+
+  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', background: '#1e293b' }}>
     <Sidebar />
 
-    <Box sx={{pl: '20px',pt: '20px'}}>
-      dashbord
-      <button onClick={onAuthVerify}>auth verify</button>
+    <Box sx={{ pl: '20px', pt: '20px' }}>
+      <Box sx={{fontWeight: '700',fontSize: '20px'}}>
+        <Box component={'span'} sx={{ mr: '10px'}}>
+          My strategies
+        </Box>
 
-      <button onClick={onEditor}>editor</button>
+        <Button onClick={()=>onCreateStg()}>Create strategy</Button>
+      </Box>
 
-      <ButtonOrgin />
-      <Button />
-      <Input />
-      <InputOrgin />
+      <Box sx={{ mt: '18px' }}>
+        <button onClick={onAuthVerify}>auth verify</button>
+
+        <button onClick={onEditor}>editor</button>
+
+        <ButtonOrgin />
+        <Input />
+        <InputOrgin />
+      </Box>
     </Box>
+
+    <CreateStg isOpen={isOpenCreateStg} handleClose={() => openCreateStg(false)} />
   </Box>
 }
