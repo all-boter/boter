@@ -4,6 +4,9 @@ import { Modal } from '@/components/basics/modal';
 import { DynamicFormProvider, FormItem, FormSchema } from '@/components/basics/DynamicFormProvider';
 import { Form, Formik } from 'formik';
 import { useCallback } from 'react';
+import { Button } from '@/components/basics/button';
+import { createStg } from '@/services/stgApi';
+import { SUCCESS } from '@/common/constants';
 
 interface IModal {
   isOpen: boolean
@@ -15,22 +18,20 @@ const formSchema: FormSchema[] = [
   {
     type: 'Input',
     id: 'name',
-    label: 'name:',
+    label: 'Strategy name:',
     control: {
       value: '',
       defaultValue: '',
-      placeholder: 'input something',
+      placeholder: 'Type name',
     },
   },
 ]
 
-const onSubmit = () => {
-  console.log('%c=onSubmit', 'color:red',)
+const formValuesInit = {
+  name: ''
 }
 
-const formValues = {
-  name: 'test'
-}
+const StyledButton = styled(Button)(`margin-top: 10px;`)
 
 export const CreateStg = (props: IModal) => {
 
@@ -44,28 +45,34 @@ export const CreateStg = (props: IModal) => {
     [],
   )
 
+  const onSubmit = async (values: any) => {
+    const res = await createStg({ name: values.name })
+    if (res.code === SUCCESS) {
+      props.handleClose()
+    } else {
+      console.error(res.msg)
+    }
+  }
+
   return <Modal {...props}>
     <ModalContent sx={{ width: 400 }}>
-      test:
       <Formik
-        initialValues={formValues}
+        initialValues={formValuesInit}
         // validationSchema={validationSchema}
         validateOnMount
         onSubmit={onSubmit}
       >
         {({ values, errors, isValid }) => (
           <Form>
-            <div>
-              {formSchema.map((formItem, index) => {
-                return (
-                  <div key={index}>
-                    {renderFormItem(formItem, values)}
-                  </div>
-                )
-              })}
+            {formSchema.map((formItem, index) => {
+              return (
+                <div key={index}>
+                  {renderFormItem(formItem, values)}
+                </div>
+              )
+            })}
 
-              <button type='submit'>submit</button>
-            </div>
+            <StyledButton type='submit'>Create a strategy</StyledButton>
           </Form>
         )}
       </Formik>

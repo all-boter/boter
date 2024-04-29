@@ -3,15 +3,11 @@ import { Input as BaseInput } from '@mui/base/Input';
 import { styled } from '@mui/system';
 import { muiBlue, muiGrey } from '../muiColor';
 
-const InputWrap = React.forwardRef(function CustomInput(
-  props: React.InputHTMLAttributes<HTMLInputElement>,
-  ref: React.ForwardedRef<HTMLDivElement>,
-) {
-  return <BaseInput slots={{ input: InputElement }} {...props} ref={ref} />;
-});
+export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
-export function Input() {
-  return <InputWrap aria-label="Demo input" placeholder="Type something…" />;
+  return (
+    <BaseInput slots={{ input: InputElement }} {...props} />
+  );
 }
 
 const InputElement = styled('input')(
@@ -26,9 +22,8 @@ const InputElement = styled('input')(
   color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
   background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
-  box-shadow: 0px 2px 4px ${
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
-  };
+  box-shadow: 0px 2px 4px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.5)' : 'rgba(0,0,0, 0.05)'
+    };
 
   &:hover {
     border-color: ${muiBlue[400]};
