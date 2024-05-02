@@ -10,13 +10,13 @@ const Button = styled('a')(
   height: 48px;
   cursor: pointer;
   border-radius: 8px;
-  border: 2px solid ${muiGreen['A400']};
+  border: 2px solid ${muiGreen['limeGreen']};
   padding: 0px 16px;
   font-weight: 600;
   font-size: 0.875rem;
   background-color: transparent;
   font-family: 'IBM Plex Sans', sans-serif;
-  color: ${muiGreen['A400']};
+  color: ${muiGreen['limeGreen']};
   transition: all 150ms ease;
   text-decoration: none;
 

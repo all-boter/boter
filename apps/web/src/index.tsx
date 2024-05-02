@@ -35,7 +35,7 @@ root.render(
             tablet: 768,
             md: 900,
             desktop: 1200,
-            xl: 1700
+            xl: 1500
           },
         },
       })}

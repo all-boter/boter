@@ -28,8 +28,8 @@ export const StgList = () => {
       mobile: 'repeat(1, minmax(0px, 1fr))',
       tablet: 'repeat(1, minmax(0px, 1fr))',
       md: 'repeat(2, minmax(0px, 1fr))',
-      desktop: 'repeat(4, minmax(0px, 1fr))',
-      xl: 'repeat(5, minmax(0px, 1fr))'
+      desktop: 'repeat(3, minmax(0px, 1fr))',
+      xl: 'repeat(4, minmax(0px, 1fr))'
     },
   }}>
     {
