@@ -3,6 +3,7 @@ import { IStrategy, strateies } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
+import { mainColor } from "../basics/muiColor";
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
@@ -55,7 +56,8 @@ export const StgList = () => {
             <Box sx={{ color: '#f3f4f6' }}>Free</Box>
             <Box>
               <DeletePop />
-              <StyledButton color="#0ecb81" size="small">Create bot</StyledButton>
+              {/* <StyledButton bg="#0ecb81" size="small">Create bot</StyledButton> */}
+              <StyledButton color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
             </Box>
           </Box>
         </Box>

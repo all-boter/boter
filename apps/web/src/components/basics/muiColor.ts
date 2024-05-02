@@ -19,8 +19,6 @@ export const muiGrey = {
   700: '#434D5B',
   800: '#303740',
   900: '#1C2025',
-  /**dark gray*/
-  101: '#1f2937',
 };
 
 export const muiGreen = {
@@ -33,6 +31,16 @@ export const mainColor = {
   100: '#FCD535',
   /**Midnight blue*/
   101: '#202630',
+  /**light red*/
+  102: '#f87171',
+  /**light gray*/
+  103: '#e5e5e5',
+  /**black*/
+  106: 'black',
+  /**dark gray*/
+  107: '#1f2937',
+  /**dark gray pure*/
+  108: '#2e2e2e'
 }!
 
 export const lightBlue = {

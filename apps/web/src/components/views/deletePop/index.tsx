@@ -1,7 +1,7 @@
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
-import { lightBlue, muiGrey } from '@/components/basics/muiColor';
+import { lightBlue, mainColor } from '@/components/basics/muiColor';
 
 const StyledContent = styled(Content)(`
     display: flex;
@@ -10,7 +10,7 @@ const StyledContent = styled(Content)(`
     flex-direction: column;
     height: 90px;
     border-radius: 8px;
-    background: ${muiGrey[101]};
+    background: ${mainColor[107]};
     padding: 0 10px;
 `)
 
@@ -22,7 +22,7 @@ export const DeletePop = () => {
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn color={'#0ecb81'} size={'small'}>
+      <TriggerBtn color={mainColor[103]} bg={mainColor[108]} size={'small'}>
         Delete
       </TriggerBtn>
     </Trigger>
@@ -43,16 +43,16 @@ export const DeletePop = () => {
           px: '20px',
           mt: '10px',
         }}>
-          <CloseBtn aria-label="Close" color={lightBlue[100]} size='small'>
+          <CloseBtn aria-label="Close" bg={lightBlue[100]} size='small'>
             Cancel
           </CloseBtn>
 
-          <CloseBtn aria-label="Close" onClick={() => onDelete()} color={'#f87171'} size='small'>
+          <CloseBtn aria-label="Close" onClick={() => onDelete()} bg={mainColor[102]} size='small'>
             Confirm
           </CloseBtn>
         </Box>
 
-        <Arrow fill={muiGrey[101]} />
+        <Arrow fill={mainColor[107]} />
       </StyledContent>
     </Portal>
   </Root>
