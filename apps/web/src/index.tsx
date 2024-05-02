@@ -9,12 +9,12 @@ import './index.css';
 
 declare module '@mui/system' {
   interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
+    xs: false;
     sm: false;
-    md: false;
+    md: true;
     lg: false;
-    xl: false;
-    mobile: true; // adds the `mobile` breakpoint
+    xl: true;
+    mobile: true;
     tablet: true;
     desktop: true;
   }
@@ -32,8 +32,10 @@ root.render(
         breakpoints: {
           values: {
             mobile: 0,
-            tablet: 640,
-            desktop: 1024,
+            tablet: 768,
+            md: 900,
+            desktop: 1200,
+            xl: 1700
           },
         },
       })}

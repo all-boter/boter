@@ -12,6 +12,7 @@ import { appSlice } from '@/store/appSlice';
 import { AppDispatch } from '@/store';
 import { SUCCESS } from '@/common/constants';
 import { authVerifyApi } from '@/services/userApi';
+import { StgList } from '@/components/views/stgList';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -35,32 +36,36 @@ export const Dashbord = () => {
     navigate('/editor');
   }
 
-  const onCreateStg =()=>{
-    console.log('%c=onCreateStg','color:red')
+  const onCreateStg = () => {
+    console.log('%c=onCreateStg', 'color:red')
     openCreateStg(true)
   }
 
-  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', background: '#1e293b' }}>
+  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%',background: '#1e293b' }}>
     <Sidebar />
 
-    <Box sx={{ pl: '20px', pt: '20px' }}>
-      <Box sx={{fontWeight: '700',fontSize: '20px'}}>
-        <Box component={'span'} sx={{ mr: '10px'}}>
-          My strategies
+    <Box sx={{width: '85%',mx: '20px'}}>
+      <Box sx={{ width: '100%', pt: '20px' }}>
+        <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
+          <Box component={'span'} sx={{ mr: '10px', color: '#FFF' }}>
+            My strategies
+          </Box>
+
+          <Button onClick={() => onCreateStg()}>Create strategy</Button>
         </Box>
 
-        <Button onClick={()=>onCreateStg()}>Create strategy</Button>
+        <Box sx={{ mt: '18px' }}>
+          <button onClick={onAuthVerify}>auth verify</button>
+
+          <button onClick={onEditor}>editor</button>
+
+          <ButtonOrgin />
+          <Input />
+          <InputOrgin />
+        </Box>
       </Box>
 
-      <Box sx={{ mt: '18px' }}>
-        <button onClick={onAuthVerify}>auth verify</button>
-
-        <button onClick={onEditor}>editor</button>
-
-        <ButtonOrgin />
-        <Input />
-        <InputOrgin />
-      </Box>
+      <StgList />
     </Box>
 
     <CreateStg isOpen={isOpenCreateStg} handleClose={() => openCreateStg(false)} />
