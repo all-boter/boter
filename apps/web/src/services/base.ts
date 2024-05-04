@@ -7,6 +7,11 @@ export interface ResType<T> {
   data: T;
 }
 
+export interface ResTypeNoData {
+  code: number;
+  msg: string;
+}
+
 export interface PaginationType {
   currentPage: number;
   pageSize: number;

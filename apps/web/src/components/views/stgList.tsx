@@ -4,19 +4,32 @@ import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
 import { mainColor } from "../basics/muiColor";
+import { SUCCESS } from "@/common/constants";
+import { StgDrawer } from "../basics/drawer/indenx";
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const StgList = () => {
   const [stgList, setStgList] = useState<IStrategy[]>([])
 
-  useEffect(() => {
-    const getStrateies = async () => {
-      const res = await strateies()
-      console.log('%c=getStrateies', 'color:red', res)
-      setStgList(res.data)
-    }
+  const [drawerOpen, setDrawer] = useState(false);
 
+  const getStrateies = async () => {
+    const res = await strateies()
+    if(res.code === SUCCESS){
+      setStgList(res.data)
+    }else {
+      alert(res.msg)
+    }
+  }
+
+
+  const onCreate = (stg: IStrategy)=>{
+    console.log('%c=onCreate','color:red',stg)
+    setDrawer(!drawerOpen)
+  }
+
+  useEffect(() => {
     getStrateies()
   }, [])
 
@@ -55,13 +68,20 @@ export const StgList = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: '#f3f4f6' }}>Free</Box>
             <Box>
-              <DeletePop />
+              <DeletePop stg={item} callback={getStrateies} />
               {/* <StyledButton bg="#0ecb81" size="small">Create bot</StyledButton> */}
-              <StyledButton color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
+              <StyledButton onClick={()=>onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
             </Box>
           </Box>
         </Box>
       ))
     }
+
+    <StgDrawer visible={drawerOpen} onClose={() => setDrawer(false)} anchor={"left"}>
+      <Box>
+        hello
+      </Box>
+    </StgDrawer>
+    {/* <StgDrawer open={true} onClose={() => setDrawer(false)} anchor={""}/> */}
   </Box>
 }

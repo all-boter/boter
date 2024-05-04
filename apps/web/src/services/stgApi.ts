@@ -1,16 +1,18 @@
-import { ResType, fetchWithAuth } from './base'
+import { ResType, ResTypeNoData, fetchWithAuth } from './base'
 
 interface ApiConfig {
   createStg: string
   strateies: string
+  deleteStg: string
 }
 
 const apiConfig: ApiConfig = {
   createStg: '/api/stg/create',
   strateies: '/api/strateies',
+  deleteStg: '/api/stg/delete',
 }
 
-export async function createStg(params: {name: string}): Promise<ResType<any>> {
+export async function createStg(params: { name: string }): Promise<ResType<any>> {
   const url = `${apiConfig.createStg}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
@@ -42,4 +44,10 @@ export async function strateies(): Promise<ResType<any>> {
   const url = `${apiConfig.strateies}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+export async function deleteStg(id: string): Promise<ResTypeNoData> {
+  const url = `${apiConfig.deleteStg}`
+
+  return await fetchWithAuth<any>(url, { data: { id } }, 'POST');
 }
