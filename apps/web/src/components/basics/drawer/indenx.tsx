@@ -1,16 +1,16 @@
-import { Box } from "@mui/system"
-import './index.css'
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { Box } from "@mui/system"
+import './index.css'
 
 interface IDrawer {
   visible: boolean;
-  anchor: string
-  onClose: () => void
+  anchor: 'left' | 'right'
   children: React.ReactNode;
+  onClose: () => void
 }
 
-const renderAnchor = (anchor: string) => {
+const renderAnchor = (anchor: 'left' | 'right') => {
   switch (anchor) {
     case "left":
       return "drawer-left";
@@ -46,9 +46,10 @@ export const StgDrawer = ({ visible, anchor, onClose, children }: IDrawer) => {
   return <div className={clsx(renderAnchor(anchor), 'drawer', active && 'active')}>
     <div className={'drawer-mask'} onClick={onClose} />
     <Box sx={{
+      position: 'relative',
       width: '300px',
       height: '100%',
-      backgroundColor: 'aliceblue'
+      backgroundColor: '#1f2937'
     }}>
       {children}
     </Box>

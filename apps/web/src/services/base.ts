@@ -8,6 +8,7 @@ export interface ResType<T> {
 }
 
 export interface ResTypeNoData {
+  data(data: any): { payload: import("../store/appSlice").User; type: "appSlice/addUser"; };
   code: number;
   msg: string;
 }

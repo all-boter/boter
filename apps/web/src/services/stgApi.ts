@@ -4,15 +4,17 @@ interface ApiConfig {
   createStg: string
   strateies: string
   deleteStg: string
+  createRunner: string
 }
 
 const apiConfig: ApiConfig = {
   createStg: '/api/stg/create',
   strateies: '/api/strateies',
   deleteStg: '/api/stg/delete',
+  createRunner: '/api/runner/create',
 }
 
-export async function createStg(params: { name: string }): Promise<ResType<any>> {
+export async function createStg(params: { name: string }): Promise<ResTypeNoData> {
   const url = `${apiConfig.createStg}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
@@ -50,4 +52,18 @@ export async function deleteStg(id: string): Promise<ResTypeNoData> {
   const url = `${apiConfig.deleteStg}`
 
   return await fetchWithAuth<any>(url, { data: { id } }, 'POST');
+}
+
+
+interface IRegisterRunner {
+  name: string;
+  token: string;
+  machineHash: string;
+  machineIp: string;
+}
+
+export async function createRunner(params: IRegisterRunner): Promise<ResTypeNoData> {
+  const url = `${apiConfig.createRunner}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }

@@ -13,6 +13,7 @@ import { AppDispatch } from '@/store';
 import { SUCCESS } from '@/common/constants';
 import { authVerifyApi } from '@/services/userApi';
 import { StgList } from '@/components/views/stgList';
+import { createRunner } from '@/services/stgApi';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -41,10 +42,24 @@ export const Dashbord = () => {
     openCreateStg(true)
   }
 
-  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%',background: '#1e293b' }}>
+  const onCreateRunner = async () => {
+    const res = await createRunner({
+      name: 'test',
+      token: 'test',
+      machineHash: '123.00.7',
+      machineIp: '123.00.7'
+    })
+    if (res.code === SUCCESS) {
+      console.log('%c=onCreateRunner', 'color:red', res)
+    } else {
+      console.error(res.msg)
+    }
+  }
+
+  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
 
-    <Box sx={{width: '85%',mx: '20px'}}>
+    <Box sx={{ width: '85%', mx: '20px' }}>
       <Box sx={{ width: '100%', pt: '20px' }}>
         <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: '#FFF' }}>
@@ -58,6 +73,8 @@ export const Dashbord = () => {
           <button onClick={onAuthVerify}>auth verify</button>
 
           <button onClick={onEditor}>editor</button>
+
+          <button onClick={onCreateRunner}>create runner</button>
 
           <ButtonOrgin />
           <Input />
