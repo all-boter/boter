@@ -5,28 +5,35 @@ import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
 import { mainColor } from "../basics/muiColor";
 import { SUCCESS } from "@/common/constants";
-import { StgDrawer } from "../basics/drawer/indenx";
+import { Drawer } from "../basics/drawer/indenx";
+import { StgDrawer } from "./stgDrawer";
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const StgList = () => {
   const [stgList, setStgList] = useState<IStrategy[]>([])
 
+  const [currentStg, setCurrentStg] = useState<IStrategy>({
+    name: "",
+    id: '',
+    uid: '',
+    isPublic: false
+  })
   const [drawerOpen, setDrawer] = useState(false);
 
   const getStrateies = async () => {
     const res = await strateies()
-    if(res.code === SUCCESS){
+    if (res.code === SUCCESS) {
       setStgList(res.data)
-    }else {
+    } else {
       alert(res.msg)
     }
   }
 
-
-  const onCreate = (stg: IStrategy)=>{
-    console.log('%c=onCreate','color:red',stg)
+  const onCreate = (stg: IStrategy) => {
+    console.log('%c=onCreate', 'color:red', stg)
     setDrawer(!drawerOpen)
+    setCurrentStg(stg)
   }
 
   useEffect(() => {
@@ -70,18 +77,15 @@ export const StgList = () => {
             <Box>
               <DeletePop stg={item} callback={getStrateies} />
               {/* <StyledButton bg="#0ecb81" size="small">Create bot</StyledButton> */}
-              <StyledButton onClick={()=>onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
+              <StyledButton onClick={() => onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
             </Box>
           </Box>
         </Box>
       ))
     }
 
-    <StgDrawer visible={drawerOpen} onClose={() => setDrawer(false)} anchor={"left"}>
-      <Box>
-        hello
-      </Box>
-    </StgDrawer>
-    {/* <StgDrawer open={true} onClose={() => setDrawer(false)} anchor={""}/> */}
+    <Drawer visible={drawerOpen} onClose={() => setDrawer(false)} anchor={"left"}>
+      <StgDrawer stg={currentStg} />
+    </Drawer>
   </Box>
 }

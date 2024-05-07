@@ -1,11 +1,13 @@
 export const muiBlue = {
   50: '#e3f2fd',
+  100: '#DAECFF',
   200: '#99CCFF',
   300: '#66B2FF',
   400: '#3399FF',
   500: '#007FFF',
   600: '#0072E5',
   700: '#0066CC',
+  900: '#003A75',
 };
 
 export const muiGrey = {

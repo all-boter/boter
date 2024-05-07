@@ -8,6 +8,7 @@ import {
 import { Option as BaseOption, optionClasses } from '@mui/base/Option';
 import { styled } from '@mui/system';
 import { ChevronsDownUp } from 'lucide-react';
+import { muiBlue, muiGrey } from '../muiColor';
 
 interface ISelectProps<T = unknown> {
   value?: T | any;
@@ -19,11 +20,11 @@ interface ISelectProps<T = unknown> {
   id?: string
 }
 
-export default function SelectOrgin(props: ISelectProps) {
+export function Select(props: ISelectProps) {
   const { options, onChange, value, id = 'value', label = 'label' } = props
 
   return (
-    <Select
+    <SelectOrgin
       value={value}
       onChange={onChange && onChange}
     >
@@ -32,11 +33,11 @@ export default function SelectOrgin(props: ISelectProps) {
           {c[label]}
         </Option>
       ))}
-    </Select>
+    </SelectOrgin>
   );
 }
 
-function Select<TValue extends {}, Multiple extends boolean = false>(
+function SelectOrgin<TValue extends {}, Multiple extends boolean = false>(
   props: SelectProps<TValue, Multiple>,
 ) {
   const slots: SelectProps<TValue, Multiple>['slots'] = {
@@ -48,28 +49,6 @@ function Select<TValue extends {}, Multiple extends boolean = false>(
 
   return <BaseSelect {...props} slots={slots} />;
 }
-
-const blue = {
-  100: '#DAECFF',
-  200: '#99CCF3',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-  900: '#003A75',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E5EAF2',
-  200: '#DAE2ED',
-  300: '#C7D0DD',
-  400: '#B0B8C4',
-  500: '#9DA8B7',
-  600: '#6B7A90',
-  700: '#434D5B',
-  800: '#303740',
-  900: '#1C2025',
-};
 
 const Button = forwardRef(function Button<
   TValue extends {},
@@ -97,25 +76,25 @@ const StyledButton = styled('button', { shouldForwardProp: () => true })(
   border-radius: 8px;
   text-align: left;
   line-height: 1.5;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
+  color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
   position: relative;
-  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
+  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? muiGrey[900] : muiGrey[50]};
 
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 120ms;
 
   &:hover {
-    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
-    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
+    background: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[50]};
+    border-color: ${theme.palette.mode === 'dark' ? muiGrey[600] : muiGrey[300]};
   }
 
   &.${selectClasses.focusVisible} {
     outline: 0;
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
+    border-color: ${muiBlue[400]};
+    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? muiBlue[600] : muiBlue[200]};
   }
 
   & > svg {
@@ -139,9 +118,9 @@ const Listbox = styled('ul')(
   border-radius: 12px;
   overflow: auto;
   outline: 0px;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
+  color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
   box-shadow: 0px 2px 6px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
     };
   `,
@@ -159,31 +138,31 @@ const Option = styled(BaseOption)(
   }
 
   &.${optionClasses.selected} {
-    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
-    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+    background-color: ${theme.palette.mode === 'dark' ? muiBlue[900] : muiBlue[100]};
+    color: ${theme.palette.mode === 'dark' ? muiBlue[100] : muiBlue[900]};
   }
 
   &.${optionClasses.highlighted} {
-    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
-    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+    background-color: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[100]};
+    color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
   }
 
   &:focus-visible {
-    outline: 3px solid ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
+    outline: 3px solid ${theme.palette.mode === 'dark' ? muiBlue[600] : muiBlue[200]};
   }
 
   &.${optionClasses.highlighted}.${optionClasses.selected} {
-    background-color: ${theme.palette.mode === 'dark' ? blue[900] : blue[100]};
-    color: ${theme.palette.mode === 'dark' ? blue[100] : blue[900]};
+    background-color: ${theme.palette.mode === 'dark' ? muiBlue[900] : muiBlue[100]};
+    color: ${theme.palette.mode === 'dark' ? muiBlue[100] : muiBlue[900]};
   }
 
   &.${optionClasses.disabled} {
-    color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
+    color: ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[400]};
   }
 
   &:hover:not(.${optionClasses.disabled}) {
-    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
-    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+    background-color: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[100]};
+    color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
   }
   `,
 );

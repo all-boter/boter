@@ -21,7 +21,7 @@ const renderAnchor = (anchor: 'left' | 'right') => {
   }
 };
 
-export const StgDrawer = ({ visible, anchor, onClose, children }: IDrawer) => {
+export const Drawer = ({ visible, anchor, onClose, children }: IDrawer) => {
   const [opened, setOpened] = useState(visible);
   const [active, setActive] = useState(visible);
 
@@ -49,7 +49,7 @@ export const StgDrawer = ({ visible, anchor, onClose, children }: IDrawer) => {
       position: 'relative',
       width: '300px',
       height: '100%',
-      backgroundColor: '#1f2937'
+      backgroundColor: '#f6f7f8'
     }}>
       {children}
     </Box>

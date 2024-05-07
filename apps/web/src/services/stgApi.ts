@@ -5,6 +5,7 @@ interface ApiConfig {
   strateies: string
   deleteStg: string
   createRunner: string
+  runners: string
 }
 
 const apiConfig: ApiConfig = {
@@ -12,6 +13,7 @@ const apiConfig: ApiConfig = {
   strateies: '/api/strateies',
   deleteStg: '/api/stg/delete',
   createRunner: '/api/runner/create',
+  runners: '/api/runners',
 }
 
 export async function createStg(params: { name: string }): Promise<ResTypeNoData> {
@@ -33,10 +35,10 @@ export interface IStrategy {
   isPublic: boolean
   enableUI?: boolean
   enableTrade?: boolean
-  enableStopPassword: boolean
+  enableStopPassword?: boolean
   tradeTypes?: string
-  isLazyStart: boolean
-  usedCount: number
+  isLazyStart?: boolean
+  usedCount?: number
   deletedAt?: Date
   createdAt?: Date
   updatedAt?: Date
@@ -62,8 +64,27 @@ interface IRegisterRunner {
   machineIp: string;
 }
 
+export interface IRunner {
+    id: string;
+    uid: string;
+    name: string;
+    runnerType: string;
+    machineHash: string;
+    machineIp: string;
+    heartbeatAt: Date;
+    deletedAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export async function createRunner(params: IRegisterRunner): Promise<ResTypeNoData> {
   const url = `${apiConfig.createRunner}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
+}
+
+export async function getRunners(): Promise<ResType<IRunner[]>> {
+  const url = `${apiConfig.runners}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }

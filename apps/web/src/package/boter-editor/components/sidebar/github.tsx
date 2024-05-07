@@ -5,7 +5,7 @@ import { IGithubInstallation, Repository, getRepos, getGithubInsByuid } from '..
 import { GitHubTree, GithubService } from '../../../../services/githubService';
 import { Settings } from 'lucide-react'
 import { EditorSetting } from '../../../../components/views/modal/editorSetting';
-import Select from '../../../../components/basics/select';
+import { Select } from '../../../../components/basics/select';
 import { penx_mock } from '../../../../common/mock/mockTree';
 import { mockRespos1 } from '../../../../common/mock/mock-respos';
 import { appActions } from '../../../../store/appSlice';

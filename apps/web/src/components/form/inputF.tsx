@@ -15,6 +15,8 @@ export const InputF = (props: Props) => {
     helpers.setValue(value)
   }
 
+  console.log('%c=input F', 'color:red', control)
+
   return <>
     <Box sx={{ mb: '8px' }}>{props.label}</Box>
     <Field
@@ -24,6 +26,7 @@ export const InputF = (props: Props) => {
       value={formik.values[id] as string}
       maxLength={control?.maxLength}
       placeholder={control?.placeholder}
+      width={control.width}
     />
   </>
 }
