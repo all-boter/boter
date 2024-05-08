@@ -1,5 +1,19 @@
 import { GithubRepository } from "@/services/githubService";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IStrategy, strateies } from "@/services/stgApi";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SUCCESS } from "@/common/constants";
+
+export const fetchStrategies = createAsyncThunk(
+  "strategies/fetch",
+  async () => {
+    const res = await strateies();
+    if (res.code === SUCCESS) {
+      return res.data;
+    }
+
+    return []
+  }
+);
 
 export interface User {
   id: string;
@@ -11,6 +25,7 @@ export interface User {
 interface InitialState {
   user: User
   githubRepository: GithubRepository | null
+  stgList: IStrategy[]
 }
 
 const initialState: InitialState = {
@@ -20,8 +35,8 @@ const initialState: InitialState = {
     email: '',
     exp: 0
   },
-  // githubRepository: null
-  githubRepository: null
+  githubRepository: null,
+  stgList: []
 }
 
 const loadStatePersiste = () => {
@@ -59,11 +74,18 @@ export const appSlice = createSlice({
     addGithubRepository: (state, action: PayloadAction<GithubRepository>) => {
       state.githubRepository = action.payload;
 
-      console.log('%c=addGithubRepository', 'color:#1dddae', action.payload)
-
       return state
     }
-  }
+  },
+  extraReducers(builder) {
+    builder.addCase(
+      fetchStrategies.fulfilled,
+      (state, action: PayloadAction<IStrategy[]>) => {
+
+        state.stgList = action.payload;
+      },
+    )
+  },
 });
 
 export const appActions = appSlice.actions

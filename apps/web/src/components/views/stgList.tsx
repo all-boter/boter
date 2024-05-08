@@ -1,17 +1,20 @@
 import { Box, styled } from "@mui/system"
-import { IStrategy, strateies } from '@/services/stgApi';
+import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
 import { mainColor } from "../basics/muiColor";
-import { SUCCESS } from "@/common/constants";
 import { Drawer } from "../basics/drawer/indenx";
 import { StgDrawer } from "./stgDrawer";
+import { AppDispatch, stgListState, useAppSelector } from "@/store";
+import { useDispatch } from "react-redux";
+import { fetchStrategies } from "@/store/appSlice";
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const StgList = () => {
-  const [stgList, setStgList] = useState<IStrategy[]>([])
+  const dispatch: AppDispatch = useDispatch();
+  const stgList = useAppSelector(stgListState)
 
   const [currentStg, setCurrentStg] = useState<IStrategy>({
     name: "",
@@ -21,24 +24,16 @@ export const StgList = () => {
   })
   const [drawerOpen, setDrawer] = useState(false);
 
-  const getStrateies = async () => {
-    const res = await strateies()
-    if (res.code === SUCCESS) {
-      setStgList(res.data)
-    } else {
-      alert(res.msg)
-    }
-  }
-
   const onCreate = (stg: IStrategy) => {
-    console.log('%c=onCreate', 'color:red', stg)
     setDrawer(!drawerOpen)
     setCurrentStg(stg)
   }
 
   useEffect(() => {
-    getStrateies()
+    dispatch(fetchStrategies());
   }, [])
+
+  console.log('%c=stgList', 'color:red', stgList)
 
   return <Box sx={{
     display: 'grid',
@@ -54,7 +49,7 @@ export const StgList = () => {
     },
   }}>
     {
-      stgList.map((item) => (
+      stgList && stgList.map((item) => (
         <Box key={item.id} sx={{
           height: '100px',
           borderRadius: '4px',
@@ -75,7 +70,7 @@ export const StgList = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: '#f3f4f6' }}>Free</Box>
             <Box>
-              <DeletePop stg={item} callback={getStrateies} />
+              <DeletePop stg={item} />
               {/* <StyledButton bg="#0ecb81" size="small">Create bot</StyledButton> */}
               <StyledButton onClick={() => onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
             </Box>

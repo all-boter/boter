@@ -34,8 +34,7 @@ const formSchema: FormSchema[] = [
 
 const formValuesInit = {
   name: '',
-  runner: 'c882972f-6796-467a-8696-e266d495a0f21',
-  // runner: 'c882972f-6796-467a-8696-e266d495a0f2',
+  runner: '',
 }
 
 const StyledButton = styled(Button)(`margin-top: 10px;`)

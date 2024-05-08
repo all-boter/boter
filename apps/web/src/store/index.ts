@@ -18,6 +18,7 @@ export type AppState = ReturnType<typeof store.getState>
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 export const userState = (state: AppState) => state.appSlice.user
+export const stgListState = (state: AppState) => state.appSlice.stgList
 export const githubReposState = (state: AppState) => state.appSlice.githubRepository
 
 export default store;

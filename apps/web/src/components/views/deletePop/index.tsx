@@ -3,7 +3,10 @@ import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
 import { lightBlue, mainColor } from '@/components/basics/muiColor';
 import { IStrategy, deleteStg } from '@/services/stgApi';
+import { AppDispatch } from "@/store";
 import { SUCCESS } from '@/common/constants';
+import { useDispatch } from 'react-redux';
+import { fetchStrategies } from '@/store/appSlice';
 
 const StyledContent = styled(Content)(`
     display: flex;
@@ -18,17 +21,18 @@ const StyledContent = styled(Content)(`
 
 interface IDeletePop {
   stg: IStrategy
-  callback: () => void
+  // callback: () => void
 }
 
 export const DeletePop = (props: IDeletePop) => {
+  const dispatch: AppDispatch = useDispatch();
 
   const onDelete = async () => {
-    const { stg, callback } = props
+    const { stg } = props
     console.log('onDelete', props.stg)
     const res = await deleteStg(stg.id)
     if (res.code === SUCCESS) {
-      callback()
+      dispatch(fetchStrategies());
     } else {
       alert(res.msg)
     }

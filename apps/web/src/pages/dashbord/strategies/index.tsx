@@ -8,7 +8,7 @@ import { Sidebar } from '@/components/views/Sidebar';
 import { InputOrgin } from '@/components/basics/inputOrgin';
 import { Input } from '@/components/basics/input';
 import ButtonOrgin from '@/components/basics/buttonOrgin';
-import { appSlice } from '@/store/appSlice';
+import { appSlice, fetchStrategies } from '@/store/appSlice';
 import { AppDispatch } from '@/store';
 import { SUCCESS } from '@/common/constants';
 import { authVerifyApi } from '@/services/userApi';
@@ -38,8 +38,12 @@ export const Dashbord = () => {
   }
 
   const onCreateStg = () => {
-    console.log('%c=onCreateStg', 'color:red')
     openCreateStg(true)
+  }
+
+  const handleClose = () => {
+    openCreateStg(false)
+    dispatch(fetchStrategies());
   }
 
   const onCreateRunner = async () => {
@@ -85,6 +89,6 @@ export const Dashbord = () => {
       <StgList />
     </Box>
 
-    <CreateStg isOpen={isOpenCreateStg} handleClose={() => openCreateStg(false)} />
+    <CreateStg isOpen={isOpenCreateStg} handleClose={() => handleClose()} />
   </Box>
 }
