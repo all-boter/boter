@@ -15,8 +15,6 @@ export const InputF = (props: Props) => {
     helpers.setValue(value)
   }
 
-  console.log('%c=input F', 'color:red', control)
-
   return <>
     <Box sx={{ mb: '8px' }}>{props.label}</Box>
     <Field

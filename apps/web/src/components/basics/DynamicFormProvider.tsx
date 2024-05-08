@@ -6,7 +6,7 @@ export interface FormItem {
   type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Switch' | 'Checkbox' |  'Upload' |'textArea'
   label?: string
   control: Control
-  dataSourceFn?: () => Promise<void>;
+  dataSourceFn?: () => Promise<any>;
 }
 
 export interface FormSchema extends FormItem {
@@ -25,6 +25,8 @@ export enum FormItemType {
 }
 
 interface Control {
+  id?: string
+  label?: string
   value: number | string | string[]
   defaultValue?: number | string
   maxLength?: number

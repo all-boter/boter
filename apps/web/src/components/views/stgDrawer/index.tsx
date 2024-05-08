@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from "react"
-import { SUCCESS } from "@/common/constants"
+import { useCallback } from "react"
 import { DynamicFormProvider, FormItem, FormSchema } from "@/components/basics/DynamicFormProvider"
 import { Button } from "@/components/basics/button"
-import { IRunner, IStrategy, getRunners } from "@/services/stgApi"
+import { IStrategy, getRunners } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { Form, Formik } from 'formik';
 
@@ -11,7 +10,10 @@ const formSchema: FormSchema[] = [
     type: 'Select',
     id: 'runner',
     label: 'Runner:',
+    dataSourceFn: getRunners,
     control: {
+      id: 'id',
+      label: 'name',
       value: '',
       defaultValue: '',
       placeholder: 'Type name',
@@ -31,7 +33,9 @@ const formSchema: FormSchema[] = [
 ]
 
 const formValuesInit = {
-  name: ''
+  name: '',
+  runner: 'c882972f-6796-467a-8696-e266d495a0f21',
+  // runner: 'c882972f-6796-467a-8696-e266d495a0f2',
 }
 
 const StyledButton = styled(Button)(`margin-top: 10px;`)
@@ -40,9 +44,7 @@ interface Props {
   stg: IStrategy
 }
 
-export const StgDrawer = ({stg}:Props) => {
-  const [runners, setRunners] = useState<IRunner[]>([])
-
+export const StgDrawer = ({ stg }: Props) => {
   const renderFormItem = useCallback(
     (
       formItem: FormItem,
@@ -50,7 +52,7 @@ export const StgDrawer = ({stg}:Props) => {
     ) => {
       return DynamicFormProvider.of(formItem)
     },
-    [],
+    [formSchema],
   )
 
   const onSubmit = async (values: any) => {
@@ -63,24 +65,9 @@ export const StgDrawer = ({stg}:Props) => {
     // }
   }
 
-  const getRunnersUtil = async () => {
-    const res = await getRunners()
-    if (res.code === SUCCESS) {
-      setRunners(res.data)
-    } else {
-      alert(res.msg)
-    }
-  }
-
-  useEffect(() => {
-    getRunnersUtil()
-  }, [])
-
-  console.log('%c=runners', 'color:red', runners)
-
-  return <Box sx={{p: '20px'}}>
+  return <Box sx={{ p: '20px' }}>
     <Box>
-    Create <span>{stg.name}</span> Bot
+      Create <span>{stg.name}</span> Bot
     </Box>
     <Formik
       initialValues={formValuesInit}

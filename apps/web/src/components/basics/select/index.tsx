@@ -18,14 +18,17 @@ interface ISelectProps<T = unknown> {
   onChange?: (event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null, value: any) => void;
   label?: string
   id?: string
+  // name?: string
 }
 
 export function Select(props: ISelectProps) {
-  const { options, onChange, value, id = 'value', label = 'label' } = props
+  const { options, onChange, value,id = 'value', label = 'label' } = props
 
   return (
     <SelectOrgin
+      {...props}
       value={value}
+      // name={name}
       onChange={onChange && onChange}
     >
       {options.map((c) => (
