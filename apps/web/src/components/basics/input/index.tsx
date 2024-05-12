@@ -7,12 +7,25 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   width?: number
 }
 
+/*
 export function Input(props: Props) {
 
   return (
     <BaseInput slots={{ input: InputElement }} slotProps={{ input: { width: props.width } }} {...props} />
   );
 }
+*/
+
+export const Input = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+  return (
+    <BaseInput
+      slots={{ input: InputElement }}
+      slotProps={{ input: { width: props.width } }}
+      {...props}
+      ref={ref} // Forwarding ref to the underlying input element
+    />
+  );
+});
 
 const InputElement = styled('input')(
   ({ theme, width }) => `width: ${width || 300}px;

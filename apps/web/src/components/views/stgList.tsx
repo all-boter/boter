@@ -20,7 +20,8 @@ export const StgList = () => {
     name: "",
     id: '',
     uid: '',
-    isPublic: false
+    isPublic: false,
+    paramsSchema: []
   })
   const [drawerOpen, setDrawer] = useState(false);
 

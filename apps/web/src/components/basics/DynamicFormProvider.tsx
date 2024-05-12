@@ -3,14 +3,13 @@ import { SelectF } from "../form/selectF"
 
 export interface FormItem {
   id: string
-  type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Switch' | 'Checkbox' |  'Upload' |'textArea'
+  type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Switch' | 'Checkbox' | 'Upload' | 'textArea'
   label?: string
   control: Control
   dataSourceFn?: () => Promise<any>;
 }
 
 export interface FormSchema extends FormItem {
-
 }
 
 export enum FormItemType {
@@ -36,13 +35,13 @@ interface Control {
 }
 
 export class DynamicFormProvider {
-  static of(formItem: FormItem) {
+  static of(formItem: FormItem, values: any, setFormValuesState: (val: any) => void) {
     switch (formItem.type) {
       case FormItemType.Input:
-        return <InputF {...formItem} />
+        return <InputF {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       case FormItemType.Select:
-        return <SelectF {...formItem} />
+        return <SelectF {...formItem}  values={values} setFormValuesState={setFormValuesState} />
 
       default:
         console.log('unknow component', formItem.type)

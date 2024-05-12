@@ -36,7 +36,7 @@ const initialState: InitialState = {
     exp: 0
   },
   githubRepository: null,
-  stgList: []
+  stgList: [],
 }
 
 const loadStatePersiste = () => {

@@ -12,12 +12,10 @@ export const Select2 = (props: Props) => {
   const { options, onChange, value, id = 'value', label = 'label' } = props
 
   return <select
-    {...props}
     value={value}
     onChange={onChange && onChange}
-    // onBlur={handleBlur}
-    style={{ display: "block" }}
   >
+    <option style={{ display: 'none' }}></option>
     {options.map((c) => (
       <option key={c[id]} value={c[id]}>
         {c[label]}

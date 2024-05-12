@@ -2,8 +2,8 @@ import { styled, css } from '@mui/system';
 import { muiGrey } from '@/components/basics/muiColor';
 import { Modal } from '@/components/basics/modal';
 import { DynamicFormProvider, FormItem, FormSchema } from '@/components/basics/DynamicFormProvider';
-import { Form, Formik } from 'formik';
-import { useCallback } from 'react';
+import { useForm } from "react-hook-form"
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/basics/button';
 import { createStg } from '@/services/stgApi';
 import { SUCCESS } from '@/common/constants';
@@ -34,19 +34,24 @@ const formValuesInit = {
 const StyledButton = styled(Button)(`margin-top: 10px;`)
 
 export const CreateStg = (props: IModal) => {
+  const [formValues, setFormValuesState] = useState<{ name: string }>(formValuesInit)
+
+  const { handleSubmit } = useForm({
+    defaultValues: formValuesInit
+  });
 
   const renderFormItem = useCallback(
     (
       formItem: FormItem,
       values: { [key: string]: any },
     ) => {
-      return DynamicFormProvider.of(formItem)
+      return DynamicFormProvider.of(formItem, values, setFormValuesState)
     },
     [],
   )
 
-  const onSubmit = async (values: any) => {
-    const res = await createStg({ name: values.name })
+  const onSubmit = async () => {
+    const res = await createStg(formValues)
     if (res.code === SUCCESS) {
       props.handleClose()
     } else {
@@ -54,28 +59,26 @@ export const CreateStg = (props: IModal) => {
     }
   }
 
+  useEffect(()=>{
+    if(props.isOpen && formValues.name){
+      setFormValuesState(formValuesInit)
+    }
+  },[props.isOpen])
+
   return <Modal {...props}>
     <ModalContent sx={{ width: 400 }}>
-      <Formik
-        initialValues={formValuesInit}
-        // validationSchema={validationSchema}
-        validateOnMount
-        onSubmit={onSubmit}
-      >
-        {({ values, errors, isValid }) => (
-          <Form>
-            {formSchema.map((formItem, index) => {
-              return (
-                <div key={index}>
-                  {renderFormItem(formItem, values)}
-                </div>
-              )
-            })}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {formSchema.map((formItem, index) => {
 
-            <StyledButton type='submit'>Create a strategy</StyledButton>
-          </Form>
-        )}
-      </Formik>
+          return (
+            <div key={index}>
+              {renderFormItem(formItem, formValues)}
+            </div>
+          )
+        })}
+
+        <StyledButton type='submit'>Create a strategy</StyledButton>
+      </form>
     </ModalContent>
   </Modal>
 }

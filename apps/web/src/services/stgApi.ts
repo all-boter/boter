@@ -1,3 +1,4 @@
+import { FormSchema } from '@/components/basics/DynamicFormProvider'
 import { ResType, ResTypeNoData, fetchWithAuth } from './base'
 
 interface ApiConfig {
@@ -31,7 +32,7 @@ export interface IStrategy {
   intro?: string
   config?: string
   docs?: string
-  paramsSchema?: string
+  paramsSchema: FormSchema[]
   isPublic: boolean
   enableUI?: boolean
   enableTrade?: boolean

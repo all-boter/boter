@@ -1,17 +1,19 @@
 import { FormItem } from "../basics/DynamicFormProvider";
-import { Field, useField, useFormikContext } from 'formik'
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { SUCCESS } from "@/common/constants";
 import { Select2 } from "../basics/select/select2";
+import { useForm, Controller } from "react-hook-form"
 
-interface Props extends FormItem { }
+interface Props extends FormItem {
+  values: any
+  setFormValuesState: (val: any) => void
+}
 
 export const SelectF = (props: Props) => {
-  const formik = useFormikContext<any>()
-  const { control, id } = props
-  const [field, , helpers] = useField(id)
+  const { control, id, setFormValuesState } = props
   const [options, setOptions] = useState<any[]>([])
+  const { control: controlF } = useForm();
 
   const dataSourceFnUtil = async () => {
     if (props.dataSourceFn) {
@@ -24,9 +26,12 @@ export const SelectF = (props: Props) => {
     }
   }
 
-  const handleChange = (_e: any, val: any) => {
+  const handleChange = (_e: any) => {
     if (control.id && _e.target.value) {
-      helpers.setValue(_e.target.value)
+      setFormValuesState({
+        ...props.values,
+        [id]: _e.target.value
+      })
     }
   }
 
@@ -37,15 +42,19 @@ export const SelectF = (props: Props) => {
   return <>
     <Box sx={{ mb: '8px' }}>{props.label}</Box>
 
-    <Field
-      as={Select2}
-      options={options}
-      id={control?.id}
-      label={control?.label}
-      placeholder={control?.placeholder}
-      {...field}
-      value={formik.values[id] as string}
-      onChange={handleChange}
+    <Controller
+      name={id}
+      control={controlF}
+      render={({ field: { onChange, onBlur, value } }) => (
+        <Select2
+          options={options}
+          id={control?.id}
+          label={control?.label}
+          placeholder={control?.placeholder}
+          value={props.values[id]}
+          onChange={(e) => handleChange(e)}
+        />
+      )}
     />
   </>
 }

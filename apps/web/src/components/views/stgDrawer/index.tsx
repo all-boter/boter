@@ -1,11 +1,11 @@
-import { useCallback } from "react"
+import { useMemo, useState } from "react"
 import { DynamicFormProvider, FormItem, FormSchema } from "@/components/basics/DynamicFormProvider"
 import { Button } from "@/components/basics/button"
 import { IStrategy, getRunners } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
-import { Form, Formik } from 'formik';
+import { useForm } from "react-hook-form"
 
-const formSchema: FormSchema[] = [
+const formSchemaDefault: FormSchema[] = [
   {
     type: 'Select',
     id: 'runner',
@@ -19,22 +19,10 @@ const formSchema: FormSchema[] = [
       placeholder: 'Type name',
     },
   },
-  {
-    type: 'Input',
-    id: 'name',
-    label: 'Strategy name:',
-    control: {
-      value: '',
-      defaultValue: '',
-      placeholder: 'Type name',
-      width: 200
-    },
-  },
 ]
 
-const formValuesInit = {
-  name: '',
-  runner: '',
+interface FormValues {
+  [key: string]: string;
 }
 
 const StyledButton = styled(Button)(`margin-top: 10px;`)
@@ -44,18 +32,40 @@ interface Props {
 }
 
 export const StgDrawer = ({ stg }: Props) => {
-  const renderFormItem = useCallback(
-    (
-      formItem: FormItem,
-      values: { [key: string]: any },
-    ) => {
-      return DynamicFormProvider.of(formItem)
-    },
-    [formSchema],
-  )
+  const [formValues, setFormValuesState] = useState<FormValues>({})
+
+  const { handleSubmit } = useForm({
+    defaultValues: {
+      interval: "",
+    }
+  });
+
+  const { formSchema } = useMemo<{ formSchema: FormSchema[] }>(() => {
+    const newSchema = [...formSchemaDefault, ...stg.paramsSchema]
+
+    const formValues: FormValues = newSchema.reduce((obj: FormValues, item) => {
+      obj[item.id] = "";
+      return obj;
+    }, {});
+
+    setFormValuesState(formValues)
+
+    return { formSchema: newSchema }
+  }, [stg])
+
+  const renderFormItem = (
+    formItem: FormItem,
+    values: { [key: string]: any },
+  ) => {
+
+    return DynamicFormProvider.of(formItem, values, setFormValuesState)
+  };
 
   const onSubmit = async (values: any) => {
-    console.log('%c=onSubmit', 'color:red', values)
+    console.log('%c=onSubmit AA:', 'color:red', {
+      values,
+      formValues
+    })
     // const res = await createStg({ name: values.name })
     // if (res.code === SUCCESS) {
     //   props.handleClose()
@@ -68,25 +78,17 @@ export const StgDrawer = ({ stg }: Props) => {
     <Box>
       Create <span>{stg.name}</span> Bot
     </Box>
-    <Formik
-      initialValues={formValuesInit}
-      // validationSchema={validationSchema}
-      validateOnMount
-      onSubmit={onSubmit}
-    >
-      {({ values, errors, isValid }) => (
-        <Form>
-          {formSchema.map((formItem, index) => {
-            return (
-              <div key={index}>
-                {renderFormItem(formItem, values)}
-              </div>
-            )
-          })}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {formSchema.map((formItem, index) => {
 
-          <StyledButton type='submit'>Create a strategy</StyledButton>
-        </Form>
-      )}
-    </Formik>
+        return (
+          <div key={index}>
+            {renderFormItem(formItem, formValues)}
+          </div>
+        )
+      })}
+
+      <StyledButton type='submit'>Create a strategy</StyledButton>
+    </form>
   </Box>
 }
