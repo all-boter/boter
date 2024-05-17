@@ -1,14 +1,15 @@
 import { useMemo, useState } from "react"
 import { DynamicFormProvider, FormItem, FormSchema } from "@/components/basics/DynamicFormProvider"
 import { Button } from "@/components/basics/button"
-import { IStrategy, getRunners } from "@/services/stgApi"
+import { IStrategy, createBot, getRunners } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { useForm } from "react-hook-form"
+import { SUCCESS } from "@/common/constants"
 
 const formSchemaDefault: FormSchema[] = [
   {
     type: 'Select',
-    id: 'runner',
+    id: 'runnerId',
     label: 'Runner:',
     dataSourceFn: getRunners,
     control: {
@@ -61,17 +62,18 @@ export const StgDrawer = ({ stg }: Props) => {
     return DynamicFormProvider.of(formItem, values, setFormValuesState)
   };
 
-  const onSubmit = async (values: any) => {
-    console.log('%c=onSubmit AA:', 'color:red', {
-      values,
-      formValues
+  const onSubmit = async () => {
+    const res = await createBot({
+      strategyId: stg.id,
+      name: stg.name,
+      params: formValues
     })
-    // const res = await createStg({ name: values.name })
-    // if (res.code === SUCCESS) {
-    //   props.handleClose()
-    // } else {
-    //   console.error(res.msg)
-    // }
+
+    if (res.code === SUCCESS) {
+
+    } else {
+      console.error(res.msg)
+    }
   }
 
   return <Box sx={{ p: '20px' }}>

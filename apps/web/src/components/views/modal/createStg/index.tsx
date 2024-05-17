@@ -51,6 +51,11 @@ export const CreateStg = (props: IModal) => {
   )
 
   const onSubmit = async () => {
+    if(!formValues.name){
+      alert('name required')
+      return
+    }
+
     const res = await createStg(formValues)
     if (res.code === SUCCESS) {
       props.handleClose()

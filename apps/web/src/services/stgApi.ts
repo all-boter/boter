@@ -7,6 +7,7 @@ interface ApiConfig {
   deleteStg: string
   createRunner: string
   runners: string
+  createBot: string
 }
 
 const apiConfig: ApiConfig = {
@@ -15,6 +16,7 @@ const apiConfig: ApiConfig = {
   deleteStg: '/api/stg/delete',
   createRunner: '/api/runner/create',
   runners: '/api/runners',
+  createBot: '/api/bot/create',
 }
 
 export async function createStg(params: { name: string }): Promise<ResTypeNoData> {
@@ -57,7 +59,6 @@ export async function deleteStg(id: string): Promise<ResTypeNoData> {
   return await fetchWithAuth<any>(url, { data: { id } }, 'POST');
 }
 
-
 interface IRegisterRunner {
   name: string;
   token: string;
@@ -88,4 +89,17 @@ export async function getRunners(): Promise<ResType<IRunner[]>> {
   const url = `${apiConfig.runners}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+interface ICreateBot {
+  strategyId: string;
+  name: string;
+  params: any;
+  apiId?: number;
+}
+
+export async function createBot(params: ICreateBot): Promise<ResTypeNoData> {
+  const url = `${apiConfig.createBot}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
