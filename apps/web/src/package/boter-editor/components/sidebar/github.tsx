@@ -43,7 +43,6 @@ export const Github = () => {
   const onOnPull = async () => {
     if (githubToken && repository) {
       const githubServer = await GithubService.init(githubToken, repository)
-      // const res = await githubServer.getPagesTree()
       const res = await githubServer.getPagesTree()
       if (res.code === SUCCESS) {
         store.dispatch(appActions.addGithubRepository(res.data))

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Editor from "../editor/editor";
-import { CodeFile, Directory, buildFileTree, findFileByName } from "../utils";
+import { CodeFile, Directory, buildFileTree, findFileByName, isEmptyObject } from "../utils";
 import { Sidebar } from "../components/sidebar";
 import { FileTree } from "../components/file-tree";
 import { IDirectory, IModule, boterCodeDb } from "../boter-db";
@@ -183,6 +183,11 @@ export const BoterEditor = () => {
     })
   }, [rootDir])
 
+  console.log('%c=boter-editer','color:green',{
+    codes,
+    bundlerUrl
+  })
+
   return <>
     <Sidebar>
       <Github />
@@ -194,6 +199,6 @@ export const BoterEditor = () => {
     </Sidebar>
 
     <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
-    {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}
+    {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />}
   </>
 }

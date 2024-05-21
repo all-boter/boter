@@ -161,7 +161,8 @@ export class GithubService {
 
   async getPagesTree(): Promise<{ data: GithubRepository, code: number }> {
     try {
-      /*
+      // /*
+      // TODO: PROD
       const pagesTree = await this.app.request(
         'GET /repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1',
         {
@@ -173,11 +174,12 @@ export class GithubService {
       )
 
       const tree: GitHubTree[] = pagesTree.data.tree
-      */
+      // TODO: PROD end
+      // */
 
       // TODO: MOCK test
       // const tree = mockTreeContainCode as GitHubTree[]
-      const tree = mockTreeContainCode_penx as GitHubTree[]
+      // const tree = mockTreeContainCode_penx as GitHubTree[]
       // end
 
       const regex = /\//;
@@ -226,13 +228,14 @@ export class GithubService {
         }
 
         if (treeItem.type === 'blob') {
-          // PROD
-          // const gitHubFile = await this.getFileBlob(treeItem.sha, treeItem.mode)
+          // TODO: PROD
+          const gitHubFile = await this.getFileBlob(treeItem.sha, treeItem.mode)
 
           modules.push({
-            // code: gitHubFile ? atob(gitHubFile?.content) : '',
+            // TODO: PROD
+            code: gitHubFile ? atob(gitHubFile?.content) : '',
             // TODO: mock test
-            code: treeItem.content || '',
+            // code: treeItem.content || '',
             // end
             id: treeItem.sha,
             is_binary: false,
