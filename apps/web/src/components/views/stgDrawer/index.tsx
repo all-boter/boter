@@ -63,6 +63,15 @@ export const StgDrawer = ({ stg }: Props) => {
   };
 
   const onSubmit = async () => {
+    console.log('%c=onSubmit:','color:red',
+      {
+        strategyId: stg.id,
+        name: stg.name,
+        params: formValues
+      }
+    )
+
+    // return
     const res = await createBot({
       strategyId: stg.id,
       name: stg.name,

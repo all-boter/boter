@@ -6,6 +6,7 @@ import { Dashbord } from "@/pages/dashbord/strategies";
 import { Bots } from "@/pages/dashbord/bots";
 import { Detail } from "@/pages/dashbord/strategies/detail";
 import PageNotFound from "@/pages/pageNotFound";
+import Test from "@/pages/test";
 
 export default function AppRouter() {
   return (
@@ -16,6 +17,7 @@ export default function AppRouter() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/editor" element={<Editor />} />
+          <Route path="/test" element={<Test />} />
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />
             <Route path="/dashbord/strategies" element={<Dashbord />} />
