@@ -8,6 +8,7 @@ interface ApiConfig {
   createRunner: string
   runners: string
   createBot: string
+  testAnyGet: string
 }
 
 const apiConfig: ApiConfig = {
@@ -17,6 +18,7 @@ const apiConfig: ApiConfig = {
   createRunner: '/api/runner/create',
   runners: '/api/runners',
   createBot: '/api/bot/create',
+  testAnyGet: '/api/test/any/get',
 }
 
 export async function createStg(params: { name: string }): Promise<ResTypeNoData> {
@@ -67,16 +69,16 @@ interface IRegisterRunner {
 }
 
 export interface IRunner {
-    id: string;
-    uid: string;
-    name: string;
-    runnerType: string;
-    machineHash: string;
-    machineIp: string;
-    heartbeatAt: Date;
-    deletedAt: Date;
-    createdAt: Date;
-    updatedAt: Date;
+  id: string;
+  uid: string;
+  name: string;
+  runnerType: string;
+  machineHash: string;
+  machineIp: string;
+  heartbeatAt: Date;
+  deletedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export async function createRunner(params: IRegisterRunner): Promise<ResTypeNoData> {
@@ -102,4 +104,10 @@ export async function createBot(params: ICreateBot): Promise<ResTypeNoData> {
   const url = `${apiConfig.createBot}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
+}
+
+export async function testAnyGet(params: any): Promise<ResType<any>> {
+  const url = `${apiConfig.testAnyGet}?symbol=${params}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'GET');
 }
