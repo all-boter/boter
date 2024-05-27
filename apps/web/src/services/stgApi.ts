@@ -144,8 +144,14 @@ export async function testAnyGet(params: any): Promise<ResType<any>> {
   return await fetchWithAuth<any>(url, { data: params }, 'GET');
 }
 
-export async function stopBot(botId: string): Promise<ResType<IRunner[]>> {
-  const url = `${apiConfig.stopBot}?botId=${botId}`
+
+export enum StopBotEnum {
+  forceStop = 1,
+  normalStop = 2
+}
+
+export async function stopBot(botId: string, stopType: StopBotEnum): Promise<ResType<IRunner[]>> {
+  const url = `${apiConfig.stopBot}?botId=${botId}&stopType=${stopType}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }

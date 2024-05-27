@@ -23,7 +23,7 @@ export const Bots = () => {
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <BotList bots={bots} />
+      <BotList bots={bots} refreshList={getBotsUtil} />
     </Box>
   </Box>
 }

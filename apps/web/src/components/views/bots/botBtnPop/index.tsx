@@ -2,7 +2,7 @@ import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
 import { lightBlue, mainColor } from '@/components/basics/muiColor';
-import { Bot, stopBot } from '@/services/stgApi';
+import { Bot, StopBotEnum, stopBot } from '@/services/stgApi';
 import { BotStatus, SUCCESS } from '@/common/constants';
 
 const StyledContent = styled(Content)(`
@@ -17,20 +17,20 @@ const StyledContent = styled(Content)(`
 `)
 
 interface IBotBtnPop {
-  bot: Bot 
+  bot: Bot
+  callBack: (type: StopBotEnum, botId: string) => void
 }
 
-export const BotBtnPop = ({bot}: IBotBtnPop) => {
+export const BotBtnPop = ({ bot, callBack }: IBotBtnPop) => {
   const onOperat = async () => {
-    if(bot.status === BotStatus.Running){
-      const res = await stopBot(bot.id)
-      console.log('on stop res',res)
+    if (bot.status === BotStatus.Running) {
+      const res = await stopBot(bot.id, StopBotEnum.normalStop)
       if (res.code === SUCCESS) {
-
+        callBack(StopBotEnum.normalStop, bot.id)
       } else {
-        alert(res.msg)
+        callBack(StopBotEnum.forceStop, bot.id)
       }
-    }else if(bot.status === BotStatus.Stopped){
+    } else if (bot.status === BotStatus.Stopped) {
       console.log('on start',)
     }
   }
@@ -40,7 +40,7 @@ export const BotBtnPop = ({bot}: IBotBtnPop) => {
   return <Root>
     <Trigger asChild>
       <TriggerBtn color={mainColor[103]} bg={mainColor[106]} size={'small'}>
-        { text }
+        {text}
       </TriggerBtn>
     </Trigger>
     <Portal>
@@ -50,7 +50,7 @@ export const BotBtnPop = ({bot}: IBotBtnPop) => {
           fontSize: '14px',
           color: '#FFF'
         }}>
-          Are you sure to &nbsp; { text } &nbsp;this strategy?
+          Are you sure to &nbsp; {text} &nbsp;this strategy?
         </Box>
         <Box sx={{
           display: 'flex',

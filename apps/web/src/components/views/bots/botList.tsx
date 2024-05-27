@@ -1,19 +1,38 @@
-import { Bot } from "@/services/stgApi"
+import { Bot, StopBotEnum } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { BotBtnPop } from "./botBtnPop"
 import { Button } from "@/components/basics/button"
-import { mainColor, muiGreen } from "@/components/basics/muiColor"
+import { muiGreen } from "@/components/basics/muiColor"
+import { ConfirmStop } from "../modal/confirmStop"
+import { useState } from "react"
 
 interface IBotList {
   bots: Bot[]
+  refreshList: () => void
 }
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
-export const BotList = ({ bots }: IBotList) => {
+export const BotList = ({ bots, refreshList }: IBotList) => {
+  const [confirmStopOpen, setConfirmStopOpen] = useState(false);
+  const [selectBotId, setSelectBotId] = useState<string>('');
 
   const onEditerCode = (bot: Bot) => {
     console.log('onEditerCode', bot)
+  }
+
+  const btnPopCallback = (type: StopBotEnum, botId: string) => {
+    if (type === StopBotEnum.forceStop) {
+      botId && setConfirmStopOpen(true)
+      setSelectBotId(botId)
+    } else {
+      refreshList()
+    }
+  }
+
+  const handleClose = () => {
+    setConfirmStopOpen(false)
+    refreshList()
   }
 
   return <Box sx={{
@@ -52,11 +71,13 @@ export const BotList = ({ bots }: IBotList) => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: '#f3f4f6' }}>interval: {item.params.interval}</Box>
             <Box>
-              <BotBtnPop bot={item} />
+              <BotBtnPop bot={item} callBack={btnPopCallback} />
             </Box>
           </Box>
         </Box>
       ))
     }
+
+    <ConfirmStop botId={selectBotId} isOpen={confirmStopOpen} handleClose={() => handleClose()} />
   </Box>
 }
