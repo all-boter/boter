@@ -30,3 +30,16 @@ const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID
 const githubRedirectUri = `${baseUrl}/api/github-oauth`
 export const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubRedirectUri}`
 export const githubAppName = process.env.REACT_APP_GITHUB_APP_NAME
+
+export enum BotStatus {
+  /**
+   * During startup, it will change to running if the startup is successful.
+   */
+  Booting = 'Booting',
+
+  Running = 'Running',
+
+  Stopped = 'Stopped',
+
+  Error = 'Error',
+}

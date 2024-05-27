@@ -1,5 +1,6 @@
 import { FormSchema } from '@/components/basics/DynamicFormProvider'
 import { ResType, ResTypeNoData, fetchWithAuth } from './base'
+import { BotStatus } from '@/common/constants'
 
 interface ApiConfig {
   createStg: string
@@ -8,6 +9,8 @@ interface ApiConfig {
   createRunner: string
   runners: string
   createBot: string
+  getOwnedBots: string
+  stopBot: string
   testAnyGet: string
 }
 
@@ -18,6 +21,8 @@ const apiConfig: ApiConfig = {
   createRunner: '/api/runner/create',
   runners: '/api/runners',
   createBot: '/api/bot/create',
+  getOwnedBots: '/api/bot/owned',
+  stopBot: '/api/bot/stop',
   testAnyGet: '/api/test/any/get',
 }
 
@@ -26,7 +31,6 @@ export async function createStg(params: { name: string }): Promise<ResTypeNoData
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
-
 
 export interface IStrategy {
   id: string
@@ -51,6 +55,34 @@ export interface IStrategy {
 
 export async function strateies(): Promise<ResType<any>> {
   const url = `${apiConfig.strateies}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+export interface Bot {
+  id: string;
+  uid: string;
+  strategyId: string;
+  apiId: string;
+  name: string;
+  apiKey: string;
+  status: BotStatus;
+  isPublic: boolean;
+  duration: number;
+  params: { [key: string]: any }
+  backtestParams: { [key: string]: any }
+  backtestBotParams: { [key: string]: any }
+  storage: { [key: string]: any }
+  backtestStatus: string
+  stopPassword: string
+  endTime: Date
+  deletedAt: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+export async function getOwnedBots(status: BotStatus): Promise<ResType<Bot[]>> {
+  const url = `${apiConfig.getOwnedBots}?status=${status}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
@@ -110,4 +142,10 @@ export async function testAnyGet(params: any): Promise<ResType<any>> {
   const url = `${apiConfig.testAnyGet}?symbol=${params}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'GET');
+}
+
+export async function stopBot(botId: string): Promise<ResType<IRunner[]>> {
+  const url = `${apiConfig.stopBot}?botId=${botId}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
