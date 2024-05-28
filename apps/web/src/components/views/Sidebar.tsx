@@ -13,24 +13,25 @@ export const Sidebar = () => {
 
     <NavLink
       className="navLink"
-      to="/dashbord/bots"
+      to="/dashbord/strategies"
+      // to="/strategies"
     >
       {({ isActive }) => (
         <>
-          <BotIcon fill={isActive ? mainColor[100] : '#FFF'} />
-          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
+          <StgIcon fill={isActive ? mainColor[100] : '#FFF'} />
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Strategies</Box>
         </>
       )}
     </NavLink>
 
     <NavLink
       className="navLink"
-      to="/dashbord/strategies"
+      to="/dashbord/bots"
     >
       {({ isActive }) => (
         <>
-          <StgIcon fill={isActive ? mainColor[100] : '#FFF'} />
-          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Strategies</Box>
+          <BotIcon fill={isActive ? mainColor[100] : '#FFF'} />
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
         </>
       )}
     </NavLink>

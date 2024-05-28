@@ -12,7 +12,7 @@ export function getCurrentDomain(): string {
 
 const currentDomain = getCurrentDomain()
 
-export const webRedirect = `${currentDomain}/dashbord`
+export const webRedirect = `${currentDomain}/dashbord/strategies`
 
 export const bundlerUrl = process.env.REACT_APP_BUNDLER_URL
 
