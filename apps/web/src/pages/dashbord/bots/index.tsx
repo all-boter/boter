@@ -4,47 +4,55 @@ import { useEffect, useState } from "react";
 import { Bot, getOwnedBots } from "@/services/stgApi";
 import { BotStatus, SUCCESS } from "@/common/constants";
 import { BotList } from "@/components/views/bots/botList";
-import { RadixSelect } from "@/components/form/radixSelect";
+import { BoterSelect } from "@/components/basics/select";
 
 const options: {
-  id: BotStatus,
+  value: BotStatus,
   label: BotStatus
-}[]  = [
-  {
-    id: BotStatus.Running,
-    label: BotStatus.Running
-  },
-  {
-    id: BotStatus.Stopped,
-    label: BotStatus.Stopped
-  },
-]
+}[] = [
+    {
+      value: BotStatus.Running,
+      label: BotStatus.Running
+    },
+    {
+      value: BotStatus.Stopped,
+      label: BotStatus.Stopped
+    },
+  ]
 
 export const Bots = () => {
   const [bots, setBots] = useState<Bot[]>([])
+  const [botStatusFilter, setBotStatusFilter] = useState<BotStatus>(BotStatus.Running);
 
-  const getBotsUtil = async () => {
-    const res = await getOwnedBots(BotStatus.Running)
+  const getBotsUtil = async (botStatus: BotStatus) => {
+    const res = await getOwnedBots(botStatus)
     if (res.code === SUCCESS) {
       setBots(res.data)
     }
   }
 
+  const onChangeBotFilter = (val: BotStatus) => {
+    setBotStatusFilter(val)
+    getBotsUtil(val)
+  }
+
   useEffect(() => {
-    getBotsUtil()
+    getBotsUtil(BotStatus.Running)
   }, [])
 
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', background: '#1e293b' }}>
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      {/* <Select2 
-          options={options} 
-          id={'id'}
-          label={'label'}
-       /> */}
+      <Box sx={{ mb: '10px' }}>
+        <BoterSelect 
+          options={options}
+          value={botStatusFilter}
+          width={140}
+          onChange={onChangeBotFilter}
+         />
+      </Box>
 
-      <RadixSelect />
       <BotList bots={bots} refreshList={getBotsUtil} />
     </Box>
   </Box>

@@ -2,8 +2,8 @@ import { FormItem } from "../basics/DynamicFormProvider";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { SUCCESS } from "@/common/constants";
-import { Select2 } from "../basics/select/select2";
 import { useForm, Controller } from "react-hook-form"
+import { BoterSelect } from "../basics/select";
 
 interface Props extends FormItem {
   values: any
@@ -26,11 +26,12 @@ export const SelectF = (props: Props) => {
     }
   }
 
-  const handleChange = (_e: any) => {
-    if (control.id && _e.target.value) {
+  const handleChange = (value: any) => {
+    console.log('%c=_e', 'color:red', value)
+    if (control.id) {
       setFormValuesState({
         ...props.values,
-        [id]: _e.target.value
+        [id]: value
       })
     }
   }
@@ -46,12 +47,12 @@ export const SelectF = (props: Props) => {
       name={id}
       control={controlF}
       render={({ field: { onChange, onBlur, value } }) => (
-        <Select2
+        <BoterSelect
           options={options}
-          id={control?.id}
-          label={control?.label}
-          placeholder={control?.placeholder}
           value={props.values[id]}
+          width={240}
+          id='id'
+          label='name'
           onChange={(e) => handleChange(e)}
         />
       )}

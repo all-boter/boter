@@ -5,10 +5,11 @@ import { Button } from "@/components/basics/button"
 import { muiGreen } from "@/components/basics/muiColor"
 import { ConfirmStop } from "../modal/confirmStop"
 import { useState } from "react"
+import { BotStatus } from "@/common/constants"
 
 interface IBotList {
   bots: Bot[]
-  refreshList: () => void
+  refreshList: (botStatus: BotStatus) => void
 }
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
@@ -26,13 +27,13 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
       botId && setConfirmStopOpen(true)
       setSelectBotId(botId)
     } else {
-      refreshList()
+      refreshList(BotStatus.Running)
     }
   }
 
   const handleClose = () => {
     setConfirmStopOpen(false)
-    refreshList()
+    refreshList(BotStatus.Running)
   }
 
   return <Box sx={{
@@ -70,9 +71,9 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: '#f3f4f6' }}>interval: {item.params.interval}</Box>
-            <Box>
+            {item.status === BotStatus.Running && <Box>
               <BotBtnPop bot={item} callBack={btnPopCallback} />
-            </Box>
+            </Box>}
           </Box>
         </Box>
       ))

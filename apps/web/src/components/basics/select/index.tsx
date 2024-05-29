@@ -1,175 +1,119 @@
-import { forwardRef } from 'react';
-import {
-  Select as BaseSelect,
-  SelectProps,
-  selectClasses,
-  SelectRootSlotProps,
-} from '@mui/base/Select';
-import { Option as BaseOption, optionClasses } from '@mui/base/Option';
-import { styled } from '@mui/system';
-import { ChevronsDownUp } from 'lucide-react';
-import { muiBlue, muiGrey } from '../muiColor';
+import { Trigger, Root, ItemText, Content, Item, Icon } from '@radix-ui/react-select';
+import { Box, css, styled } from '@mui/system';
+import arrowIcon from "@assets/arrow.svg"
+import { useMemo } from 'react';
 
-interface ISelectProps<T = unknown> {
-  value?: T | any;
-  defaultValue?: T | any;
-  placeholder?: React.ReactNode;
+interface ICss {
+  width: number
+  theme?: any
+}
+
+const selectTheme = {
+  whiteBg: 'rgb(255, 255, 255)',
+  whiteColor: 'rgb(9, 9, 11)',
+  whiteHover:'hsl(240 4.8% 95.9%)',
+
+  blackColor:'#fff',
+  blackBg:'#2a2a2a',
+  blackHover:'#35363a'
+}
+
+const RadixItem = styled(Item)(
+  ({ theme }) => css`
+    cursor: pointer;
+    padding: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: background ease 300ms;
+    border-radius: 2px;
+    &:focus {
+      background: ${selectTheme.whiteHover};
+    }
+  `
+);
+
+const Dropdown = styled('div')(
+  ({ theme, width }: ICss) => css`
+    position: relative;
+    box-sizing: border-box;
+    width: ${width ? width + 'px' : '180px'};
+    font-family: sans-serif;
+    font-size: 16px;
+    border: 1px solid #1b1b1b;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    pointer-events: all;
+    background: ${selectTheme.whiteBg};
+    color: ${selectTheme.whiteColor};
+  `
+);
+
+const RadixSelTrigger = styled('div')(
+  ({ theme, width }: ICss) => css`
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    width: ${width ? width + 'px' : '100%'};
+    box-sizing: border-box;
+    padding: 18px;
+    height: 32px;
+    font-size: 14px;
+    font-family: sans-serif;
+    border: 1px solid #979595;
+    border-radius: 2px;
+    outline: none;
+    background: ${selectTheme.whiteBg};
+    color: ${selectTheme.whiteColor};
+  `
+);
+
+interface IBoterSelect {
   options: any[]
-  onChange?: (event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null, value: any) => void;
+  value?: any;
+  onChange?: (event: any) => void
   label?: string
   id?: string
-  // name?: string
+  width?: number
 }
 
-export function Select(props: ISelectProps) {
-  const { options, onChange, value,id = 'value', label = 'label' } = props
+export const BoterSelect = (props: IBoterSelect) => {
+  const { options, id = 'value', label = 'label', value, onChange } = props
 
-  return (
-    <SelectOrgin
-      {...props}
-      value={value}
-      // name={name}
-      onChange={onChange && onChange}
-    >
-      {options.map((c) => (
-        <Option key={c[id]} value={c}>
-          {c[label]}
-        </Option>
-      ))}
-    </SelectOrgin>
-  );
+  const labelView = useMemo<string>(() => {
+    if(!value) return ''
+
+    return options.find((item)=>{
+      return item[id] === value
+    })?.[label] || ''
+  }, [value])
+
+  return <Root
+    value={value}
+    dir="ltr"
+    onValueChange={onChange && onChange}
+  >
+    <Trigger asChild>
+      <RadixSelTrigger width={props.width || 0}>
+        <Box component={'span'}>{labelView}</Box>
+        <Icon asChild>
+          <Box component={'img'} src={arrowIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
+        </Icon>
+      </RadixSelTrigger>
+    </Trigger>
+
+    <Content position="popper">
+      <Dropdown width={props.width || 0}>
+        {options.map((item, i) => {
+          return (
+            <RadixItem key={item[id] || i} value={item[id]}>
+              <ItemText> {item[label]} </ItemText>
+            </RadixItem>
+          );
+        })}
+      </Dropdown>
+    </Content>
+  </Root>
 }
-
-function SelectOrgin<TValue extends {}, Multiple extends boolean = false>(
-  props: SelectProps<TValue, Multiple>,
-) {
-  const slots: SelectProps<TValue, Multiple>['slots'] = {
-    root: Button,
-    listbox: Listbox,
-    popup: Popup,
-    ...props.slots,
-  };
-
-  return <BaseSelect {...props} slots={slots} />;
-}
-
-const Button = forwardRef(function Button<
-  TValue extends {},
-  Multiple extends boolean,
->(
-  props: SelectRootSlotProps<TValue, Multiple>,
-  ref: React.ForwardedRef<HTMLButtonElement>,
-) {
-  const { ownerState, ...other } = props;
-  return (
-    <StyledButton type="button" {...other} ref={ref}>
-      {other.children}
-      <ChevronsDownUp size={20} />
-    </StyledButton>
-  );
-});
-
-const StyledButton = styled('button', { shouldForwardProp: () => true })(
-  ({ theme }) => `
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-  min-width: 200px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  text-align: left;
-  line-height: 1.5;
-  background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
-  color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
-  position: relative;
-  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? muiGrey[900] : muiGrey[50]};
-
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 120ms;
-
-  &:hover {
-    background: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[50]};
-    border-color: ${theme.palette.mode === 'dark' ? muiGrey[600] : muiGrey[300]};
-  }
-
-  &.${selectClasses.focusVisible} {
-    outline: 0;
-    border-color: ${muiBlue[400]};
-    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? muiBlue[600] : muiBlue[200]};
-  }
-
-  & > svg {
-    font-size: 1rem;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    right: 10px;
-  }
-  `,
-);
-
-const Listbox = styled('ul')(
-  ({ theme }) => `
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-  padding: 6px;
-  margin: 12px 0;
-  min-width: 220px;
-  border-radius: 12px;
-  overflow: auto;
-  outline: 0px;
-  background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
-  color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
-  box-shadow: 0px 2px 6px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
-    };
-  `,
-);
-
-const Option = styled(BaseOption)(
-  ({ theme }) => `
-  list-style: none;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: default;
-
-  &:last-of-type {
-    border-bottom: none;
-  }
-
-  &.${optionClasses.selected} {
-    background-color: ${theme.palette.mode === 'dark' ? muiBlue[900] : muiBlue[100]};
-    color: ${theme.palette.mode === 'dark' ? muiBlue[100] : muiBlue[900]};
-  }
-
-  &.${optionClasses.highlighted} {
-    background-color: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[100]};
-    color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
-  }
-
-  &:focus-visible {
-    outline: 3px solid ${theme.palette.mode === 'dark' ? muiBlue[600] : muiBlue[200]};
-  }
-
-  &.${optionClasses.highlighted}.${optionClasses.selected} {
-    background-color: ${theme.palette.mode === 'dark' ? muiBlue[900] : muiBlue[100]};
-    color: ${theme.palette.mode === 'dark' ? muiBlue[100] : muiBlue[900]};
-  }
-
-  &.${optionClasses.disabled} {
-    color: ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[400]};
-  }
-
-  &:hover:not(.${optionClasses.disabled}) {
-    background-color: ${theme.palette.mode === 'dark' ? muiGrey[800] : muiGrey[100]};
-    color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
-  }
-  `,
-);
-
-const Popup = styled('div')`
-  z-index: 1;
-`;

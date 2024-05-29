@@ -8,7 +8,7 @@ import { EditorSetting } from '../../../../components/views/modal/editorSetting'
 import { penx_mock } from '../../../../common/mock/mockTree';
 import { mockRespos1 } from '../../../../common/mock/mock-respos';
 import { appActions } from '../../../../store/appSlice';
-import { Select } from '@/components/basics/select';
+import { BoterSelect } from '@/components/basics/select';
 
 export const Github = () => {
   const user = useAppSelector(userState)
@@ -88,8 +88,12 @@ export const Github = () => {
     })
   }, [user.id])
 
-  const onChangeSelect = (_e: any, val: Repository) => {
-    selectRepository(val)
+  const onChangeSelect = (val: number) => {
+    const rep = repos.find(item=> item.id === val)
+    console.log('onChangeSelect',{val,rep})
+    if(rep){
+      selectRepository(rep)
+    }
   }
 
   const onCompileForEditor = () => {
@@ -105,7 +109,16 @@ export const Github = () => {
 
     <Settings size={20} onClick={() => onSetting()} style={{ cursor: 'pointer' }} />
 
-    <Select onChange={onChangeSelect} options={repos} value={repository} label='name' id='id' />
+    {/* <Select onChange={onChangeSelect} options={repos} value={repository} label='name' id='id' /> */}
+
+    <BoterSelect
+      options={repos}
+      value={repository?.id}
+      width={200}
+      id='id'
+      label='name'
+      onChange={onChangeSelect}
+    />
 
     <EditorSetting uid={user.id} isOpen={settingOpen} handleClose={() => setSettingOpen(false)} />
   </div>
