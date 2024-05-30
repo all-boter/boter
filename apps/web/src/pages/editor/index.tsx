@@ -1,10 +1,28 @@
 import { BoterEditor } from "@/package/boter-editor/editor"
+import { useParams } from "react-router-dom";
+import PageNotFound from "../pageNotFound";
 
 interface IEditor { }
 
-export const Editor = (props: IEditor) => {
+export enum EditorSource {
+  server = 'server',
+  github = 'github'
+}
 
-  return <div style={{ display: 'flex', height: '100vh', background: 'grey' }}>
-    <BoterEditor />
-  </div>
+export const Editor = (props: IEditor) => {
+  const routerParams = useParams<{
+    source: string,
+    codeId: string
+  }>();
+
+  if (
+    routerParams?.source === EditorSource.server ||
+    routerParams?.source === EditorSource.github
+  ) {
+    return <div style={{ display: 'flex', height: '100vh', background: 'grey' }}>
+      <BoterEditor editerType={routerParams?.source} codeId={routerParams.codeId} />
+    </div>
+  } else {
+    return <PageNotFound />;
+  }
 }

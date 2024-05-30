@@ -38,7 +38,7 @@ export function HomeBtns() {
   const navigate = useNavigate();
 
   const onLaunch = () => {
-    navigate('/dashbord');
+    navigate('/dashbord/strategies');
   }
 
   return <>

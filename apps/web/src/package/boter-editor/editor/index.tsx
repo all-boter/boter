@@ -15,6 +15,7 @@ import { githubReposState, useAppSelector } from "../../../store";
 import "../components/file-tree/style.css";
 import "../components/sidebar/style.css";
 import { GithubRepository } from "../../../services/githubService";
+import { EditorSource } from "@/pages/editor";
 
 const dummyDir: Directory = {
   id: "1",
@@ -87,7 +88,12 @@ const buildModuleUtil = async (modules: IModule[]) => {
   }
 }
 
-export const BoterEditor = () => {
+interface IBoterEditor {
+  editerType: EditorSource,
+  codeId?: string
+}
+
+export const BoterEditor = ({editerType,codeId}:IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
 
@@ -184,8 +190,10 @@ export const BoterEditor = () => {
   }, [rootDir])
 
   console.log('%c=boter-editer','color:green',{
+    editerType,
+    codeId,
     codes,
-    bundlerUrl
+    bundlerUrl,
   })
 
   return <>

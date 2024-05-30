@@ -6,6 +6,7 @@ import { muiGreen } from "@/components/basics/muiColor"
 import { ConfirmStop } from "../modal/confirmStop"
 import { useState } from "react"
 import { BotStatus } from "@/common/constants"
+import { useNavigate } from "react-router-dom"
 
 interface IBotList {
   bots: Bot[]
@@ -17,9 +18,11 @@ const StyledButton = styled(Button)(`margin-left: 6px;`)
 export const BotList = ({ bots, refreshList }: IBotList) => {
   const [confirmStopOpen, setConfirmStopOpen] = useState(false);
   const [selectBotId, setSelectBotId] = useState<string>('');
+  const navigate = useNavigate();
 
   const onEditerCode = (bot: Bot) => {
     console.log('onEditerCode', bot)
+    navigate(`/editor/server/${bot.id}`);
   }
 
   const btnPopCallback = (type: StopBotEnum, botId: string) => {

@@ -35,7 +35,7 @@ export const Dashbord = () => {
   }
 
   const onEditor = () => {
-    navigate('/editor');
+    navigate('/editor/github');
   }
 
   const onCreateStg = () => {

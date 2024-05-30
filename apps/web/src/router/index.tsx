@@ -16,7 +16,7 @@ export default function AppRouter() {
           <Route index element={<App />} />
         </Route>
         <Route element={<PrivateRoute />}>
-          <Route path="/editor" element={<Editor />} />
+          <Route path="/editor/:source?/:codeId" element={<Editor />} />
           <Route path="/test" element={<Test />} />
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />
