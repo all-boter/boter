@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Editor from "../editor/editor";
-import { CodeFile, Directory, buildFileTree, findFileByName, isEmptyObject } from "../utils";
+import { CodeFile, Directory, Type, buildFileTree, findFileByName, isEmptyObject } from "../utils";
 import { Sidebar } from "../components/sidebar";
 import { FileTree } from "../components/file-tree";
 import { IDirectory, IModule, boterCodeDb } from "../boter-db";
@@ -10,12 +10,13 @@ import { mock_24d8ff } from "../../../common/mock/codesandbox.io-mock2";
 import { parseCodesToFilePath } from "../utils/file-manager";
 import { Github } from "../components/sidebar/github";
 import CodeRenderer from "boter-renderer"
-import { bundlerUrl } from "../../../common/constants";
+import { SUCCESS, bundlerUrl } from "../../../common/constants";
 import { githubReposState, useAppSelector } from "../../../store";
 import "../components/file-tree/style.css";
 import "../components/sidebar/style.css";
 import { GithubRepository } from "../../../services/githubService";
 import { EditorSource } from "@/pages/editor";
+import { getCodeByStgId } from "@/services/stgApi";
 
 const dummyDir: Directory = {
   id: "1",
@@ -93,7 +94,7 @@ interface IBoterEditor {
   codeId?: string
 }
 
-export const BoterEditor = ({editerType,codeId}:IBoterEditor) => {
+export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
 
@@ -129,39 +130,8 @@ export const BoterEditor = ({editerType,codeId}:IBoterEditor) => {
   }, []);
 
   useEffect(() => {
-    /* mock
-    let source_id = mock_source_id
-    const fetchData = async () => {
-      try {
-        const rootDir = await getDataFromPersistence(source_id);
-
-        console.log('editor source_id:', { source_id, rootDir })
-
-        if (rootDir && rootDir.files.length) {
-          initCallback(rootDir);
-        } else {
-          // TODO: mock dev
-          let dataSource = mock_24d8ff
-          if (!dataSource) {
-            dataSource = await fetchSandboxesData(CURRENT_SANDBOX_ID)
-          }
-
-          const mockSource_id = dataSource.source_id
-          buildFileUtil(mockSource_id, dataSource)
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-    */
-  }, [])
-
-  useEffect(() => {
     console.log('editor source_id test 1:', { githubRepos })
     if (githubRepos) {
-      console.log('editor source_id test 2:', { githubRepos })
       buildFileUtil(githubRepos.source_id, githubRepos)
     }
   }, [githubRepos])
@@ -189,11 +159,68 @@ export const BoterEditor = ({editerType,codeId}:IBoterEditor) => {
     })
   }, [rootDir])
 
-  console.log('%c=boter-editer','color:green',{
-    editerType,
-    codeId,
-    codes,
-    bundlerUrl,
+  const fetchCodeByStg = async (stgId: string) => {
+    const res = await getCodeByStgId(stgId)
+    if (res.code === SUCCESS) {
+      const data = res.data
+      setSelectedFile({
+        content: data.strategyCode,
+        code_id: data.strategyId,
+        id: data.id,
+        type: Type.FILE,
+        name: '',
+        /**Parent directory, undefined if it is the root directory*/
+        parentId: undefined,
+        depth: 1,
+      })
+    } else {
+      alert('fetchCodeByStg error')
+    }
+  }
+
+  useEffect(() => {
+    /* mock
+    let source_id = mock_source_id
+    const fetchData = async () => {
+      try {
+        const rootDir = await getDataFromPersistence(source_id);
+
+        console.log('editor source_id:', { source_id, rootDir })
+
+        if (rootDir && rootDir.files.length) {
+          initCallback(rootDir);
+        } else {
+          // TODO: mock dev
+          let dataSource = mock_24d8ff
+          if (!dataSource) {
+            dataSource = await fetchSandboxesData(CURRENT_SANDBOX_ID)
+          }
+
+          const mockSource_id = dataSource.source_id
+          buildFileUtil(mockSource_id, dataSource)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+    */
+
+    if (editerType === EditorSource.server && codeId) {
+      fetchCodeByStg(codeId)
+    }
+
+    console.log('%c=useEffect init', 'color: blue', {
+      codeId,
+      codes,
+    })
+  }, [])
+
+  console.log('%c=boter-editer-render', 'color:red', {
+    // bundlerUrl,
+    rootDir,
+    selectedFile
   })
 
   return <>
@@ -203,7 +230,8 @@ export const BoterEditor = ({editerType,codeId}:IBoterEditor) => {
       <FileTree
         rootDir={rootDir}
         selectedFile={selectedFile}
-        onSelect={onSelectFile} />
+        onSelect={onSelectFile}
+      />
     </Sidebar>
 
     <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />

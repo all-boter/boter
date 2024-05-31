@@ -22,7 +22,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
 
   const onEditerCode = (bot: Bot) => {
     console.log('onEditerCode', bot)
-    navigate(`/editor/server/${bot.id}`);
+    navigate(`/editor/server/${bot.strategyId}`);
   }
 
   const btnPopCallback = (type: StopBotEnum, botId: string) => {

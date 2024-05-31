@@ -11,6 +11,7 @@ interface ApiConfig {
   createBot: string
   getOwnedBots: string
   stopBot: string
+  codeByStgId: string
   testAnyGet: string
 }
 
@@ -23,6 +24,7 @@ const apiConfig: ApiConfig = {
   createBot: '/api/bot/create',
   getOwnedBots: '/api/bot/owned',
   stopBot: '/api/bot/stop',
+  codeByStgId: '/api/code/byStgId',
   testAnyGet: '/api/test/any/get',
 }
 
@@ -144,7 +146,6 @@ export async function testAnyGet(params: any): Promise<ResType<any>> {
   return await fetchWithAuth<any>(url, { data: params }, 'GET');
 }
 
-
 export enum StopBotEnum {
   forceStop = 1,
   normalStop = 2
@@ -152,6 +153,21 @@ export enum StopBotEnum {
 
 export async function stopBot(botId: string, stopType: StopBotEnum): Promise<ResType<IRunner[]>> {
   const url = `${apiConfig.stopBot}?botId=${botId}&stopType=${stopType}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+interface IServerCode {
+  id: string;
+  strategyId: string;
+  strategyCode: string;
+  uiCode: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export async function getCodeByStgId(stgId: string): Promise<ResType<IServerCode>> {
+  const url = `${apiConfig.codeByStgId}?stgId=${stgId}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
