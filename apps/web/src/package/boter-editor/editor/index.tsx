@@ -17,6 +17,8 @@ import "../components/sidebar/style.css";
 import { GithubRepository } from "../../../services/githubService";
 import { EditorSource } from "@/pages/editor";
 import { getCodeByStgId } from "@/services/stgApi";
+import { EditorMenubar } from "./menubar";
+import { Box } from "@mui/system";
 
 const dummyDir: Directory = {
   id: "1",
@@ -223,18 +225,30 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     selectedFile
   })
 
-  return <>
-    <Sidebar>
-      <Github />
+  return <Box sx={{
+    height: '100vh',
+    width: '100vw',
+    background: 'grey'
+  }}
+  >
+    <EditorMenubar />
+    <Box sx={{
+      display: 'flex',
+      height: 'calc(100vh - 44px)',
+      width: '100%',
+    }}>
+      <Sidebar>
+        <Github />
 
-      <FileTree
-        rootDir={rootDir}
-        selectedFile={selectedFile}
-        onSelect={onSelectFile}
-      />
-    </Sidebar>
+        <FileTree
+          rootDir={rootDir}
+          selectedFile={selectedFile}
+          onSelect={onSelectFile}
+        />
+      </Sidebar>
 
-    <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
-    {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />}
-  </>
+      <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
+      {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />}
+    </Box>
+  </Box>
 }

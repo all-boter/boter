@@ -19,9 +19,7 @@ export const Editor = (props: IEditor) => {
     routerParams?.source === EditorSource.server ||
     routerParams?.source === EditorSource.github
   ) {
-    return <div style={{ display: 'flex', height: '100vh', background: 'grey' }}>
-      <BoterEditor editerType={routerParams?.source} codeId={routerParams.codeId} />
-    </div>
+    return <BoterEditor editerType={routerParams?.source} codeId={routerParams.codeId} />
   } else {
     return <PageNotFound />;
   }
