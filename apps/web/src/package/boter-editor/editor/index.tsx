@@ -73,9 +73,21 @@ const buildModuleUtil = async (modules: IModule[]) => {
   for (const module of modules) {
     const persistModules = await getModuleById(module.id)
     if (persistModules) {
-      // TODO: feature buildModuleUtil-update
+      // feature: buildModuleUtil-update
+      // console.log('%c=buildModuleUtil-update','color:green')
+      await boterCodeDb.modules.update(module.id, {
+        code: module.code,
+        is_binary: module.is_binary,
+        title: module.title,
+        shortid: module.shortid,
+        source_id: module.source_id,
+        directory_shortid: module.directory_shortid,
+        inserted_at: module.inserted_at,
+        updated_at: module.updated_at,
+      });
     } else {
       // buildModuleUtil-add
+      // console.log('%c=buildModuleUtil-add','color:green',)
       await boterCodeDb.modules.add({
         code: module.code,
         id: module.id,
@@ -99,7 +111,6 @@ interface IBoterEditor {
 export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
-
   const githubRepos = useAppSelector(githubReposState)
 
   const initCallback = useCallback((rootDir: Directory) => {
@@ -110,7 +121,6 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     setRootDir(rootDir);
   }, []);
 
-  // const buildFileUtil = useCallback(async (source_id: string, data: DataSource) => {
   const buildFileUtil = useCallback(async (source_id: string, data: GithubRepository) => {
     const repositories = await getRepositoriesBySourceId(source_id)
     if (repositories.length) {
@@ -165,16 +175,28 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     const res = await getCodeByStgId(stgId)
     if (res.code === SUCCESS) {
       const data = res.data
+
       setSelectedFile({
         content: data.strategyCode,
-        code_id: data.strategyId,
-        id: data.id,
+        code_id: data.id,
+        id: data.strategyId,
         type: Type.FILE,
-        name: '',
-        /**Parent directory, undefined if it is the root directory*/
+        name: 'strategy',
         parentId: undefined,
         depth: 1,
       })
+
+      buildModuleUtil([{
+        code: data.strategyCode,
+        id: data.id,
+        is_binary: false,
+        title: 'strategy',
+        shortid: "",
+        source_id: data.strategyId,
+        directory_shortid: null,
+        inserted_at: data.updatedAt as unknown as string,
+        updated_at: data.createdAt as unknown as string
+      }])
     } else {
       alert('fetchCodeByStg error')
     }
@@ -231,7 +253,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     background: 'grey'
   }}
   >
-    <EditorMenubar />
+    <EditorMenubar id={codeId as string} />
     <Box sx={{
       display: 'flex',
       height: 'calc(100vh - 40px)',

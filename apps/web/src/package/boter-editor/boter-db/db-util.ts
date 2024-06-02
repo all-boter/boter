@@ -32,6 +32,14 @@ export const getModuleById = async (id: string): Promise<IModule | undefined> =>
   }
 }
 
+export const getModulesBySourceId = async (id: string): Promise<IModule[] | undefined> => {
+  try {
+    return await boterCodeDb.modules.where('source_id').equals(id).toArray();
+  } catch (error) {
+    return undefined
+  }
+}
+
 export async function addRepository(repository: IRepository): Promise<void> {
   try {
     const id = await boterCodeDb.repositories.add(repository);

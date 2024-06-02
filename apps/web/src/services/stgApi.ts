@@ -12,6 +12,7 @@ interface ApiConfig {
   getOwnedBots: string
   stopBot: string
   codeByStgId: string
+  editCodeByStgId: string
   testAnyGet: string
 }
 
@@ -25,6 +26,7 @@ const apiConfig: ApiConfig = {
   getOwnedBots: '/api/bot/owned',
   stopBot: '/api/bot/stop',
   codeByStgId: '/api/code/byStgId',
+  editCodeByStgId: '/api/code/edit',
   testAnyGet: '/api/test/any/get',
 }
 
@@ -170,4 +172,15 @@ export async function getCodeByStgId(stgId: string): Promise<ResType<IServerCode
   const url = `${apiConfig.codeByStgId}?stgId=${stgId}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+export interface EditCodeDto {
+  stgId: string;
+  code: string;
+}
+
+export async function editCodeByStgId(params: EditCodeDto): Promise<ResTypeNoData> {
+  const url = `${apiConfig.editCodeByStgId}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
