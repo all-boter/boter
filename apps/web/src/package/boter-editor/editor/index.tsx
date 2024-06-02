@@ -234,7 +234,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     <EditorMenubar />
     <Box sx={{
       display: 'flex',
-      height: 'calc(100vh - 44px)',
+      height: 'calc(100vh - 40px)',
       width: '100%',
     }}>
       <Sidebar>

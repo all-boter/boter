@@ -1,7 +1,8 @@
-import * as React from 'react';
-import clsx from 'clsx';
-import { styled } from '@mui/system';
-import { Modal as BaseModal } from '@mui/base/Modal';
+import React from 'react';
+import { Root, Portal, Overlay, Content } from '@radix-ui/react-dialog';
+import { muiGrey } from '@/components/basics/muiColor';
+import { css, styled } from '@mui/system';
+import './modal.css'
 
 interface IModal {
   isOpen: boolean
@@ -10,49 +11,37 @@ interface IModal {
   children: JSX.Element
 }
 
+export const ModalContent = styled('div')(
+  ({ theme }) => css`
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    text-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    background-color: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
+    border-radius: 8px;
+    border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
+    box-shadow: 0 4px 12px
+      ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};
+    padding: 24px;
+    color: ${theme.palette.mode === 'dark' ? muiGrey[50] : muiGrey[900]};
+  `,
+);
+
 export function Modal(props: IModal) {
   const { isOpen, handleClose, handleOpen, children } = props
 
   return (
-    <StyledModal
-      aria-labelledby="unstyled-modal-title"
-      aria-describedby="unstyled-modal-description"
-      open={isOpen}
-      onClose={handleClose}
-      slots={{ backdrop: StyledBackdrop }}
-    >
-      {children}
-    </StyledModal>
+    <Root open={isOpen} onOpenChange={handleClose}>
+      <Portal>
+        <Overlay />
+        <Content className='dialog-content'>
+          {children}
+        </Content>
+      </Portal>
+    </Root>
   );
-}
-
-const Backdrop = React.forwardRef<
-  HTMLDivElement,
-  { open?: boolean; className: string }
->((props, ref) => {
-  const { open, className, ...other } = props;
-  return (
-    <div
-      className={clsx({ 'base-Backdrop-open': open }, className)}
-      ref={ref}
-      {...other}
-    />
-  );
-});
-
-const StyledModal = styled(BaseModal)`
-  position: fixed;
-  z-index: 1300;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledBackdrop = styled(Backdrop)`
-  z-index: -1;
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 0.5);
-  -webkit-tap-highlight-color: transparent;
-`;
+};

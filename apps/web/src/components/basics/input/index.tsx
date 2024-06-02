@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Input as BaseInput } from '@mui/base/Input';
 import { styled } from '@mui/system';
 import { muiBlue, muiGrey } from '../muiColor';
 
@@ -7,22 +6,11 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   width?: number
 }
 
-/*
-export function Input(props: Props) {
-
-  return (
-    <BaseInput slots={{ input: InputElement }} slotProps={{ input: { width: props.width } }} {...props} />
-  );
-}
-*/
-
 export const Input = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
-    <BaseInput
-      slots={{ input: InputElement }}
-      slotProps={{ input: { width: props.width } }}
+    <InputElement
       {...props}
-      ref={ref} // Forwarding ref to the underlying input element
+      ref={ref}
     />
   );
 });

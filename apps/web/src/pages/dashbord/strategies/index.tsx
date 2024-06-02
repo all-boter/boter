@@ -12,9 +12,8 @@ import { StgList } from '@/components/views/stgList';
 import { createRunner } from '@/services/stgApi';
 
 import { Button } from '@/components/basics/button';
-import { InputOrgin } from '@/components/basics/inputOrgin';
 import { Input } from '@/components/basics/input';
-import ButtonOrgin from '@/components/basics/buttonOrgin';
+import ButtonOrgin from '@/components/basics/button/btnOrgin';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -81,9 +80,8 @@ export const Dashbord = () => {
 
           <button onClick={onCreateRunner}>create runner</button>
 
-          <ButtonOrgin />
+          <ButtonOrgin>hello</ButtonOrgin>
           <Input />
-          <InputOrgin />
         </Box>
       </Box>
 

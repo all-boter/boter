@@ -1,12 +1,13 @@
-import { Button as BaseButton, ButtonProps, buttonClasses } from '@mui/base/Button'
 import { styled } from '@mui/system';
 import { mainColor, muiBlue, muiGrey } from '../muiColor';
+import ButtonOrgin from './btnOrgin';
 
-interface Props extends ButtonProps{
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element | string
   color?: string
   bg?: string
   size?: 'small' | 'middle'
+  // onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export function Button(props: Props) {
@@ -14,7 +15,7 @@ export function Button(props: Props) {
   return <StyledButton {...props}>{props.children}</StyledButton>;
 }
 
-const StyledButton = styled(BaseButton)(
+const StyledButton = styled(ButtonOrgin)(
   ({ theme,bg,color,size='middle' }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
@@ -33,18 +34,18 @@ const StyledButton = styled(BaseButton)(
     opacity: .8;
   }
 
-  &.${buttonClasses.active} {
+  &.active {
     background-color: ${bg || mainColor[100]};;
     box-shadow: none;
     transform: scale(0.99);
   }
 
-  &.${buttonClasses.focusVisible} {
+  &:focus {
     box-shadow: 0 0 0 4px ${theme.palette.mode === 'dark' ? muiBlue[300] : muiBlue[200]};
     outline: none;
   }
 
-  &.${buttonClasses.disabled} {
+  &:disabled {
     background-color: ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
     color: ${theme.palette.mode === 'dark' ? muiGrey[200] : muiGrey[700]};
     border: 0;

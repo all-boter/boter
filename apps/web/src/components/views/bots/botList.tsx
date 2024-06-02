@@ -1,12 +1,12 @@
-import { Bot, StopBotEnum } from "@/services/stgApi"
+import { Bot, StopBotEnum, stopBot } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { BotBtnPop } from "./botBtnPop"
 import { Button } from "@/components/basics/button"
 import { muiGreen } from "@/components/basics/muiColor"
-import { ConfirmStop } from "../modal/confirmStop"
 import { useState } from "react"
-import { BotStatus } from "@/common/constants"
+import { BotStatus, SUCCESS } from "@/common/constants"
 import { useNavigate } from "react-router-dom"
+import { Modal, ModalContent } from "@/components/basics/modal"
 
 interface IBotList {
   bots: Bot[]
@@ -37,6 +37,15 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
   const handleClose = () => {
     setConfirmStopOpen(false)
     refreshList(BotStatus.Running)
+  }
+
+  const onForceStop = async () => {
+    const res = await stopBot(selectBotId, StopBotEnum.forceStop)
+    if (res.code === SUCCESS) {
+      handleClose()
+    } else {
+      alert(res.msg)
+    }
   }
 
   return <Box sx={{
@@ -82,6 +91,10 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
       ))
     }
 
-    <ConfirmStop botId={selectBotId} isOpen={confirmStopOpen} handleClose={() => handleClose()} />
+    <Modal isOpen={confirmStopOpen} handleClose={() => handleClose()}>
+      <ModalContent sx={{ width: 400 }}>
+        <button onClick={() => onForceStop()}>Force Stop Bot</button>
+      </ModalContent>
+    </Modal>
   </Box>
 }
