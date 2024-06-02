@@ -5,6 +5,7 @@ import { BotStatus } from '@/common/constants'
 interface ApiConfig {
   createStg: string
   strateies: string
+  stgById: string
   deleteStg: string
   createRunner: string
   runners: string
@@ -19,6 +20,7 @@ interface ApiConfig {
 const apiConfig: ApiConfig = {
   createStg: '/api/stg/create',
   strateies: '/api/strateies',
+  stgById: '/api/stg/byId',
   deleteStg: '/api/stg/delete',
   createRunner: '/api/runner/create',
   runners: '/api/runners',
@@ -87,6 +89,12 @@ export interface Bot {
 
 export async function getOwnedBots(status: BotStatus): Promise<ResType<Bot[]>> {
   const url = `${apiConfig.getOwnedBots}?status=${status}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
+export async function getStgById(stgId: string): Promise<ResType<IStrategy>> {
+  const url = `${apiConfig.stgById}?stgId=${stgId}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }

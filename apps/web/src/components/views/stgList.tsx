@@ -3,19 +3,26 @@ import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
-import { mainColor } from "../basics/muiColor";
+import { mainColor, muiGreen } from "../basics/muiColor";
 import { Drawer } from "../basics/drawer/indenx";
 import { StgDrawer } from "./stgDrawer";
 import { AppDispatch, stgListState, useAppSelector } from "@/store";
 import { useDispatch } from "react-redux";
 import { fetchStrategies } from "@/store/appSlice";
+import { useNavigate } from "react-router-dom";
+import { Pencil } from "lucide-react";
+
+enum EditerType {
+  Code = 1,
+  Config = 2
+}
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const StgList = () => {
   const dispatch: AppDispatch = useDispatch();
   const stgList = useAppSelector(stgListState)
-
+  const [drawerOpen, setDrawer] = useState(false);
   const [currentStg, setCurrentStg] = useState<IStrategy>({
     name: "",
     id: '',
@@ -23,7 +30,22 @@ export const StgList = () => {
     isPublic: false,
     paramsSchema: []
   })
-  const [drawerOpen, setDrawer] = useState(false);
+  const navigate = useNavigate();
+
+  const onEdit = (strategy: IStrategy, editerType: EditerType) => {
+    switch (editerType) {
+      case EditerType.Code:
+        navigate(`/editor/server/${strategy.id}`);
+        break;
+
+      case EditerType.Config:
+        navigate(`/dashbord/strategy/${strategy.id}`);
+        break;
+
+      default:
+        break;
+    }
+  }
 
   const onCreate = (stg: IStrategy) => {
     setDrawer(!drawerOpen)
@@ -57,14 +79,23 @@ export const StgList = () => {
           p: '20px',
           background: '#334155'
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: '20px' }}>
-            <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '20px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box>
 
-            <Box sx={{ pl: '6px' }}>
-              <Box sx={{ fontSize: '18px', fontWeight: 700, color: '#f3f4f6' }}>{item.name}</Box>
-              <Box component={'span'} sx={{ color: '#9ca3af' }}>
-                {item.intro || 'No introduction'}
+              <Box sx={{ pl: '6px' }}>
+                <Box sx={{ fontSize: '18px', fontWeight: 700, color: '#f3f4f6' }}>
+                  {item.name}
+                  <Box component={Pencil} onClick={() => onEdit(item, EditerType.Config)} size={16} sx={{ ml: '6px', cursor: 'pointer' }} />
+                </Box>
+                <Box component={'span'} sx={{ color: '#9ca3af' }}>
+                  {item.intro || 'No introduction'}
+                </Box>
               </Box>
+            </Box>
+
+            <Box>
+              <StyledButton onClick={() => onEdit(item, EditerType.Code)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>coding</StyledButton>
             </Box>
           </Box>
 
@@ -72,7 +103,6 @@ export const StgList = () => {
             <Box sx={{ color: '#f3f4f6' }}>Free</Box>
             <Box>
               <DeletePop stg={item} />
-              {/* <StyledButton bg="#0ecb81" size="small">Create bot</StyledButton> */}
               <StyledButton onClick={() => onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
             </Box>
           </Box>

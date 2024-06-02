@@ -1,11 +1,8 @@
 import { Bot, StopBotEnum, stopBot } from "@/services/stgApi"
-import { Box, styled } from "@mui/system"
+import { Box } from "@mui/system"
 import { BotBtnPop } from "./botBtnPop"
-import { Button } from "@/components/basics/button"
-import { muiGreen } from "@/components/basics/muiColor"
 import { useState } from "react"
 import { BotStatus, SUCCESS } from "@/common/constants"
-import { useNavigate } from "react-router-dom"
 import { Modal, ModalContent } from "@/components/basics/modal"
 
 interface IBotList {
@@ -13,17 +10,9 @@ interface IBotList {
   refreshList: (botStatus: BotStatus) => void
 }
 
-const StyledButton = styled(Button)(`margin-left: 6px;`)
-
 export const BotList = ({ bots, refreshList }: IBotList) => {
   const [confirmStopOpen, setConfirmStopOpen] = useState(false);
   const [selectBotId, setSelectBotId] = useState<string>('');
-  const navigate = useNavigate();
-
-  const onEditerCode = (bot: Bot) => {
-    console.log('onEditerCode', bot)
-    navigate(`/editor/server/${bot.strategyId}`);
-  }
 
   const btnPopCallback = (type: StopBotEnum, botId: string) => {
     if (type === StopBotEnum.forceStop) {
@@ -77,8 +66,6 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
                 {item.status}
               </Box>
             </Box>
-
-            <StyledButton onClick={() => onEditerCode(item)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>Strategy code</StyledButton>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
