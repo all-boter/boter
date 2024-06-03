@@ -6,6 +6,7 @@ interface ApiConfig {
   createStg: string
   strateies: string
   stgById: string
+  stgEdit: string
   deleteStg: string
   createRunner: string
   runners: string
@@ -21,6 +22,7 @@ const apiConfig: ApiConfig = {
   createStg: '/api/stg/create',
   strateies: '/api/strateies',
   stgById: '/api/stg/byId',
+  stgEdit: '/api/stg/edit',
   deleteStg: '/api/stg/delete',
   createRunner: '/api/runner/create',
   runners: '/api/runners',
@@ -57,6 +59,12 @@ export interface IStrategy {
   deletedAt?: Date
   createdAt?: Date
   updatedAt?: Date
+}
+
+export async function editStg(params: IStrategy): Promise<ResTypeNoData> {
+  const url = `${apiConfig.stgEdit}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
 
 export async function strateies(): Promise<ResType<any>> {

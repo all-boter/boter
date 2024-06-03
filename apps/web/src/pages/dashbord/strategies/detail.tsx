@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Sidebar } from "@/components/views/Sidebar";
-import { IStrategy, getStgById } from "@/services/stgApi";
+import { IStrategy, editStg, getStgById } from "@/services/stgApi";
 import { Box, styled } from "@mui/system"
 import { useParams } from "react-router-dom";
 import { SUCCESS } from "@/common/constants";
@@ -8,6 +8,7 @@ import { mainTheme } from "@/components/basics/muiColor";
 import { Input } from "@/components/basics/input";
 import { Textarea } from "@/components/basics/input/textarea";
 import { Switch } from "@/components/basics/switch";
+import { Button } from "@/components/basics/button";
 
 const StyledFormItem = styled('div')(`
   display: flex;
@@ -44,6 +45,18 @@ export const StgDetail = () => {
     } as IStrategy)
   }
 
+  const onSubmit = async () => {
+    console.log('%c=onSubmit==>', 'color:red', strategy)
+    if (strategy) {
+      const res = await editStg(strategy)
+      if (res.code === SUCCESS) {
+        alert(res.msg)
+      } else {
+        alert(res.msg)
+      }
+    }
+  }
+
   useEffect(() => {
     const fetchStg = async (stgId: string) => {
       const res = await getStgById(stgId)
@@ -55,14 +68,12 @@ export const StgDetail = () => {
     fetchStg(stgId as string)
   }, [stgId])
 
-  console.log('%c=strategy', 'color:red', strategy)
-
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
     <Box sx={{ color: mainTheme.white, mx: '20px', mt: '20px' }}>
       {strategy ? <>
         <Box>
-          <Box sx={{ mb: '16px' }}>Strategy Detail:</Box>
+          <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>Strategy Detail</Box>
           <StyledFormItem>
             <StyledCell>
               <StyledLabel>
@@ -116,6 +127,13 @@ export const StgDetail = () => {
               isPublic: status
             } as IStrategy)} />
           </StyledFormItem>
+
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}>
+            <Button onClick={() => onSubmit()}>Submit</Button>
+          </Box>
         </Box>
       </>
         :
