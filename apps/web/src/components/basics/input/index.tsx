@@ -16,7 +16,10 @@ export const Input = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
 });
 
 const InputElement = styled('input')(
-  ({ theme, width }) => `width: ${width || 300}px;
+  ({ theme, width }) => `
+      width: ${width || 300}px;
+      height: 32px;
+      box-sizing: border-box;
       font-family: 'IBM Plex Sans', sans-serif;
       font-size: 0.875rem;
       font-weight: 400;

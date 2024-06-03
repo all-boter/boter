@@ -1,8 +1,9 @@
+import { ButtonHTMLAttributes } from 'react';
 import { styled } from '@mui/system';
 import { mainColor, muiBlue, muiGrey } from '../muiColor';
 import ButtonOrgin from './btnOrgin';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element | string
   color?: string
   bg?: string
@@ -16,7 +17,7 @@ export function Button(props: Props) {
 }
 
 const StyledButton = styled(ButtonOrgin)(
-  ({ theme,bg,color,size='middle' }) => `
+  ({ theme, bg, color, size = 'middle' }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
