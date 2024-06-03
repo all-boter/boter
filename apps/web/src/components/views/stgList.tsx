@@ -3,7 +3,7 @@ import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
-import { mainColor, muiGreen } from "../basics/muiColor";
+import { mainColor, mainTheme, muiGreen } from "../basics/muiColor";
 import { Drawer } from "../basics/drawer/indenx";
 import { StgDrawer } from "./stgDrawer";
 import { AppDispatch, stgListState, useAppSelector } from "@/store";
@@ -84,7 +84,7 @@ export const StgList = () => {
               <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box>
 
               <Box sx={{ pl: '6px' }}>
-                <Box sx={{ fontSize: '18px', fontWeight: 700, color: '#f3f4f6' }}>
+                <Box sx={{ fontSize: '18px', fontWeight: 700, color: mainTheme.white }}>
                   {item.name}
                   <Box component={Pencil} onClick={() => onEdit(item, EditerType.Config)} size={16} sx={{ ml: '6px', cursor: 'pointer' }} />
                 </Box>
@@ -100,7 +100,7 @@ export const StgList = () => {
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ color: '#f3f4f6' }}>Free</Box>
+            <Box sx={{ color: mainTheme.white }}>Free</Box>
             <Box>
               <DeletePop stg={item} />
               <StyledButton onClick={() => onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>

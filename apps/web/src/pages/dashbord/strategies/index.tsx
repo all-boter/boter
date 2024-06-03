@@ -64,7 +64,7 @@ export const Dashbord = () => {
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <Box sx={{ width: '100%', pt: '20px' }}>
+      <Box sx={{ width: '100%' }}>
         <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: '#FFF' }}>
             My strategies

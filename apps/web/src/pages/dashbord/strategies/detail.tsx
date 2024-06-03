@@ -4,13 +4,14 @@ import { Box } from "@mui/system"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SUCCESS } from "@/common/constants";
+import { mainTheme } from "@/components/basics/muiColor";
 
 export const StgDetail = () => {
   const { stgId } = useParams();
-  const [strategy,setStrategy] = useState<IStrategy>()
+  const [strategy, setStrategy] = useState<IStrategy>()
 
-  useEffect(()=>{
-    const fetchStg = async(stgId:string)=>{
+  useEffect(() => {
+    const fetchStg = async (stgId: string) => {
       const res = await getStgById(stgId)
       if (res.code === SUCCESS) {
         setStrategy(res.data)
@@ -18,12 +19,17 @@ export const StgDetail = () => {
     }
 
     fetchStg(stgId as string)
-  },[stgId])
+  }, [stgId])
 
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
-    <Box>
-      { strategy && strategy.id}
+    <Box sx={{ color: mainTheme.white, mx: '20px', mt: '20px' }}>
+      {strategy ? <>
+        {strategy.id}
+      </>
+        :
+        <>loading</>
+      }
     </Box>
   </Box>
 }

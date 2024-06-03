@@ -4,6 +4,7 @@ import { BotBtnPop } from "./botBtnPop"
 import { useState } from "react"
 import { BotStatus, SUCCESS } from "@/common/constants"
 import { Modal, ModalContent } from "@/components/basics/modal"
+import { mainTheme } from "@/components/basics/muiColor"
 
 interface IBotList {
   bots: Bot[]
@@ -61,7 +62,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
             <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box>
 
             <Box sx={{ pl: '6px' }}>
-              <Box sx={{ fontSize: '18px', fontWeight: 700, color: '#f3f4f6' }}>{item.name}</Box>
+              <Box sx={{ fontSize: '18px', fontWeight: 700, color: mainTheme.white }}>{item.name}</Box>
               <Box component={'span'} sx={{ color: '#9ca3af' }}>
                 {item.status}
               </Box>
@@ -69,7 +70,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ color: '#f3f4f6' }}>interval: {item.params.interval}</Box>
+            <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
             {item.status === BotStatus.Running && <Box>
               <BotBtnPop bot={item} callBack={btnPopCallback} />
             </Box>}

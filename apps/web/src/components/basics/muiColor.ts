@@ -29,6 +29,10 @@ export const muiGreen = {
   seaFoam:'#34d399'
 }!
 
+export const mainTheme = {
+  white: '#f3f4f6'
+}
+
 export const mainColor = { 
   /**Golden yellow*/
   100: '#FCD535',
