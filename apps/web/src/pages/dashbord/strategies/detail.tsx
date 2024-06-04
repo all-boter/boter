@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
 import { Sidebar } from "@/components/views/Sidebar";
 import { IStrategy, editStg, getStgById } from "@/services/stgApi";
 import { Box, styled } from "@mui/system"
@@ -9,6 +9,7 @@ import { Input } from "@/components/basics/input";
 import { Textarea } from "@/components/basics/input/textarea";
 import { Switch } from "@/components/basics/switch";
 import { Button } from "@/components/basics/button";
+import { ToastContext, ToastType } from "@/components/basics/toast/toastContext";
 
 const StyledFormItem = styled('div')(`
   display: flex;
@@ -30,6 +31,8 @@ const StyledLabel = styled('label')(`
 export const StgDetail = () => {
   const { stgId } = useParams();
   const [strategy, setStrategy] = useState<IStrategy>()
+  const { showToast } = useContext(ToastContext)!;
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStrategy({
@@ -46,27 +49,31 @@ export const StgDetail = () => {
   }
 
   const onSubmit = async () => {
-    console.log('%c=onSubmit==>', 'color:red', strategy)
     if (strategy) {
       const res = await editStg(strategy)
       if (res.code === SUCCESS) {
-        alert(res.msg)
+        showToast(res.msg, { type: ToastType.success, duration: 2000 })
+        fetchStgUtil(stgId as string)
       } else {
-        alert(res.msg)
+        showToast(res.msg, { type: ToastType.success })
       }
     }
   }
 
-  useEffect(() => {
-    const fetchStg = async (stgId: string) => {
-      const res = await getStgById(stgId)
-      if (res.code === SUCCESS) {
-        setStrategy(res.data)
-      }
+  const fetchStgUtil = async (stgId: string) => {
+    const res = await getStgById(stgId)
+    if (res.code === SUCCESS) {
+      setStrategy(res.data)
     }
+  }
 
-    fetchStg(stgId as string)
+  useEffect(() => {
+    fetchStgUtil(stgId as string)
   }, [stgId])
+
+  const paramsSchema = useCallback(() => {
+    return `{}`
+  }, [strategy?.paramsSchema])
 
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
@@ -132,7 +139,7 @@ export const StgDetail = () => {
             display: 'flex',
             justifyContent: 'center',
           }}>
-            <Button onClick={() => onSubmit()}>Submit</Button>
+            <Button width="160" onClick={() => onSubmit()}>Submit</Button>
           </Box>
         </Box>
       </>

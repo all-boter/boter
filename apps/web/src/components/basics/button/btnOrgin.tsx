@@ -5,6 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: string
   bg?: string
   size?: 'small' | 'middle'
+  width?: string
   // onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
