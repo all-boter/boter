@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Sidebar } from "@/components/views/Sidebar";
 import { IStrategy, editStg, getStgById } from "@/services/stgApi";
 import { Box, styled } from "@mui/system"
@@ -16,9 +16,16 @@ const StyledFormItem = styled('div')(`
   margin-bottom: 10px;
 `)
 
+const FieldWarnning = styled('div')(`
+  font-size: 14px;
+  color: ${mainTheme.warning};
+  height: 18px;
+  line-height: 18px;
+`)
+
 const StyledCell = styled('div')(`
   display: inline-block;
-  width: 120px;
+  width: 130px;
 `)
 
 const StyledLabel = styled('label')(`
@@ -27,12 +34,12 @@ const StyledLabel = styled('label')(`
   height: 32px;
 `)
 
-
 export const StgDetail = () => {
   const { stgId } = useParams();
   const [strategy, setStrategy] = useState<IStrategy>()
   const { showToast } = useContext(ToastContext)!;
-
+  const [schemaWarnning, setSchemaWarnning] = useState('')
+  const [schemaStr, setSchemaStr] = useState('')
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStrategy({
@@ -41,22 +48,41 @@ export const StgDetail = () => {
     } as IStrategy)
   }
 
-  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setStrategy({
-      ...strategy,
-      intro: event.target.value,
-    } as IStrategy)
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>, type: 1 | 2) => {
+    if (type === 1) {
+      setStrategy({
+        ...strategy,
+        intro: event.target.value,
+      } as IStrategy)
+    } else if (type === 2) {
+      if (event.target.value) {
+        setSchemaStr(event.target.value)
+      } else {
+        setSchemaWarnning('Please enter paramsSchema')
+      }
+    }
   }
 
   const onSubmit = async () => {
-    if (strategy) {
-      const res = await editStg(strategy)
-      if (res.code === SUCCESS) {
-        showToast(res.msg, { type: ToastType.success, duration: 2000 })
-        fetchStgUtil(stgId as string)
-      } else {
-        showToast(res.msg, { type: ToastType.success })
-      }
+    if (!strategy?.name) {
+      return
+    }
+
+    let paramsSchema = []
+    try {
+      paramsSchema = JSON.parse(schemaStr)
+      schemaWarnning && setSchemaWarnning('')
+    } catch (error) {
+      setSchemaWarnning('ParamsSchema format error,Must be an array of objects')
+      return
+    }
+
+    const res = await editStg({ ...strategy, paramsSchema })
+    if (res.code === SUCCESS) {
+      showToast(res.msg, { type: ToastType.success, duration: 2000 })
+      fetchStgUtil(stgId as string)
+    } else {
+      showToast(res.msg, { type: ToastType.success })
     }
   }
 
@@ -64,16 +90,16 @@ export const StgDetail = () => {
     const res = await getStgById(stgId)
     if (res.code === SUCCESS) {
       setStrategy(res.data)
+
+      if (res.data?.paramsSchema?.length) {
+        setSchemaStr(JSON.stringify(res.data.paramsSchema))
+      }
     }
   }
 
   useEffect(() => {
     fetchStgUtil(stgId as string)
   }, [stgId])
-
-  const paramsSchema = useCallback(() => {
-    return `{}`
-  }, [strategy?.paramsSchema])
 
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
@@ -87,11 +113,16 @@ export const StgDetail = () => {
                 Name:
               </StyledLabel>
             </StyledCell>
-            <Input
-              value={strategy.name}
-              width={400}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
-            />
+            <Box>
+              <Input
+                value={strategy.name}
+                width={400}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
+              />
+              {!strategy.name && <FieldWarnning>
+                Please enter Name
+              </FieldWarnning>}
+            </Box>
           </StyledFormItem>
 
           <StyledFormItem>
@@ -103,10 +134,30 @@ export const StgDetail = () => {
             <Textarea
               value={strategy.intro}
               width={400}
-              height={200}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e)}
+              height={100}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 1)}
               placeholder="Enter your text here"
             />
+          </StyledFormItem>
+
+          <StyledFormItem>
+            <StyledCell>
+              <StyledLabel>
+                Params schema:
+              </StyledLabel>
+            </StyledCell>
+            <Box>
+              <Textarea
+                value={schemaStr}
+                width={400}
+                height={200}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 2)}
+                placeholder="Enter your text here"
+              />
+              {schemaWarnning && <FieldWarnning>
+                {schemaWarnning}
+              </FieldWarnning>}
+            </Box>
           </StyledFormItem>
 
           <StyledFormItem sx={{ height: '32px' }}>

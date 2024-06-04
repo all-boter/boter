@@ -30,7 +30,8 @@ export const muiGreen = {
 }!
 
 export const mainTheme = {
-  white: '#f3f4f6'
+  white: '#f3f4f6',
+  warning: '#ff4d4f'
 }
 
 export const mainColor = { 
