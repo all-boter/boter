@@ -56,8 +56,6 @@ export const StgList = () => {
     dispatch(fetchStrategies());
   }, [])
 
-  console.log('%c=stgList', 'color:red', stgList)
-
   return <Box sx={{
     display: 'grid',
     width: '100%',

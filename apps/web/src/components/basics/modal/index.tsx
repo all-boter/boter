@@ -22,7 +22,7 @@ export const ModalContent = styled('div')(
     gap: 8px;
     overflow: hidden;
     background-color: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
-    border-radius: 8px;
+   border-radius: 6px;
     border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};
     box-shadow: 0 4px 12px
       ${theme.palette.mode === 'dark' ? 'rgb(0 0 0 / 0.5)' : 'rgb(0 0 0 / 0.2)'};

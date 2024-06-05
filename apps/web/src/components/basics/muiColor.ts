@@ -31,12 +31,11 @@ export const muiGreen = {
 
 export const mainTheme = {
   white: '#f3f4f6',
-  warning: '#ff4d4f'
-}
+  warning: '#ff4d4f',
+  golden: '#FCD535',
+}!
 
 export const mainColor = { 
-  /**Golden yellow*/
-  100: '#FCD535',
   /**Midnight blue*/
   101: '#202630',
   /**light red*/

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system"
 import { Logo } from "./logo";
 import { StgIcon } from "../icon/stgIcon";
-import { mainColor } from "../basics/muiColor";
+import { mainTheme } from "../basics/muiColor";
 import { BotIcon } from "../icon/botIcon";
 
 export const Sidebar = () => {
@@ -18,7 +18,7 @@ export const Sidebar = () => {
     >
       {({ isActive }) => (
         <>
-          <StgIcon fill={isActive ? mainColor[100] : '#FFF'} />
+          <StgIcon fill={isActive ? mainTheme.golden : '#FFF'} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Strategies</Box>
         </>
       )}
@@ -30,7 +30,7 @@ export const Sidebar = () => {
     >
       {({ isActive }) => (
         <>
-          <BotIcon fill={isActive ? mainColor[100] : '#FFF'} />
+          <BotIcon fill={isActive ? mainTheme.golden : '#FFF'} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
         </>
       )}

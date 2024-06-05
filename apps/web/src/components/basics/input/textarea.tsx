@@ -36,7 +36,7 @@ const TextareaElement = styled('textarea')(
     font-weight: 400;
     line-height: 1.5;
     padding: 8px 12px;
-    border-radius: 8px;
+   border-radius: 6px;
     color: ${theme.palette.mode === 'dark' ? muiGrey[300] : muiGrey[900]};
     background: ${theme.palette.mode === 'dark' ? muiGrey[900] : '#fff'};
     border: 1px solid ${theme.palette.mode === 'dark' ? muiGrey[700] : muiGrey[200]};

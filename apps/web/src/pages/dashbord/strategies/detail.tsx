@@ -40,13 +40,7 @@ export const StgDetail = () => {
   const { showToast } = useContext(ToastContext)!;
   const [schemaWarnning, setSchemaWarnning] = useState('')
   const [schemaStr, setSchemaStr] = useState('')
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStrategy({
-      ...strategy,
-      name: event.target.value,
-    } as IStrategy)
-  }
+  const [stgName, setStgName] = useState('')
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>, type: 1 | 2) => {
     if (type === 1) {
@@ -64,7 +58,7 @@ export const StgDetail = () => {
   }
 
   const onSubmit = async () => {
-    if (!strategy?.name) {
+    if (!strategy || !stgName) {
       return
     }
 
@@ -77,7 +71,7 @@ export const StgDetail = () => {
       return
     }
 
-    const res = await editStg({ ...strategy, paramsSchema })
+    const res = await editStg({ ...strategy, paramsSchema, name: stgName })
     if (res.code === SUCCESS) {
       showToast(res.msg, { type: ToastType.success, duration: 2000 })
       fetchStgUtil(stgId as string)
@@ -90,7 +84,7 @@ export const StgDetail = () => {
     const res = await getStgById(stgId)
     if (res.code === SUCCESS) {
       setStrategy(res.data)
-
+      setStgName(res.data.name)
       if (res.data?.paramsSchema?.length) {
         setSchemaStr(JSON.stringify(res.data.paramsSchema))
       }
@@ -106,7 +100,13 @@ export const StgDetail = () => {
     <Box sx={{ color: mainTheme.white, mx: '20px', mt: '20px' }}>
       {strategy ? <>
         <Box>
-          <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>Strategy Detail</Box>
+          <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>
+            <Box component={'span'} sx={{color: mainTheme.golden,fontSize: '22px'}}>
+              {strategy.name}&nbsp;
+            </Box>
+            Strategy Detail
+          </Box>
+
           <StyledFormItem>
             <StyledCell>
               <StyledLabel>
@@ -115,9 +115,9 @@ export const StgDetail = () => {
             </StyledCell>
             <Box>
               <Input
-                value={strategy.name}
+                value={stgName}
                 width={400}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => setStgName(event.target.value)}
               />
               {!strategy.name && <FieldWarnning>
                 Please enter Name

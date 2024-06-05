@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import { styled } from '@mui/system';
-import { mainColor, muiBlue, muiGrey } from '../muiColor';
+import { mainColor, mainTheme, muiBlue, muiGrey } from '../muiColor';
 import ButtonOrgin from './btnOrgin';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -23,22 +23,22 @@ const StyledButton = styled(ButtonOrgin)(
   font-weight: 600;
   font-size: 0.875rem;
   line-height: 1.5;
-  background-color: ${bg || mainColor[100]};
+  background-color: ${bg || mainTheme.golden};
   padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
   width: ${width ? width + 'px' : 'auto'};
   border-radius: 6px;
   color: ${color || mainColor[101]};
   transition: all 150ms ease;
   cursor: pointer;
-  border: 1px solid ${bg || mainColor[100]};;
-  box-shadow: 0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'}, inset 0 1.5px 1px ${bg || mainColor[100]}, inset 0 -2px 1px ${bg || mainColor[100]};
+  border: 1px solid ${bg || mainTheme.golden};;
+  box-shadow: 0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'}, inset 0 1.5px 1px ${bg || mainTheme.golden}, inset 0 -2px 1px ${bg || mainTheme.golden};
 
   &:hover {
     opacity: .8;
   }
 
   &.active {
-    background-color: ${bg || mainColor[100]};;
+    background-color: ${bg || mainTheme.golden};;
     box-shadow: none;
     transform: scale(0.99);
   }

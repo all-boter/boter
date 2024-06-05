@@ -11,7 +11,7 @@ const StyledContent = styled(Content)(`
     justify-content: center;
     flex-direction: column;
     height: 90px;
-    border-radius: 8px;
+   border-radius: 6px;
     background: ${mainColor[106]};
     padding: 0 10px;
 `)

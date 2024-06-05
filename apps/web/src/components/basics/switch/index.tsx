@@ -1,6 +1,6 @@
 import { Root, Thumb } from '@radix-ui/react-switch';
 import { Box, styled } from "@mui/system"
-import { mainColor } from '../muiColor';
+import { mainTheme } from '../muiColor';
 
 const SwitchRoot = styled(Root)`
   position: relative;
@@ -18,7 +18,7 @@ const SwitchRoot = styled(Root)`
   }
 
   &[data-state='checked'] {
-    background-color: ${mainColor[100]};
+    background-color: ${mainTheme.golden};
   }
 `;
 
