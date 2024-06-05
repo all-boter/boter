@@ -4,6 +4,8 @@ import { Box, styled } from "@mui/system"
 import { ArrowLeft, Play, Save } from "lucide-react"
 import { getModulesBySourceId } from "../boter-db/db-util"
 import { useNavigate } from "react-router-dom"
+import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
+import { useContext } from "react"
 
 enum MenubarEvent {
   Save = 1,
@@ -60,6 +62,7 @@ interface IMenubar {
 
 export const EditorMenubar = ({ id }: IMenubar) => {
   const navigate = useNavigate();
+  const { showToast } = useContext(ToastContext)!;
 
   const onMenubar = async (event: MenubarEvent) => {
     const modules = await getModulesBySourceId(id)
@@ -71,9 +74,9 @@ export const EditorMenubar = ({ id }: IMenubar) => {
             code: modules[0].code
           })
           if (saveRes.code === SUCCESS) {
-            console.log('saveRes', saveRes)
+            showToast(saveRes.msg, { type: ToastType.success, duration: 1000 })
           } else {
-            alert(saveRes.msg)
+            showToast(saveRes.msg, { type: ToastType.error, duration: 2000 })
           }
         }
 
@@ -96,11 +99,10 @@ export const EditorMenubar = ({ id }: IMenubar) => {
     sx={{
       display: 'flex',
       height: '40px',
-      // height: '20px',
       background: menbarTheme.blackBg
     }}>
 
-    <StyledItem onClick={() => onMenubar(MenubarEvent.Back)}>
+    <StyledItem onClick={() => onMenubar(MenubarEvent.Back)} sx={{width: '50px'}}>
       <Box component={ArrowLeft} size={20} sx={{ mr: '4px' }} />
     </StyledItem>
 

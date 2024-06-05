@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Editor from "../editor/editor";
 import { CodeFile, Directory, Type, buildFileTree, findFileByName, isEmptyObject } from "../utils";
 import { Sidebar } from "../components/sidebar";
@@ -19,6 +19,9 @@ import { EditorSource } from "@/pages/editor";
 import { getCodeByStgId } from "@/services/stgApi";
 import { EditorMenubar } from "./menubar";
 import { Box } from "@mui/system";
+import { InspectorPanel } from "./inspectorPanel";
+import { computeSizePercentage } from "./utils";
+import './inspectorPanel.css'
 
 const dummyDir: Directory = {
   id: "1",
@@ -112,6 +115,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
   const githubRepos = useAppSelector(githubReposState)
+  const editorcontainerRef = useRef<HTMLDivElement>(null)
 
   const initCallback = useCallback((rootDir: Directory) => {
     if (!selectedFile) {
@@ -255,10 +259,10 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   }}
   >
     <EditorMenubar id={codeId as string} />
-    <Box sx={{
+    <Box ref={editorcontainerRef} sx={{
       display: 'flex',
       flexGrow: 1,
-      height:"calc(100% - 40px)"
+      height: "calc(100% - 40px)"
     }}>
       <Sidebar>
         <Github />
@@ -271,7 +275,29 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
       </Sidebar>
 
       <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
-      {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />}
+
+      <InspectorPanel
+        onLayoutChange={(layout) => {
+          // dispatch(dispatchPanelLayoutChange({ layout }))
+          console.log('%c=onLayoutChange=>', 'color:green', layout)
+        }}
+        onCollapsed={(collapsed) => {
+          console.log('%c=onCollapsed=>', 'color:green', collapsed)
+          // dispatch(dispatchPanelLayoutChange({ collapsed }))
+        }}
+        onResize={(changes) => {
+          if ('height' in changes) {
+            console.log('%c=onResize A 1=>', 'color:green', changes)
+            // Height percentage is buggy on resize. Use percents only for width.
+            // dispatch(dispatchPanelLayoutChange(changes))
+            return
+          }
+          const result = computeSizePercentage(changes, editorcontainerRef.current!)
+          console.log('%c=onResize A 2=>', 'color:green', changes)
+          // dispatch(dispatchPanelLayoutChange(result))
+        }}
+      />
+      {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}
     </Box>
   </Box>
 }
