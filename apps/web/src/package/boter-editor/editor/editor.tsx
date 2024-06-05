@@ -45,9 +45,9 @@ export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) =>
   }, [codeFile]);
 
   return <div style={{
-    width: '60%',
-    height: '100%',
-    border: '1px solid #ccc'
+    width: '70%',
+    height:"calc(100% - 22px)",
+    boxSizing: 'border-box'
   }} ref={divEl}
   />;
 };

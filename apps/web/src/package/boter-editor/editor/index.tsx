@@ -248,16 +248,17 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   })
 
   return <Box sx={{
-    height: '100vh',
-    width: '100vw',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     background: 'grey'
   }}
   >
     <EditorMenubar id={codeId as string} />
     <Box sx={{
       display: 'flex',
-      height: 'calc(100vh - 40px)',
-      width: '100%',
+      flexGrow: 1,
+      height:"calc(100% - 40px)"
     }}>
       <Sidebar>
         <Github />

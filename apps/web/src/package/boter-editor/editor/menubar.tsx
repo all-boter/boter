@@ -1,12 +1,14 @@
 import { SUCCESS } from "@/common/constants"
 import { editCodeByStgId } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
-import { Play, Save } from "lucide-react"
+import { ArrowLeft, Play, Save } from "lucide-react"
 import { getModulesBySourceId } from "../boter-db/db-util"
+import { useNavigate } from "react-router-dom"
 
 enum MenubarEvent {
   Save = 1,
-  Run = 2
+  Run = 2,
+  Back = 3
 }
 
 const menbarTheme = {
@@ -20,11 +22,17 @@ const menbarTheme = {
 }
 
 const StyledItem = styled('div')(`
+  display: flex;
+  // display: inline-block;
+  height: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
   font-size: 14px;
   font-weight: 400;
   box-sizing: border-box;
   border: none;
-  display: inline-block;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -46,27 +54,18 @@ const StyledItem = styled('div')(`
   `
 )
 
-const StyledSpan = styled('span')(`
-  display: flex;
-  height: 100%;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  `
-)
-
 interface IMenubar {
   id: string
 }
 
 export const EditorMenubar = ({ id }: IMenubar) => {
+  const navigate = useNavigate();
 
   const onMenubar = async (event: MenubarEvent) => {
     const modules = await getModulesBySourceId(id)
     switch (event) {
       case MenubarEvent.Save:
-        if(modules?.length) {
+        if (modules?.length) {
           const saveRes = await editCodeByStgId({
             stgId: id,
             code: modules[0].code
@@ -84,31 +83,35 @@ export const EditorMenubar = ({ id }: IMenubar) => {
 
         break;
 
+      case MenubarEvent.Back:
+        navigate(-1);
+        break;
+
       default:
         break;
     }
   }
 
-  return <Box component={'header'}
+  return <Box component={'div'}
     sx={{
       display: 'flex',
       height: '40px',
-      paddingLeft: '30px',
+      // height: '20px',
       background: menbarTheme.blackBg
     }}>
 
+    <StyledItem onClick={() => onMenubar(MenubarEvent.Back)}>
+      <Box component={ArrowLeft} size={20} sx={{ mr: '4px' }} />
+    </StyledItem>
+
     <StyledItem onClick={() => onMenubar(MenubarEvent.Save)}>
-      <StyledSpan>
-        <Box component={Save} size={20} sx={{ mr: '4px' }}></Box>
-        Save
-      </StyledSpan>
+      <Box component={Save} size={20} sx={{ mr: '4px' }} />
+      Save
     </StyledItem>
 
     <StyledItem onClick={() => onMenubar(MenubarEvent.Run)}>
-      <StyledSpan>
-        <Box component={Play} size={20} sx={{ mr: '4px' }}></Box>
-        Run
-      </StyledSpan>
+      <Box component={Play} size={20} sx={{ mr: '4px' }} />
+      Run
     </StyledItem>
   </Box>
 }

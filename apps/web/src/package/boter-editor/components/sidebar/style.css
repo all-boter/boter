@@ -1,7 +1,6 @@
 .botere-aside {
   display: block;
   width: 250px;
-  height: 100%;
   overflow-y: auto;
   border-right: 2px solid;
   border-color: #242424;
