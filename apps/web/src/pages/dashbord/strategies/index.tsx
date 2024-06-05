@@ -1,41 +1,20 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box } from "@mui/system"
-import { useNavigate } from 'react-router-dom';
 import { CreateStg } from '@/components/views/modal/createStg';
 import { Sidebar } from '@/components/views/Sidebar';
 import { appSlice, fetchStrategies } from '@/store/appSlice';
 import { AppDispatch } from '@/store';
+import { StgList } from '@/components/views/stgList';
+import { Button } from '@/components/basics/button';
+import { createRunner } from '@/services/stgApi';
 import { SUCCESS } from '@/common/constants';
 import { authVerifyApi } from '@/services/userApi';
-import { StgList } from '@/components/views/stgList';
-import { createRunner } from '@/services/stgApi';
-
-import { Button } from '@/components/basics/button';
-import { Input } from '@/components/basics/input';
-import ButtonOrgin from '@/components/basics/button/btnOrgin';
+import { mainTheme } from '@/components/basics/muiColor';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
   const [isOpenCreateStg, openCreateStg] = useState(false);
-
-  const authVerifyUtil = async () => {
-    const res = await authVerifyApi()
-    if (res.code === SUCCESS) {
-      dispatch(appSlice.actions.addUser(res.data))
-    } else {
-      console.error(res.msg)
-    }
-  }
-
-  const onAuthVerify = () => {
-    authVerifyUtil()
-  }
-
-  const onEditor = () => {
-    navigate('/editor/github');
-  }
 
   const onCreateStg = () => {
     openCreateStg(true)
@@ -46,6 +25,16 @@ export const Dashbord = () => {
     dispatch(fetchStrategies());
   }
 
+  // TODO: Just for testing
+  /**
+  const onAuthVerify = async() => {
+    const res = await authVerifyApi()
+    if (res.code === SUCCESS) {
+      dispatch(appSlice.actions.addUser(res.data))
+    } else {
+      console.error(res.msg)
+    }
+  }
   const onCreateRunner = async () => {
     const res = await createRunner({
       name: 'test',
@@ -59,30 +48,25 @@ export const Dashbord = () => {
       console.error(res.msg)
     }
   }
+  */
 
   return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%',mb: '20px' }}>
         <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
-          <Box component={'span'} sx={{ mr: '10px', color: '#FFF' }}>
+          <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
             My strategies
           </Box>
 
           <Button onClick={() => onCreateStg()}>Create strategy</Button>
         </Box>
 
-        <Box sx={{ mt: '18px' }}>
+        {/* <Box sx={{ mt: '18px' }}>
           <button onClick={onAuthVerify}>auth verify</button>
-
-          <button onClick={onEditor}>editor</button>
-
           <button onClick={onCreateRunner}>create runner</button>
-
-          <ButtonOrgin>hello</ButtonOrgin>
-          <Input />
-        </Box>
+        </Box> */}
       </Box>
 
       <StgList />

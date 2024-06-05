@@ -26,7 +26,7 @@ const StyledButton = styled(ButtonOrgin)(
   background-color: ${bg || mainColor[100]};
   padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
   width: ${width ? width + 'px' : 'auto'};
-  border-radius: 8px;
+  border-radius: 6px;
   color: ${color || mainColor[101]};
   transition: all 150ms ease;
   cursor: pointer;

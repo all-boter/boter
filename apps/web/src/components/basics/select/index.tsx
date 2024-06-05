@@ -11,11 +11,11 @@ interface ICss {
 const selectTheme = {
   whiteBg: 'rgb(255, 255, 255)',
   whiteColor: 'rgb(9, 9, 11)',
-  whiteHover:'hsl(240 4.8% 95.9%)',
+  whiteHover: 'hsl(240 4.8% 95.9%)',
 
-  blackColor:'#fff',
-  blackBg:'#2a2a2a',
-  blackHover:'#35363a'
+  blackColor: '#fff',
+  blackBg: '#2a2a2a',
+  blackHover: '#35363a'
 }
 
 const RadixItem = styled(Item)(
@@ -25,7 +25,7 @@ const RadixItem = styled(Item)(
     outline: none;
     font-size: 14px;
     transition: background ease 300ms;
-    border-radius: 2px;
+    border-radius: 6px;
     &:focus {
       background: ${selectTheme.whiteHover};
     }
@@ -39,8 +39,8 @@ const Dropdown = styled('div')(
     width: ${width ? width + 'px' : '180px'};
     font-family: sans-serif;
     font-size: 16px;
-    border: 1px solid #1b1b1b;
-    border-radius: 2px;
+    border: 1px solid #bcbaba;
+    border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     pointer-events: all;
     background: ${selectTheme.whiteBg};
@@ -62,8 +62,7 @@ const RadixSelTrigger = styled('div')(
     height: 32px;
     font-size: 14px;
     font-family: sans-serif;
-    border: 1px solid #979595;
-    border-radius: 2px;
+    border-radius: 6px;
     outline: none;
     background: ${selectTheme.whiteBg};
     color: ${selectTheme.whiteColor};
@@ -83,9 +82,9 @@ export const BoterSelect = (props: IBoterSelect) => {
   const { options, id = 'value', label = 'label', value, onChange } = props
 
   const labelView = useMemo<string>(() => {
-    if(!value) return ''
+    if (!value) return ''
 
-    return options.find((item)=>{
+    return options.find((item) => {
       return item[id] === value
     })?.[label] || ''
   }, [value])

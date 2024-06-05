@@ -5,6 +5,7 @@ import { Bot, getOwnedBots } from "@/services/stgApi";
 import { BotStatus, SUCCESS } from "@/common/constants";
 import { BotList } from "@/components/views/bots/botList";
 import { BoterSelect } from "@/components/basics/select";
+import { mainTheme } from "@/components/basics/muiColor";
 
 const options: {
   value: BotStatus,
@@ -44,13 +45,16 @@ export const Bots = () => {
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <Box sx={{ mb: '10px' }}>
-        <BoterSelect 
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: '10px' }}>
+        <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '700', fontSize: '20px' }}>
+          My bots
+        </Box>
+        <BoterSelect
           options={options}
           value={botStatusFilter}
           width={140}
           onChange={onChangeBotFilter}
-         />
+        />
       </Box>
 
       <BotList bots={bots} refreshList={getBotsUtil} />
