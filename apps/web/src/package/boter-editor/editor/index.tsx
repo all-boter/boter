@@ -274,7 +274,8 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
         />
       </Sidebar>
 
-      <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
+      {/* <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} /> */}
+      <Editor />
 
       <InspectorPanel
         onLayoutChange={(layout) => {

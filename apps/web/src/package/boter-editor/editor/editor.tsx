@@ -1,55 +1,15 @@
 import React, { useRef, useEffect } from 'react';
-import * as monaco from 'monaco-editor';
-import { CodeFile } from '../utils';
-import { Vimer } from 'boter-vim'
+import MonacoEditor, { type Monaco } from '@monaco-editor/react'
+import { KeyMod, KeyCode, type editor, type IKeyboardEvent } from 'monaco-editor'
 
 interface Props {
-  codeFile: CodeFile
-  defaultValue: any
-  language: string
-  onChange: (codeFile: CodeFile) => void
 }
 
-export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) => {
-  const divEl = useRef<HTMLDivElement>(null);
-  const editor = useRef<monaco.editor.IStandaloneCodeEditor>(null as any);
-  const codeFileRef = useRef<CodeFile>(codeFile);
+export const Editor = (props: Props) => {
 
-  useEffect(() => {
-    if (divEl.current) {
-      editor.current = monaco.editor.create(divEl.current, {
-        value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-        // language: 'typescript'
-        language: 'javascript'
-      });
-
-      editor.current.focus();
-      Vimer.initVim(editor.current, divEl.current);
-
-      editor.current.onDidChangeModelContent((event) => {
-        const value = editor.current.getValue();
-        onChange({ ...codeFileRef.current, content: value });
-      });
-    }
-
-    return () => {
-      editor.current.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (codeFile) {
-      codeFileRef.current = codeFile;
-      editor.current.setValue(codeFile.content);
-    }
-  }, [codeFile]);
-
-  return <div style={{
-    width: '70%',
-    height:"calc(100% - 22px)",
-    boxSizing: 'border-box'
-  }} ref={divEl}
-  />;
+  return <div>
+    hello
+  </div>
 };
 
 export default Editor;
