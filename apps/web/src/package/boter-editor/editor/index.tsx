@@ -11,9 +11,8 @@ import { parseCodesToFilePath } from "../utils/file-manager";
 import { Github } from "../components/sidebar/github";
 import CodeRenderer from "boter-renderer"
 import { SUCCESS, bundlerUrl } from "../../../common/constants";
-import { githubReposState, useAppSelector } from "../../../store";
+import { AppDispatch, githubReposState, useAppSelector } from "../../../store";
 import "../components/file-tree/style.css";
-import "../components/sidebar/style.css";
 import { GithubRepository } from "../../../services/githubService";
 import { EditorSource } from "@/pages/editor";
 import { getCodeByStgId } from "@/services/stgApi";
@@ -22,6 +21,8 @@ import { Box } from "@mui/system";
 import { InspectorPanel } from "./inspectorPanel";
 import { computeSizePercentage } from "./utils";
 import './inspectorPanel.css'
+import { useDispatch } from "react-redux";
+import { editorSlice, panelState } from "@/store/editorSlice";
 
 const dummyDir: Directory = {
   id: "1",
@@ -116,6 +117,9 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
   const githubRepos = useAppSelector(githubReposState)
   const editorcontainerRef = useRef<HTMLDivElement>(null)
+
+  const dispatch: AppDispatch = useDispatch();
+  const panel = useAppSelector(panelState)
 
   const initCallback = useCallback((rootDir: Directory) => {
     if (!selectedFile) {
@@ -248,7 +252,8 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   console.log('%c=boter-editer-render', 'color:red', {
     // bundlerUrl,
     rootDir,
-    selectedFile
+    selectedFile,
+    panel
   })
 
   return <Box sx={{
@@ -264,19 +269,28 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
       flexGrow: 1,
       height: "calc(100% - 40px)"
     }}>
-      <Sidebar>
-        <Github />
+      <Box sx={{
+        height: '100%',
+        overflow: 'hidden',
+        flex: '1',
+        display: 'flex',
+        width: '100%',
+      }}>
+        <Sidebar>
+          <Github />
+          <FileTree
+            rootDir={rootDir}
+            selectedFile={selectedFile}
+            onSelect={onSelectFile}
+          />
+        </Sidebar>
 
-        <FileTree
-          rootDir={rootDir}
-          selectedFile={selectedFile}
-          onSelect={onSelectFile}
-        />
-      </Sidebar>
-
-      <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} />
+        {/* <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} /> */}
+        <Editor />
+      </Box>
 
       <InspectorPanel
+        {...panel}
         onLayoutChange={(layout) => {
           // dispatch(dispatchPanelLayoutChange({ layout }))
           console.log('%c=onLayoutChange=>', 'color:green', layout)
@@ -292,8 +306,11 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
             // dispatch(dispatchPanelLayoutChange(changes))
             return
           }
+
           const result = computeSizePercentage(changes, editorcontainerRef.current!)
-          console.log('%c=onResize A 2=>', 'color:green', changes)
+
+          console.log('%c=onResize A 2=>', 'color:green', { changes,result })
+          dispatch(editorSlice.actions.changePanelLayout(result))
           // dispatch(dispatchPanelLayoutChange(result))
         }}
       />

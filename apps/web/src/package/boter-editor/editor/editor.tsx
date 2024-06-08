@@ -1,55 +1,81 @@
-import React, { useRef, useEffect } from 'react';
-import * as monaco from 'monaco-editor';
-import { CodeFile } from '../utils';
-import { Vimer } from 'boter-vim'
+import React, { useRef, useEffect, useMemo } from 'react';
+import MonacoEditor, { type Monaco } from '@monaco-editor/react'
+import type * as monaco from 'monaco-editor'
+import { KeyMod, KeyCode, editor, type IKeyboardEvent } from 'monaco-editor'
+import { AppDispatch, useAppSelector } from '@/store';
+import { useDispatch } from 'react-redux';
+import { editorSettingsState, editorSlice, monacoSettingsState, statusState } from '@/store/editorSlice';
+import { Box } from '@mui/system';
+import { loadWorkspaceState } from '@/store/conifg/configWorkspace';
+import { MonacoSettings } from '@/store/editorSlice/tpesMonaco';
+import { getDefaultFontFamily, getFontFamily } from '@/store/conifg/fonts';
 
-interface Props {
-  codeFile: CodeFile
-  defaultValue: any
-  language: string
-  onChange: (codeFile: CodeFile) => void
+const LANGUAGE_GOLANG = 'go'
+
+const setMonacoSettingsToOptions = (state: MonacoSettings): monaco.editor.IEditorOptions => {
+  const {
+    selectOnLineNumbers,
+    mouseWheelZoom,
+    smoothScrolling,
+    cursorBlinking,
+    fontLigatures,
+    cursorStyle,
+    contextMenu,
+  } = state
+  return {
+    selectOnLineNumbers,
+    mouseWheelZoom,
+    smoothScrolling,
+    cursorBlinking,
+    cursorStyle,
+    fontLigatures,
+    fontFamily: state.fontFamily ? getFontFamily(state.fontFamily) : getDefaultFontFamily(),
+    showUnused: true,
+    automaticLayout: true,
+    minimap: { enabled: state.minimap },
+    contextmenu: contextMenu,
+  }
 }
 
-export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) => {
-  const divEl = useRef<HTMLDivElement>(null);
-  const editor = useRef<monaco.editor.IStandaloneCodeEditor>(null as any);
-  const codeFileRef = useRef<CodeFile>(codeFile);
+
+interface Props {
+}
+
+export const Editor = (props: Props) => {
+  const dispatch: AppDispatch = useDispatch();
+  const status = useAppSelector(statusState)
+  const monacoSettings = useAppSelector(monacoSettingsState)
+  const editorSettings = useAppSelector(editorSettingsState)
+
+  const onModifyloading = () => {
+    dispatch(editorSlice.actions.modifyloading(status.loading))
+  }
+
+  const options = useMemo(() => {
+    const options = setMonacoSettingsToOptions(monacoSettings)
+    console.log('%c=editor-options==>', 'color:red', { monacoSettings, options })
+
+    return options
+  }, [monacoSettings])
 
   useEffect(() => {
-    if (divEl.current) {
-      editor.current = monaco.editor.create(divEl.current, {
-        value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
-        // language: 'typescript'
-        language: 'javascript'
-      });
+    const workspaceState = loadWorkspaceState()
+    console.log('%c=editor-useEffect:', 'color:red', workspaceState)
+  }, [])
 
-      editor.current.focus();
-      Vimer.initVim(editor.current, divEl.current);
-
-      editor.current.onDidChangeModelContent((event) => {
-        const value = editor.current.getValue();
-        onChange({ ...codeFileRef.current, content: value });
-      });
-    }
-
-    return () => {
-      editor.current.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (codeFile) {
-      codeFileRef.current = codeFile;
-      editor.current.setValue(codeFile.content);
-    }
-  }, [codeFile]);
-
-  return <div style={{
-    width: '70%',
-    height:"calc(100% - 22px)",
-    boxSizing: 'border-box'
-  }} ref={divEl}
-  />;
+  return <>
+  <Box sx={{
+    display: 'flex',
+    width: '100%',
+    minWidth: '500px',
+  }}>
+    <MonacoEditor
+      language={LANGUAGE_GOLANG}
+      options={options}
+      theme={editorSettings.darkMode ? 'vs-dark' : 'vs-light'}
+    />
+  </Box>
+</>
 };
 
 export default Editor;

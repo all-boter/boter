@@ -1,10 +1,12 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { appSlice } from './appSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { editorSlice } from './editorSlice';
 // import { todos } from './todos';
 
 const rootReducer = combineReducers({
   // todos: todos.reducer,
+  editorSlice: editorSlice.reducer,
   appSlice: appSlice.reducer
 });
 

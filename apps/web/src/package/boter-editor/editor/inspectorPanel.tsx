@@ -3,7 +3,7 @@ import { Resizable } from 're-resizable'
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_WIDTH_PERCENT, LayoutType, MIN_HEIGHT, MIN_WIDTH, SizeChanges, handleClasses } from "./constants"
 import { useCallback } from "react"
 import clsx from "clsx"
-
+// import { throttle } from 'lodash';
 export interface Props {
   /**
    * Panel layout
@@ -57,9 +57,11 @@ export const InspectorPanel = ({
   onCollapsed,
 }: Props) => {
 
+  // /*
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
       const { height, width } = ref.getBoundingClientRect()
+      console.log('%c=---test','color:red',)
       switch (layout) {
         case LayoutType.Vertical:
           onResize?.({ height })
@@ -72,6 +74,23 @@ export const InspectorPanel = ({
     },
     [layout, onResize],
   )
+  // */
+
+  // const handleResize = useCallback(
+  //   throttle((e:any, direction:any, ref:any, delta:any) => {
+  //     const { height, width } = ref.getBoundingClientRect();
+  //     switch (layout) {
+  //       case LayoutType.Vertical:
+  //         onResize?.({ height })
+  //         return
+  //       case LayoutType.Horizontal:
+  //         onResize?.({ width })
+  //         break
+  //       default:
+  //     }
+  //   }, 200), 
+  //   [layout, onResize],
+  // );
 
   const size = {
     // FIXME: Percent height flickers during resize. Use pixels for now.
@@ -92,9 +111,10 @@ export const InspectorPanel = ({
 
   const isCollapsed = collapsed && layout === LayoutType.Vertical
 
-  console.log('%c=inspectorPanel==>', 'color:red', {
+  console.log('%c=inspectorPanel==>', 'color:yellow', {
     MIN_HEIGHT,
-    MIN_WIDTH
+    MIN_WIDTH,
+    size
   })
 
   return <Resizable
