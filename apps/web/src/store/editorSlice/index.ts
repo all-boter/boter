@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "..";
-import { IEditor } from "./types";
+import { IEditor, PanelState } from "./types";
 import { config } from "../conifg";
 import { initialTerminalState } from "./typesTerminal";
 import { initialWorkspaceState } from "./typesWorkspace";
@@ -34,7 +34,20 @@ export const editorSlice = createSlice({
 
       return state;
     },
+    changePanelLayout: (state, action: PayloadAction<PanelState>) => {
+      console.log('%c=changePanelLayout:', 'color:red', action.payload)
+
+      state.panel = {
+        ...state.panel,
+        ...action.payload,
+      }
+
+      return state;
+    }
   }
 });
 
 export const statusState = (state: AppState) => state.editorSlice.status
+export const monacoSettingsState = (state: AppState) => state.editorSlice.monaco
+export const editorSettingsState = (state: AppState) => state.editorSlice.settings
+export const panelState = (state: AppState) => state.editorSlice.panel

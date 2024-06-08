@@ -4,16 +4,17 @@ import { CodeFile } from '../utils';
 import { Vimer } from 'boter-vim'
 
 interface Props {
-  codeFile: CodeFile
-  defaultValue: any
-  language: string
-  onChange: (codeFile: CodeFile) => void
+  // codeFile: CodeFile
+  // defaultValue: any
+  // language: string
+  // onChange: (codeFile: CodeFile) => void
 }
 
-export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) => {
+// export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) => {
+export const Editor = () => {
   const divEl = useRef<HTMLDivElement>(null);
   const editor = useRef<monaco.editor.IStandaloneCodeEditor>(null as any);
-  const codeFileRef = useRef<CodeFile>(codeFile);
+  const codeFileRef = useRef<any>('');
 
   useEffect(() => {
     if (divEl.current) {
@@ -28,7 +29,7 @@ export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) =>
 
       editor.current.onDidChangeModelContent((event) => {
         const value = editor.current.getValue();
-        onChange({ ...codeFileRef.current, content: value });
+        // onChange({ ...codeFileRef.current, content: value });
       });
     }
 
@@ -37,15 +38,16 @@ export const Editor = ({ codeFile, language, onChange, defaultValue }: Props) =>
     };
   }, []);
 
-  useEffect(() => {
-    if (codeFile) {
-      codeFileRef.current = codeFile;
-      editor.current.setValue(codeFile.content);
-    }
-  }, [codeFile]);
+  // useEffect(() => {
+  //   if (codeFile) {
+  //     codeFileRef.current = codeFile;
+  //     editor.current.setValue(codeFile.content);
+  //   }
+  // }, [codeFile]);
 
   return <div style={{
-    width: '70%',
+    // width: '70%',
+    width: '100%',
     height:"calc(100% - 22px)",
     boxSizing: 'border-box'
   }} ref={divEl}

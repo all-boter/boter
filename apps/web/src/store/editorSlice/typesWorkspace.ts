@@ -1,4 +1,6 @@
+
 export const defaultFileName = 'main.go'
+
 const defaultFile = `
 package main
 
