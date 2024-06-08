@@ -161,17 +161,6 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     setSelectedFile(file)
   };
 
-  const onEditorChange = async (codeFile: CodeFile) => {
-    console.log('%c=onEditorChange', 'color:red', { codeFile, selectedFile })
-    if (codeFile?.code_id) {
-      // const res = await boterCodeDb.modules.where('id').equals(codeFile.code_id)
-      // await boterCodeDb.modules.update(id:codeFile.code_id, );
-      await boterCodeDb.modules.update(codeFile.code_id, { code: codeFile.content });
-    } else {
-      console.error('onChange error')
-    }
-  }
-
   const codes = useMemo<any>(() => {
 
     return parseCodesToFilePath({
@@ -286,7 +275,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
         </Sidebar>
 
         {/* <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} /> */}
-        <Editor />
+        <Editor codeFile={selectedFile as CodeFile} />
       </Box>
 
       <InspectorPanel
@@ -309,7 +298,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
 
           const result = computeSizePercentage(changes, editorcontainerRef.current!)
 
-          console.log('%c=onResize A 2=>', 'color:green', { changes,result })
+          console.log('%c=onResize A 2=>', 'color:green', { changes, result })
           dispatch(editorSlice.actions.changePanelLayout(result))
           // dispatch(dispatchPanelLayoutChange(result))
         }}

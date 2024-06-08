@@ -57,7 +57,6 @@ export const InspectorPanel = ({
   onCollapsed,
 }: Props) => {
 
-  // /*
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
       const { height, width } = ref.getBoundingClientRect()
@@ -74,23 +73,6 @@ export const InspectorPanel = ({
     },
     [layout, onResize],
   )
-  // */
-
-  // const handleResize = useCallback(
-  //   throttle((e:any, direction:any, ref:any, delta:any) => {
-  //     const { height, width } = ref.getBoundingClientRect();
-  //     switch (layout) {
-  //       case LayoutType.Vertical:
-  //         onResize?.({ height })
-  //         return
-  //       case LayoutType.Horizontal:
-  //         onResize?.({ width })
-  //         break
-  //       default:
-  //     }
-  //   }, 200), 
-  //   [layout, onResize],
-  // );
 
   const size = {
     // FIXME: Percent height flickers during resize. Use pixels for now.

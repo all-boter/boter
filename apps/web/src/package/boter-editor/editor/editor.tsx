@@ -9,8 +9,9 @@ import { Box } from '@mui/system';
 import { loadWorkspaceState } from '@/store/conifg/configWorkspace';
 import { MonacoSettings } from '@/store/editorSlice/tpesMonaco';
 import { getDefaultFontFamily, getFontFamily } from '@/store/conifg/fonts';
-
-const LANGUAGE_GOLANG = 'go'
+import { CodeFile } from '../utils';
+import { DEFAULT_LANGUAGE } from './constants';
+import { boterCodeDb } from '../boter-db';
 
 const setMonacoSettingsToOptions = (state: MonacoSettings): monaco.editor.IEditorOptions => {
   const {
@@ -37,11 +38,11 @@ const setMonacoSettingsToOptions = (state: MonacoSettings): monaco.editor.IEdito
   }
 }
 
-
 interface Props {
+  codeFile: CodeFile
 }
 
-export const Editor = (props: Props) => {
+export const Editor = ({ codeFile }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const status = useAppSelector(statusState)
   const monacoSettings = useAppSelector(monacoSettingsState)
@@ -58,24 +59,44 @@ export const Editor = (props: Props) => {
     return options
   }, [monacoSettings])
 
+  const editorDidMount = (editorInstance: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
+    console.log('%c=editorDidMount', 'color:grey', { editorInstance, monacoInstance })
+  }
+
+  const onChange = async (newValue: string | undefined, _: editor.IModelContentChangedEvent) => {
+    if (!newValue) {
+      return
+    }
+
+    // void this.debouncedAnalyzeFunc(fileName, code)
+    if (codeFile?.code_id) {
+      console.log('%c=onChange===>', 'color:grey',codeFile.code_id)
+      await boterCodeDb.modules.update(codeFile.code_id, { code: newValue });
+    } else {
+      console.error('onChange error')
+    }
+  }
+
   useEffect(() => {
     const workspaceState = loadWorkspaceState()
     console.log('%c=editor-useEffect:', 'color:red', workspaceState)
   }, [])
 
-  return <>
-  <Box sx={{
+  return <Box sx={{
     display: 'flex',
     width: '100%',
     minWidth: '500px',
   }}>
     <MonacoEditor
-      language={LANGUAGE_GOLANG}
+      loading={<Box >Loading editor...</Box>}
+      language={DEFAULT_LANGUAGE}
       options={options}
+      value={codeFile?.content}
       theme={editorSettings.darkMode ? 'vs-dark' : 'vs-light'}
+      onMount={(e, m) => editorDidMount(e, m)}
+      onChange={(newVal, e) => onChange(newVal, e)}
     />
   </Box>
-</>
 };
 
 export default Editor;
