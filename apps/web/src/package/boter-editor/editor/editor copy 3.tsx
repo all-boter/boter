@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as monaco from 'monaco-editor';
 import { CodeFile } from '../utils';
-import { Vimer } from 'boter-vim'
+// import { Vimer } from 'boter-vim'
 
 interface Props {
   // codeFile: CodeFile
@@ -25,7 +25,7 @@ export const Editor = () => {
       });
 
       editor.current.focus();
-      Vimer.initVim(editor.current, divEl.current);
+      // Vimer.initVim(editor.current, divEl.current);
 
       editor.current.onDidChangeModelContent((event) => {
         const value = editor.current.getValue();

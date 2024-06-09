@@ -14,7 +14,6 @@ import { DEFAULT_LANGUAGE } from './constants';
 import { boterCodeDb } from '../boter-db';
 import { modifyloadingAciton } from '@/store/editorSlice/action';
 import { createVimModeAdapter } from './vim';
-import { Vimer } from 'boter-vim';
 
 const setMonacoSettingsToOptions = (state: MonacoSettings): monaco.editor.IEditorOptions => {
   const {
@@ -67,14 +66,15 @@ export const Editor = ({ codeFile }: Props) => {
     console.log('%c=editorDidMount', 'color:grey', { editorInstance, monacoInstance })
     console.log('%c=editorDidMount - enableVimMode', 'color:grey', editorSettings.enableVimMode)
     // editorInstance.onKeyDown((e) => this.onKeyDown(e))
-    // const [vimAdapter, statusAdapter] = createVimModeAdapter(editorInstance)
+    const [vimAdapter, statusAdapter] = createVimModeAdapter(editorInstance)
     if(editorSettings.enableVimMode){
       // console.log('%c=Vim mode enabled','color:green',{
       //   vimAdapter,
       //   statusAdapter
       // })
-      // vimAdapter.attach()
-      Vimer.initVim(editorInstance,null as any);
+
+      vimAdapter.attach()
+      // Vimer.initVim(editorInstance,null as any);
     }
   }
 
@@ -107,7 +107,7 @@ export const Editor = ({ codeFile }: Props) => {
     { status.loading ?'loading': 'ok'} */}
     <MonacoEditor
       loading={<Box >Loading editor...</Box>}
-      language={DEFAULT_LANGUAGE}
+      language={'js'}
       options={options}
       value={codeFile?.content}
       theme={editorSettings.darkMode ? 'vs-dark' : 'vs-light'}
