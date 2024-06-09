@@ -45,7 +45,6 @@ interface Props {
 }
 
 export const Editor = ({ codeFile }: Props) => {
-  const dispatch: AppDispatch = useDispatch();
   const status = useAppSelector(statusState)
   const monacoSettings = useAppSelector(monacoSettingsState)
   const editorSettings = useAppSelector(editorSettingsState)
@@ -107,7 +106,7 @@ export const Editor = ({ codeFile }: Props) => {
     { status.loading ?'loading': 'ok'} */}
     <MonacoEditor
       loading={<Box >Loading editor...</Box>}
-      language={'js'}
+      // language={'js'}
       options={options}
       value={codeFile?.content}
       theme={editorSettings.darkMode ? 'vs-dark' : 'vs-light'}

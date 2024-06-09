@@ -150,6 +150,9 @@ importers:
       boter-renderer:
         specifier: ^1.0.1
         version: 1.0.1
+      boter-vim:
+        specifier: ^1.0.1
+        version: 1.0.1
       browserslist:
         specifier: ^4.18.1
         version: 4.22.1
@@ -5793,6 +5796,10 @@ packages:
 
   /boter-renderer@1.0.1:
     resolution: {integrity: sha512-9QfpWmvb/dV7UCz5d136QcY9zShTNx80+mLUUnxWlr1EBLDWn3Gb0Xoz7SThHTSUDOmw///h/Tqo2s4RK2RIgw==}
+    dev: false
+
+  /boter-vim@1.0.1:
+    resolution: {integrity: sha512-s+/gXJZxIRt2nJuX15KLlIPMaa1zAsABraEzmEaDuyt5ynacf3t25UnnNMiTrLpNIXgfv3bIcSOqP6OkU2N1yA==}
     dev: false
 
   /bottleneck@2.19.5:

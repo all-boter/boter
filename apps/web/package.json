@@ -32,6 +32,7 @@
     "babel-preset-react-app": "^10.0.1",
     "bfj": "^7.0.2",
     "boter-renderer": "^1.0.1",
+    "boter-vim": "^1.0.1",
     "browserslist": "^4.18.1",
     "camelcase": "^6.2.1",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",

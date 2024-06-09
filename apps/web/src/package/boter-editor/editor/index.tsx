@@ -23,6 +23,7 @@ import { computeSizePercentage } from "./utils";
 import './inspectorPanel.css'
 import { useDispatch } from "react-redux";
 import { editorSlice, panelState } from "@/store/editorSlice";
+import { StatusBar } from "./statusBar";
 
 const dummyDir: Directory = {
   id: "1",
@@ -245,65 +246,68 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     panel
   })
 
-  return <Box sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    background: 'grey'
-  }}
-  >
+  return <>
     <EditorMenubar id={codeId as string} />
-    <Box ref={editorcontainerRef} sx={{
+    <Box sx={{
       display: 'flex',
-      flexGrow: 1,
-      height: "calc(100% - 40px)"
-    }}>
-      <Box sx={{
-        height: '100%',
-        overflow: 'hidden',
-        flex: '1',
+      flexDirection: 'column',
+      height: "calc(100% - 40px)",
+      background: 'grey'
+    }}
+    >
+      <Box ref={editorcontainerRef} sx={{
         display: 'flex',
-        width: '100%',
+        flexGrow: 1,
+        height: "calc(100% - 22px)"
       }}>
-        <Sidebar>
-          <Github />
-          <FileTree
-            rootDir={rootDir}
-            selectedFile={selectedFile}
-            onSelect={onSelectFile}
-          />
-        </Sidebar>
+        <Box sx={{
+          height: '100%',
+          overflow: 'hidden',
+          flex: '1',
+          display: 'flex',
+          width: '100%',
+        }}>
+          <Sidebar>
+            <Github />
+            <FileTree
+              rootDir={rootDir}
+              selectedFile={selectedFile}
+              onSelect={onSelectFile}
+            />
+          </Sidebar>
 
-        {/* <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} /> */}
-        <Editor codeFile={selectedFile as CodeFile} />
+          {/* <Editor codeFile={selectedFile as CodeFile} defaultValue={'hello'} language={'jsLang'} onChange={onEditorChange} /> */}
+          <Editor codeFile={selectedFile as CodeFile} />
+        </Box>
+
+        <InspectorPanel
+          {...panel}
+          onLayoutChange={(layout) => {
+            // dispatch(dispatchPanelLayoutChange({ layout }))
+            console.log('%c=onLayoutChange=>', 'color:green', layout)
+          }}
+          onCollapsed={(collapsed) => {
+            console.log('%c=onCollapsed=>', 'color:green', collapsed)
+            // dispatch(dispatchPanelLayoutChange({ collapsed }))
+          }}
+          onResize={(changes) => {
+            if ('height' in changes) {
+              console.log('%c=onResize A 1=>', 'color:green', changes)
+              // Height percentage is buggy on resize. Use percents only for width.
+              // dispatch(dispatchPanelLayoutChange(changes))
+              return
+            }
+
+            const result = computeSizePercentage(changes, editorcontainerRef.current!)
+
+            console.log('%c=onResize A 2=>', 'color:green', { changes, result })
+            dispatch(editorSlice.actions.changePanelLayout(result))
+            // dispatch(dispatchPanelLayoutChange(result))
+          }}
+        />
+        {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}
       </Box>
-
-      <InspectorPanel
-        {...panel}
-        onLayoutChange={(layout) => {
-          // dispatch(dispatchPanelLayoutChange({ layout }))
-          console.log('%c=onLayoutChange=>', 'color:green', layout)
-        }}
-        onCollapsed={(collapsed) => {
-          console.log('%c=onCollapsed=>', 'color:green', collapsed)
-          // dispatch(dispatchPanelLayoutChange({ collapsed }))
-        }}
-        onResize={(changes) => {
-          if ('height' in changes) {
-            console.log('%c=onResize A 1=>', 'color:green', changes)
-            // Height percentage is buggy on resize. Use percents only for width.
-            // dispatch(dispatchPanelLayoutChange(changes))
-            return
-          }
-
-          const result = computeSizePercentage(changes, editorcontainerRef.current!)
-
-          console.log('%c=onResize A 2=>', 'color:green', { changes, result })
-          dispatch(editorSlice.actions.changePanelLayout(result))
-          // dispatch(dispatchPanelLayoutChange(result))
-        }}
-      />
-      {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}
+      <StatusBar />
     </Box>
-  </Box>
+  </>
 }

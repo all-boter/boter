@@ -141,3 +141,4 @@ export const statusState = (state: AppState) => state.editorSlice.status
 export const monacoSettingsState = (state: AppState) => state.editorSlice.monaco
 export const editorSettingsState = (state: AppState) => state.editorSlice.settings
 export const panelState = (state: AppState) => state.editorSlice.panel
+export const vimState = (state: AppState) => state.editorSlice.vim

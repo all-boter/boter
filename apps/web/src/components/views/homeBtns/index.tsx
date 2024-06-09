@@ -17,7 +17,7 @@ const LaunchBtn = styled('a')(
   align-items: center;
   height: 48px;
   cursor: pointer;
- border-radius: 6px;
+  border-radius: 6px;
   border: 2px solid ${muiGreen['limeGreen']};
   padding: 0px 16px;
   font-weight: 600;
