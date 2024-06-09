@@ -57,6 +57,7 @@
     "lucide-react": "^0.367.0",
     "mini-css-extract-plugin": "^2.4.5",
     "monaco-editor": "^0.47.0",
+    "monaco-vim": "^0.4.1",
     "nanoid": "^5.0.7",
     "octokit": "^3.2.0",
     "postcss": "^8.4.4",

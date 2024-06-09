@@ -54,7 +54,7 @@ export interface IEditor {
   monaco: MonacoSettings
   panel: PanelState
   ui?: UIState
-  vim?: VimState | null
+  vim: VimState
   workspace: WorkspaceState
   notifications: NotificationsState
   terminal: TerminalState

@@ -38,7 +38,7 @@ export const config = {
   },
 
   get enableVimMode() {
-    return this.getBoolean(ENABLE_VIM_MODE_KEY, false)
+    return this.getBoolean(ENABLE_VIM_MODE_KEY, true)
   },
 
   set enableVimMode(val: boolean) {

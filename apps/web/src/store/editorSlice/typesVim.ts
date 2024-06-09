@@ -14,7 +14,7 @@ export type ConfirmMessage = VimState['confirmMessage']
 
 export interface VimState {
   mode: VimMode
-  subMode?: VimSubMode
+  subMode: VimSubMode
   keyBuffer?: string
   commandStarted?: boolean
   confirmMessage?: {

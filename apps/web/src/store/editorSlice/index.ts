@@ -4,6 +4,8 @@ import { IEditor, PanelState } from "./types";
 import { config } from "../conifg";
 import { initialTerminalState } from "./typesTerminal";
 import { initialWorkspaceState } from "./typesWorkspace";
+import { ConfirmMessage, VimMode, VimState, VimSubMode } from "./typesVim";
+import { VimModeChangeArgs } from "@/package/boter-editor/editor/vim";
 
 const initialState: IEditor = {
   status: {
@@ -20,7 +22,10 @@ const initialState: IEditor = {
   monaco: config.monacoSettings,
   panel: config.panelLayout,
   notifications: {},
-  vim: null,
+  vim: {
+    mode: VimMode.Normal,
+    subMode: VimSubMode.Linewise
+  },
   terminal: initialTerminalState,
   workspace: initialWorkspaceState,
 }
@@ -43,7 +48,92 @@ export const editorSlice = createSlice({
       }
 
       return state;
-    }
+    },
+    // =====Vim end=====
+    // =====Vim end=====
+    newVimInitAction: (state) => {
+      console.log('%c=newVimInitAction-B', 'color:red',)
+      state.vim = {
+        mode: VimMode.Normal,
+        subMode: VimSubMode.Linewise
+      }
+
+      return state;
+    },
+    newVimModeChangeAction: (state, action: PayloadAction<VimModeChangeArgs>) => {
+      state.vim = {
+        ...state.vim,
+        mode: action.payload.mode,
+        subMode: action.payload.subMode
+      }
+
+      return state;
+    },
+    newVimDisposeAction: (state) => {
+      state.vim = {} as VimState
+
+      return state;
+    },
+    newVimConfirmAction: (state, action: PayloadAction<ConfirmMessage>) => {
+      state.vim = {
+        ...state.vim,
+        confirmMessage: action.payload,
+      }
+
+      return state;
+    },
+    newVimCommandStartAction: (state, action: PayloadAction<string>) => {
+      state.vim = {
+        ...state.vim,
+        commandStarted: true,
+        keyBuffer: action.payload ?? ''
+      }
+
+      return state;
+    },
+    newVimCommandDoneAction: (state) => {
+      state.vim = {
+        mode: state.vim.mode,
+        subMode: state.vim.subMode,
+      }
+
+      return state;
+    },
+    newVimKeyDeleteAction: (state) => {
+      const keyBuffer = state.vim.keyBuffer?.slice(0, -1)
+      if (!keyBuffer) {
+        state.vim = {
+          mode: state.vim.mode,
+          subMode: state.vim.subMode,
+        }
+      } else {
+        state.vim = {
+          ...state.vim,
+          keyBuffer
+        }
+      }
+
+      return state;
+    },
+    newVimKeyPressAction: (state, action: PayloadAction<{ key: string, replaceContents: boolean }>) => {
+      if (!state.vim.commandStarted) {
+        return state
+      }
+
+      const { key, replaceContents } = action.payload
+      const keyBuffer = state.vim.keyBuffer
+      const newContent = replaceContents ? key : keyBuffer + key
+
+      state.vim = {
+        ...state.vim,
+        commandStarted: true,
+        keyBuffer: newContent
+      }
+
+      return state;
+    },
+    // =====Vim end=====
+    // =====Vim end=====
   }
 });
 

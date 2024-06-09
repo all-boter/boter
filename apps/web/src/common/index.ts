@@ -14,3 +14,5 @@ export function isJwtExpired(exp: number): boolean {
 
   return currentTime < expirationTime;
 }
+
+export type Nullable<T> = T | null

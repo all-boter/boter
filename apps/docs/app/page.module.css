@@ -258,11 +258,11 @@
   }
 }
 
-.code {
+/* .code {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
   font-weight: 700;
-}
+} */
 
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {

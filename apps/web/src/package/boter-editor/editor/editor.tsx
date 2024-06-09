@@ -12,6 +12,9 @@ import { getDefaultFontFamily, getFontFamily } from '@/store/conifg/fonts';
 import { CodeFile } from '../utils';
 import { DEFAULT_LANGUAGE } from './constants';
 import { boterCodeDb } from '../boter-db';
+import { modifyloadingAciton } from '@/store/editorSlice/action';
+import { createVimModeAdapter } from './vim';
+import { Vimer } from 'boter-vim';
 
 const setMonacoSettingsToOptions = (state: MonacoSettings): monaco.editor.IEditorOptions => {
   const {
@@ -49,7 +52,8 @@ export const Editor = ({ codeFile }: Props) => {
   const editorSettings = useAppSelector(editorSettingsState)
 
   const onModifyloading = () => {
-    dispatch(editorSlice.actions.modifyloading(status.loading))
+    // dispatch(editorSlice.actions.modifyloading(status.loading))
+    modifyloadingAciton(status.loading)
   }
 
   const options = useMemo(() => {
@@ -61,6 +65,17 @@ export const Editor = ({ codeFile }: Props) => {
 
   const editorDidMount = (editorInstance: editor.IStandaloneCodeEditor, monacoInstance: Monaco) => {
     console.log('%c=editorDidMount', 'color:grey', { editorInstance, monacoInstance })
+    console.log('%c=editorDidMount - enableVimMode', 'color:grey', editorSettings.enableVimMode)
+    // editorInstance.onKeyDown((e) => this.onKeyDown(e))
+    // const [vimAdapter, statusAdapter] = createVimModeAdapter(editorInstance)
+    if(editorSettings.enableVimMode){
+      // console.log('%c=Vim mode enabled','color:green',{
+      //   vimAdapter,
+      //   statusAdapter
+      // })
+      // vimAdapter.attach()
+      Vimer.initVim(editorInstance,null as any);
+    }
   }
 
   const onChange = async (newValue: string | undefined, _: editor.IModelContentChangedEvent) => {
@@ -86,7 +101,10 @@ export const Editor = ({ codeFile }: Props) => {
     display: 'flex',
     width: '100%',
     minWidth: '500px',
-  }}>
+  }}
+  >
+    {/* <button onClick={onModifyloading}>test action</button>
+    { status.loading ?'loading': 'ok'} */}
     <MonacoEditor
       loading={<Box >Loading editor...</Box>}
       language={DEFAULT_LANGUAGE}
