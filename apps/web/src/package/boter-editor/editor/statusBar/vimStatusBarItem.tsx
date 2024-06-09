@@ -37,9 +37,7 @@ export const VimStatusBarItem = () => {
   const vim = useAppSelector(vimState)
 
   const text = useMemo<string>(() => {
-    const text = getItemText(vim)
-    console.log('%c=VimStatusBarItem', 'color:red', text)
-    return text
+    return getItemText(vim)
   }, [vim.mode])
 
   if (!vim || !editorSettings.enableVimMode) {

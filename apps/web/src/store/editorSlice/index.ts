@@ -34,11 +34,6 @@ export const editorSlice = createSlice({
   name: "editor",
   initialState,
   reducers: {
-    modifyloading: (state, action: PayloadAction<boolean>) => {
-      state.status.loading = !action.payload
-
-      return state;
-    },
     changePanelLayout: (state, action: PayloadAction<PanelState>) => {
       console.log('%c=changePanelLayout:', 'color:red', action.payload)
 
@@ -52,7 +47,6 @@ export const editorSlice = createSlice({
     // =====Vim end=====
     // =====Vim end=====
     newVimInitAction: (state) => {
-      console.log('%c=newVimInitAction-B', 'color:red',)
       state.vim = {
         mode: VimMode.Normal,
         subMode: VimSubMode.Linewise
@@ -61,10 +55,23 @@ export const editorSlice = createSlice({
       return state;
     },
     newVimModeChangeAction: (state, action: PayloadAction<VimModeChangeArgs>) => {
+      const mode = action.payload.mode
       state.vim = {
         ...state.vim,
-        mode: action.payload.mode,
+        mode,
         subMode: action.payload.subMode
+      }
+
+      if(mode === VimMode.Insert){
+        state.monaco = {
+          ...state.monaco,
+          cursorStyle: 'line'
+        }
+      }else{
+        state.monaco = {
+          ...state.monaco,
+          cursorStyle: 'block'
+        }
       }
 
       return state;
@@ -137,7 +144,6 @@ export const editorSlice = createSlice({
   }
 });
 
-export const statusState = (state: AppState) => state.editorSlice.status
 export const monacoSettingsState = (state: AppState) => state.editorSlice.monaco
 export const editorSettingsState = (state: AppState) => state.editorSlice.settings
 export const panelState = (state: AppState) => state.editorSlice.panel

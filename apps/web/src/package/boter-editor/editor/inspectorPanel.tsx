@@ -60,7 +60,7 @@ export const InspectorPanel = ({
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
       const { height, width } = ref.getBoundingClientRect()
-      console.log('%c=---test','color:red',)
+      console.log('%c=handleResize','color:red',)
       switch (layout) {
         case LayoutType.Vertical:
           onResize?.({ height })
@@ -92,12 +92,6 @@ export const InspectorPanel = ({
   }
 
   const isCollapsed = collapsed && layout === LayoutType.Vertical
-
-  console.log('%c=inspectorPanel==>', 'color:yellow', {
-    MIN_HEIGHT,
-    MIN_WIDTH,
-    size
-  })
 
   return <Resizable
     className={clsx('InspectorPanel', isCollapsed && 'InspectorPanel--collapsed', `InspectorPanel--${layout}`)}

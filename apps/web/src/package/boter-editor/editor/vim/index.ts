@@ -44,7 +44,6 @@ class VimModeKeymapAdapter extends VimModeKeymap {
   private commandsAttached = false
 
   constructor(editorInstance: editor.IStandaloneCodeEditor) {
-    console.log('%c=editorInstance', 'color:yellow', editorInstance)
     super(editorInstance)
   }
 
@@ -55,7 +54,6 @@ class VimModeKeymapAdapter extends VimModeKeymap {
     }
 
     newVimInitAction()
-    console.log('%c=====attach','color:green',super.attach)
     super.attach()
   }
 
