@@ -1,9 +1,12 @@
 import { Box } from "@mui/system"
 import { Resizable } from 're-resizable'
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_WIDTH_PERCENT, LayoutType, MIN_HEIGHT, MIN_WIDTH, SizeChanges, handleClasses } from "./constants"
-import { useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
-// import { throttle } from 'lodash';
+import { SocketConnector } from "@/common/socketConnector"
+import Cookies from 'js-cookie';
+import { Socket } from "socket.io-client";
+
 export interface Props {
   /**
    * Panel layout
@@ -56,11 +59,13 @@ export const InspectorPanel = ({
   onLayoutChange,
   onCollapsed,
 }: Props) => {
+  const isCollapsed = collapsed && layout === LayoutType.Vertical
+  const [socket,setSocket] = useState<SocketConnector>()
 
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
       const { height, width } = ref.getBoundingClientRect()
-      console.log('%c=handleResize','color:red',)
+      console.log('%c=handleResize', 'color:red',)
       switch (layout) {
         case LayoutType.Vertical:
           onResize?.({ height })
@@ -91,7 +96,17 @@ export const InspectorPanel = ({
     topLeft: false,
   }
 
-  const isCollapsed = collapsed && layout === LayoutType.Vertical
+  useEffect(() => {
+    const socketConnector = new SocketConnector(Cookies.get('token')!);
+    setSocket(socketConnector)
+  }, [])
+
+  const handleConnection = ()=>{
+    if(socket){
+      console.log('%c=handleConnection','color:red',)
+      socket.emitStartEvent()
+    }
+  }
 
   return <Resizable
     className={clsx('InspectorPanel', isCollapsed && 'InspectorPanel--collapsed', `InspectorPanel--${layout}`)}
@@ -104,6 +119,7 @@ export const InspectorPanel = ({
   >
     <Box sx={{ background: 'green' }}>
       InspectorPanel
+      <button onClick={handleConnection}>handleConnection</button>
     </Box>
   </Resizable>
 }
