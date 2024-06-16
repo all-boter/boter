@@ -4,8 +4,6 @@ import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_WIDTH_PERCENT, LayoutType, MIN_HEIG
 import { useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
 import { SocketConnector } from "@/common/socketConnector"
-import Cookies from 'js-cookie';
-import { Socket } from "socket.io-client";
 
 export interface Props {
   /**
@@ -60,7 +58,6 @@ export const InspectorPanel = ({
   onCollapsed,
 }: Props) => {
   const isCollapsed = collapsed && layout === LayoutType.Vertical
-  const [socket,setSocket] = useState<SocketConnector>()
 
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
@@ -96,14 +93,14 @@ export const InspectorPanel = ({
     topLeft: false,
   }
 
-  useEffect(() => {
-    const socketConnector = new SocketConnector(Cookies.get('token')!);
-    setSocket(socketConnector)
-  }, [])
-
   const handleConnection = ()=>{
-    if(socket){
-      console.log('%c=handleConnection','color:red',)
+    // if(socket){
+    //   console.log('%c=handleConnection','color:red',)
+    //   socket.emitStartEvent()
+    // }
+    console.log('%c=handleConnection:','color:red',SocketConnector.getInstance())
+    const socket = SocketConnector.getInstance()
+    if(socket) {
       socket.emitStartEvent()
     }
   }

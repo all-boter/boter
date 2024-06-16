@@ -11,6 +11,7 @@ import { createRunner } from '@/services/stgApi';
 import { SUCCESS } from '@/common/constants';
 import { authVerifyApi } from '@/services/userApi';
 import { mainTheme } from '@/components/basics/muiColor';
+import { SocketConnector } from '@/common/socketConnector';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -23,6 +24,20 @@ export const Dashbord = () => {
   const handleClose = () => {
     openCreateStg(false)
     dispatch(fetchStrategies());
+  }
+
+  const handleConnection = ()=>{
+    const socket = SocketConnector.getInstance()
+    if(socket) {
+      socket.emitStartEvent()
+    }
+  }
+
+  const handleConnection2 = ()=>{
+    const socket = SocketConnector.getInstance()
+    if(socket) {
+      socket.emitBotRunStatus()
+    }
   }
 
   // TODO: Just for testing
@@ -59,6 +74,8 @@ export const Dashbord = () => {
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
             My strategies
           </Box>
+          <button onClick={()=>handleConnection()}>test</button>
+          <button onClick={()=>handleConnection2()}>test</button>
 
           <Button onClick={() => onCreateStg()}>Create strategy</Button>
         </Box>
