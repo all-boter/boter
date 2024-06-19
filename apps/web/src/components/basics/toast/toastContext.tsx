@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export enum ToastType {
   info = 1,
@@ -36,19 +36,37 @@ interface ToastProviderProps {
   children: React.ReactNode;
 }
 
+const MAX_TOASTS = 5;
+
 export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   const showToast = (msg: string, option: IOption) => {
-    setToasts((prevToasts) => [...prevToasts, {
-      msg,
-      ...option
-    }]);
+    setToasts((prevToasts) => {
+      const newToasts = [...prevToasts, { msg, ...option }];
+      return newToasts.length > MAX_TOASTS ? newToasts.slice(1) : newToasts;
+    });
   };
 
   const removeToast = (index: number) => {
     setToasts((prevToasts) => prevToasts.filter((_, i) => i !== index));
   };
 
-  return <ToastContext.Provider value={{ toasts, showToast, removeToast }}>{children}</ToastContext.Provider>;
+  useEffect(() => {
+    const timers = toasts.map((toast, index) =>
+      setTimeout(() => {
+        removeToast(index);
+      }, toast.duration || 3000)
+    );
+
+    return () => {
+      timers.forEach(clearTimeout);
+    };
+  }, [toasts]);
+
+  return (
+    <ToastContext.Provider value={{ toasts, showToast, removeToast }}>
+      {children}
+    </ToastContext.Provider>
+  );
 };

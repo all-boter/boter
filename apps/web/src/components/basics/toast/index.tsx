@@ -8,7 +8,7 @@ import './toast.css'
 /**
  * Usage:
  * const { showToast } = useContext(ToastContext)!;
- * showToast('hello!')
+ * showToast('hello!', { type: ToastType.success, duration: 1000 })
 */
 const StyledTitle = styled(Title)`
   display: flex;
