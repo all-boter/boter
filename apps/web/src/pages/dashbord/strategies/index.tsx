@@ -28,7 +28,7 @@ export const Dashbord = () => {
   const handleConnection = () => {
     const socket = SocketConnector.getInstance()
     if (socket) {
-      socket.emitStartEvent()
+      socket.emitQuerySocket()
     }
   }
 
@@ -74,7 +74,7 @@ export const Dashbord = () => {
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
             My strategies
           </Box>
-          <button onClick={() => handleConnection()}>test</button>
+          <button onClick={() => handleConnection()}>query-socket</button>
           <button onClick={() => handleConnection2()}>test</button>
           <Button onClick={() => onCreateStg()}>Create strategy</Button>
 

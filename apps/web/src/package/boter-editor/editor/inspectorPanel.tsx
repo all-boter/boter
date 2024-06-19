@@ -96,12 +96,12 @@ export const InspectorPanel = ({
   const handleConnection = ()=>{
     // if(socket){
     //   console.log('%c=handleConnection','color:red',)
-    //   socket.emitStartEvent()
+    //   socket.emitQuerySocket()
     // }
     console.log('%c=handleConnection:','color:red',SocketConnector.getInstance())
     const socket = SocketConnector.getInstance()
     if(socket) {
-      socket.emitStartEvent()
+      socket.emitQuerySocket()
     }
   }
 
