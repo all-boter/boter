@@ -2,6 +2,7 @@ import { GithubRepository } from "@/services/githubService";
 import { IStrategy, strateies } from "@/services/stgApi";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SUCCESS } from "@/common/constants";
+import { ConnectStatus } from "@/common/socketConnector";
 
 export const fetchStrategies = createAsyncThunk(
   "strategies/fetch",
@@ -26,6 +27,7 @@ interface InitialState {
   user: User
   githubRepository: GithubRepository | null
   stgList: IStrategy[]
+  socketConnectStatus: ConnectStatus,
 }
 
 const initialState: InitialState = {
@@ -37,6 +39,7 @@ const initialState: InitialState = {
   },
   githubRepository: null,
   stgList: [],
+  socketConnectStatus: { type: 1, msg: 'not init' }
 }
 
 const loadStatePersiste = () => {
@@ -73,6 +76,11 @@ export const appSlice = createSlice({
     },
     addGithubRepository: (state, action: PayloadAction<GithubRepository>) => {
       state.githubRepository = action.payload;
+
+      return state
+    },
+    setSocketConnectStatus: (state, action: PayloadAction<ConnectStatus>) => {
+      state.socketConnectStatus = action.payload;
 
       return state
     }

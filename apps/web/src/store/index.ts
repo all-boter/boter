@@ -22,5 +22,6 @@ export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector
 export const userState = (state: AppState) => state.appSlice.user
 export const stgListState = (state: AppState) => state.appSlice.stgList
 export const githubReposState = (state: AppState) => state.appSlice.githubRepository
+export const socketConnectStatusState = (state: AppState) => state.appSlice.socketConnectStatus
 
 export default store;

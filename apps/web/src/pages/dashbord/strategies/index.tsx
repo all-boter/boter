@@ -3,19 +3,18 @@ import { useDispatch } from 'react-redux';
 import { Box } from "@mui/system"
 import { CreateStg } from '@/components/views/modal/createStg';
 import { Sidebar } from '@/components/views/Sidebar';
-import { appSlice, fetchStrategies } from '@/store/appSlice';
-import { AppDispatch } from '@/store';
+import { fetchStrategies } from '@/store/appSlice';
+import { AppDispatch, socketConnectStatusState, useAppSelector } from '@/store';
 import { StgList } from '@/components/views/stgList';
 import { Button } from '@/components/basics/button';
-import { createRunner } from '@/services/stgApi';
-import { SUCCESS } from '@/common/constants';
-import { authVerifyApi } from '@/services/userApi';
 import { mainTheme } from '@/components/basics/muiColor';
 import { SocketConnector } from '@/common/socketConnector';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
   const [isOpenCreateStg, openCreateStg] = useState(false);
+
+  const socketConnectStatus = useAppSelector(socketConnectStatusState)
 
   const onCreateStg = () => {
     openCreateStg(true)
@@ -26,17 +25,18 @@ export const Dashbord = () => {
     dispatch(fetchStrategies());
   }
 
-  const handleConnection = ()=>{
+  const handleConnection = () => {
     const socket = SocketConnector.getInstance()
-    if(socket) {
+    if (socket) {
       socket.emitStartEvent()
     }
   }
 
-  const handleConnection2 = ()=>{
+  const handleConnection2 = () => {
     const socket = SocketConnector.getInstance()
-    if(socket) {
-      socket.emitBotRunStatus()
+    if (socket) {
+      // socket.emitBotRunStatus()
+      socket.emitTimeoutBotRunStatus()
     }
   }
 
@@ -69,15 +69,16 @@ export const Dashbord = () => {
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <Box sx={{ width: '100%',mb: '20px' }}>
+      <Box sx={{ width: '100%', mb: '20px' }}>
         <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
             My strategies
           </Box>
-          <button onClick={()=>handleConnection()}>test</button>
-          <button onClick={()=>handleConnection2()}>test</button>
-
+          <button onClick={() => handleConnection()}>test</button>
+          <button onClick={() => handleConnection2()}>test</button>
           <Button onClick={() => onCreateStg()}>Create strategy</Button>
+
+          <div>status: {socketConnectStatus?.type}-{socketConnectStatus?.msg}</div>
         </Box>
 
         {/* <Box sx={{ mt: '18px' }}>
