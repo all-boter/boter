@@ -20,11 +20,17 @@ export class SocketConnector {
   private static instance: SocketConnector;
 
   constructor(token: string) {
-    console.log('%c=process.env.REACT_APP_BASE_SOCKET', 'color:cyan', { REACT_APP_BASE_SOCKET: process.env.REACT_APP_BASE_SOCKET, token })
+    // console.log('%c=process.env.REACT_APP_BASE_SOCKET', 'color:cyan', { REACT_APP_BASE_SOCKET: process.env.REACT_APP_BASE_SOCKET, token })
     this.socket = io(process.env.REACT_APP_BASE_SOCKET!, {
       auth: {
         token,
-      }
+      },
+      /**
+       * force use WebSocket; control polling event sending frequency
+       *  */
+      transports: ['websocket'], 
+      reconnectionAttempts: 360,
+      reconnectionDelay: 5000,
     });
 
     this.socket.on("connect", () => {
