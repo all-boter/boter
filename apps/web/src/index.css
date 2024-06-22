@@ -1,5 +1,5 @@
 html {
-  height: 100%;
+  height: auto;
 }
 
 body {
@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  background: #1e293b;
 }
 
 #root {
@@ -44,4 +45,17 @@ body {
 .y-center {
   display: flex;
   align-items: center;
+}
+
+.page-box {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.editor-box {
+  height: 100%;
+  width: 100%;
 }

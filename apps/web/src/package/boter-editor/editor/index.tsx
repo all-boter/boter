@@ -246,19 +246,18 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     panel
   })
 
-  return <>
+  return <div className="editor-box">
     <EditorMenubar id={codeId as string} />
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      height: "calc(100% - 40px)",
+      height: "calc(100vh - 40px)",
       background: 'grey'
     }}
     >
       <Box ref={editorcontainerRef} sx={{
         display: 'flex',
         flexGrow: 1,
-        height: "calc(100% - 22px)"
       }}>
         <Box sx={{
           height: '100%',
@@ -309,5 +308,5 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
       </Box>
       <StatusBar />
     </Box>
-  </>
+  </div>
 }

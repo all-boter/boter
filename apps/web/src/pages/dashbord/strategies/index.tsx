@@ -65,10 +65,15 @@ export const Dashbord = () => {
   }
   */
 
-  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
+  return <div className="page-box">
     <Sidebar />
 
-    <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
+    <Box sx={{
+      width: '85%',
+      mx: '20px',
+      mt: '20px',
+      flexGrow: 1
+    }}>
       <Box sx={{ width: '100%', mb: '20px' }}>
         <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
@@ -93,5 +98,5 @@ export const Dashbord = () => {
     </Box>
 
     <CreateStg isOpen={isOpenCreateStg} handleClose={() => handleClose()} />
-  </Box>
+  </div>
 }

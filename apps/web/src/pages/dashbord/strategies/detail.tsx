@@ -95,7 +95,7 @@ export const StgDetail = () => {
     fetchStgUtil(stgId as string)
   }, [stgId])
 
-  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', width: '100%', background: '#1e293b' }}>
+  return <div className="page-box">
     <Sidebar />
     <Box sx={{ color: mainTheme.white, mx: '20px', mt: '20px' }}>
       {strategy ? <>
@@ -198,5 +198,5 @@ export const StgDetail = () => {
         <>loading</>
       }
     </Box>
-  </Box>
+  </div>
 }

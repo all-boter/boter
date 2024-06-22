@@ -41,7 +41,7 @@ export const Bots = () => {
     getBotsUtil(BotStatus.Running)
   }, [])
 
-  return <Box sx={{ display: 'flex', flexDirection: 'row', height: '100%', background: '#1e293b' }}>
+  return <div className="page-box">
     <Sidebar />
 
     <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
@@ -59,5 +59,5 @@ export const Bots = () => {
 
       <BotList bots={bots} refreshList={getBotsUtil} />
     </Box>
-  </Box>
+  </div>
 }

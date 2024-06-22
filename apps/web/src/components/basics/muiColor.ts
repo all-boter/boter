@@ -33,6 +33,7 @@ export const mainTheme = {
   white: '#f3f4f6',
   warning: '#ff4d4f',
   golden: '#FCD535',
+  darkBule: '#1e293b'
 }!
 
 export const mainColor = { 
