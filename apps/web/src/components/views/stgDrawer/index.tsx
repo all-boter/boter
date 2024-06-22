@@ -1,10 +1,12 @@
-import { useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { DynamicFormProvider, FormItem, FormSchema } from "@/components/basics/DynamicFormProvider"
 import { Button } from "@/components/basics/button"
 import { IStrategy, createBot, getRunners } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { useForm } from "react-hook-form"
 import { SUCCESS } from "@/common/constants"
+import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
+import { mainTheme } from "@/components/basics/muiColor"
 
 const formSchemaDefault: FormSchema[] = [
   {
@@ -30,9 +32,12 @@ const StyledButton = styled(Button)(`margin-top: 10px;`)
 
 interface Props {
   stg: IStrategy
+  onClose: () => void
+  drawerOpen: boolean
 }
 
-export const StgDrawer = ({ stg }: Props) => {
+export const StgDrawer = ({ drawerOpen, stg, onClose }: Props) => {
+  const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<FormValues>({})
 
   const { handleSubmit } = useForm({
@@ -41,7 +46,7 @@ export const StgDrawer = ({ stg }: Props) => {
     }
   });
 
-  const { formSchema } = useMemo<{ formSchema: FormSchema[] }>(() => {
+  const { formSchema, defaultFormValues } = useMemo<{ formSchema: FormSchema[], defaultFormValues: any }>(() => {
     const newSchema = [...formSchemaDefault, ...stg.paramsSchema]
 
     const formValues: FormValues = newSchema.reduce((obj: FormValues, item) => {
@@ -51,7 +56,7 @@ export const StgDrawer = ({ stg }: Props) => {
 
     setFormValuesState(formValues)
 
-    return { formSchema: newSchema }
+    return { formSchema: newSchema, defaultFormValues: { ...formValues } }
   }, [stg])
 
   const renderFormItem = (
@@ -63,15 +68,18 @@ export const StgDrawer = ({ stg }: Props) => {
   };
 
   const onSubmit = async () => {
-    console.log('%c=onSubmit:','color:red',
-      {
-        strategyId: stg.id,
-        name: stg.name,
-        params: formValues
-      }
-    )
 
-    // return
+    console.log('%c=', 'color:red', {
+      strategyId: stg.id,
+      name: stg.name,
+      params: formValues
+    })
+
+    if (!formValues['runnerId']) {
+      showToast('Please select runner', { type: ToastType.info, duration: 2000 })
+      return
+    }
+
     const res = await createBot({
       strategyId: stg.id,
       name: stg.name,
@@ -79,14 +87,22 @@ export const StgDrawer = ({ stg }: Props) => {
     })
 
     if (res.code === SUCCESS) {
-
+      showToast(`Create ${stg.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
+      onClose()
     } else {
-      console.error(res.msg)
+      showToast(`Create ${stg.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+      onClose()
     }
   }
 
+  useEffect(() => {
+    if (!drawerOpen) {
+      setFormValuesState(defaultFormValues)
+    }
+  }, [drawerOpen]);
+
   return <Box sx={{ p: '20px' }}>
-    <Box>
+    <Box sx={{mb: '10px',fontWeight: '500',color: mainTheme.golden}}>
       Create <span>{stg.name}</span> Bot
     </Box>
     <form onSubmit={handleSubmit(onSubmit)}>

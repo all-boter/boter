@@ -109,7 +109,7 @@ export const StgList = () => {
     }
 
     <Drawer visible={drawerOpen} onClose={() => setDrawer(false)} anchor={"left"}>
-      <StgDrawer stg={currentStg} />
+      <StgDrawer drawerOpen={drawerOpen} stg={currentStg} onClose={() => setDrawer(false)} />
     </Drawer>
   </Box>
 }

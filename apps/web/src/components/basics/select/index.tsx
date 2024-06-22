@@ -18,7 +18,7 @@ const selectTheme = {
   blackHover: '#35363a'
 }
 
-const RadixItem = styled(Item)(
+export const SelectItem = styled(Item)(
   ({ theme }) => css`
     cursor: pointer;
     padding: 8px;
@@ -76,10 +76,11 @@ interface IBoterSelect {
   label?: string
   id?: string
   width?: number
+  children?: React.ReactNode
 }
 
 export const BoterSelect = (props: IBoterSelect) => {
-  const { options, id = 'value', label = 'label', value, onChange } = props
+  const { children, options, id = 'value', label = 'label', value, onChange } = props
 
   const labelView = useMemo<string>(() => {
     if (!value) return ''
@@ -105,13 +106,14 @@ export const BoterSelect = (props: IBoterSelect) => {
 
     <Content position="popper">
       <Dropdown width={props.width || 0}>
-        {options.map((item, i) => {
+        {children ? children : options.map((item, i) => {
           return (
-            <RadixItem key={item[id] || i} value={item[id]}>
+            <SelectItem key={item[id] || i} value={item[id]}>
               <ItemText> {item[label]} </ItemText>
-            </RadixItem>
+            </SelectItem>
           );
         })}
+
       </Dropdown>
     </Content>
   </Root>

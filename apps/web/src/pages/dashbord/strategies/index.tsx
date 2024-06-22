@@ -78,7 +78,9 @@ export const Dashbord = () => {
           <button onClick={() => handleConnection2()}>test</button>
           <Button onClick={() => onCreateStg()}>Create strategy</Button>
 
-          <div>status: {socketConnectStatus?.type}-{socketConnectStatus?.msg}</div>
+          <Box sx={{
+            color: socketConnectStatus?.type === 8 ? 'green' : 'red'
+          }}>Network: {socketConnectStatus?.msg}</Box>
         </Box>
 
         {/* <Box sx={{ mt: '18px' }}>

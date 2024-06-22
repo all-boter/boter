@@ -36,6 +36,10 @@ export const mainTheme = {
 }!
 
 export const mainColor = { 
+  /**light blue*/
+  100: '#b3e5fc',
+  /**dark blue*/
+  900: '#01579b',
   /**Midnight blue*/
   101: '#202630',
   /**light red*/
@@ -49,10 +53,3 @@ export const mainColor = {
   /**dark gray pure*/
   108: '#2e2e2e'
 }!
-
-export const lightBlue = {
-  /**light blue*/
-  100: '#b3e5fc',
-  /**dark blue*/
-  900: '#01579b'
-}

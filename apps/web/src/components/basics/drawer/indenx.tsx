@@ -49,7 +49,8 @@ export const Drawer = ({ visible, anchor, onClose, children }: IDrawer) => {
       position: 'relative',
       width: '300px',
       height: '100%',
-      backgroundColor: '#f6f7f8'
+      backgroundColor: '#1f2937',
+      borderRight: '1px solid #151e22'
     }}>
       {children}
     </Box>

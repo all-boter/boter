@@ -23,7 +23,7 @@ export const InputF = forwardRef<HTMLInputElement, Props>((props, ref) => {
   }
 
   return <>
-    <Box sx={{ mb: '8px' }}>{props.label}</Box>
+    <Box sx={{ my: '8px', color: '#FFF' }}>{props.label}</Box>
     <Controller
       name={id}
       control={controlF}
@@ -39,16 +39,3 @@ export const InputF = forwardRef<HTMLInputElement, Props>((props, ref) => {
     />
   </>
 });
-
-/*
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  width?: number
-}
-
-export const MyInput = forwardRef<HTMLInputElement, IProps>(({ name, value, ...rest }, ref) => {
-
-  return (
-    <input name={name} {...rest} value={value} ref={ref} />
-  );
-});
-*/

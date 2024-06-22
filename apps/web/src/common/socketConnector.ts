@@ -9,6 +9,10 @@ enum ConnectStatusType {
   connected = 8,
 }
 
+enum MessageType {
+  LOG = 101,
+}
+
 export interface ConnectStatus {
   type: ConnectStatusType
   msg: string
@@ -28,7 +32,7 @@ export class SocketConnector {
       /**
        * force use WebSocket; control polling event sending frequency
        *  */
-      transports: ['websocket'], 
+      transports: ['websocket'],
       reconnectionAttempts: 360,
       reconnectionDelay: 5000,
     });
@@ -63,17 +67,17 @@ export class SocketConnector {
 
   private setupListeners() {
     this.socket.on('private-msg', (data) => {
-      console.log('%c=Received private message', 'color:cyan', data)
+      console.log('%c=Received private messageType:', 'color:cyan', data.type, data)
+      switch (data.type) {
+        case MessageType.LOG:
+          break;
+        default:
+          break;
+      }
     });
   }
 
   static getInstance(): SocketConnector {
-    if (!SocketConnector.instance) {
-      console.log('%c=getInstance-1', 'color:cyan');
-    } else {
-      console.log('%c=getInstance-2', 'color:cyan');
-    }
-
     return SocketConnector.instance;
   }
 
