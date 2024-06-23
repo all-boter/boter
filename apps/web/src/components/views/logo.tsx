@@ -1,5 +1,5 @@
 import Box from '@mui/system/Box';
-import { mainTheme } from '../basics/muiColor';
+import { mainTheme } from '../basics/mainColor';
 
 export const Logo = () => {
   return <Box className='y-center' sx={{ pr: '2px', color: mainTheme.white, fontSize: '24px' }}>

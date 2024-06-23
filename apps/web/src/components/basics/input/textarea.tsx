@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { muiBlue, muiGrey } from '../muiColor';
+import { muiBlue, muiGrey } from '../mainColor';
 import { TextareaHTMLAttributes, forwardRef } from 'react';
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {

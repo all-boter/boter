@@ -1,60 +1,19 @@
 import { SUCCESS } from "@/common/constants"
 import { editCodeByStgId } from "@/services/stgApi"
-import { Box, styled } from "@mui/system"
+import { Box } from "@mui/system"
 import { ArrowLeft, Play, Save } from "lucide-react"
 import { getModulesBySourceId } from "../boter-db/db-util"
 import { useNavigate } from "react-router-dom"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { useContext } from "react"
+import { menbarTheme } from "@/components/basics/mainColor"
+import { MenubarItem } from "@/components/views/menubarItem"
 
 enum MenubarEvent {
   Save = 1,
   Run = 2,
   Back = 3
 }
-
-const menbarTheme = {
-  whiteBg: 'rgb(255, 255, 255)',
-  whiteColor: 'rgb(50, 49, 48)',
-  whiteHover: 'rgb(243, 242, 241)',
-
-  blackColor: '#f4f4f4',
-  blackBg: '#2a2a2a',
-  blackHover: '#3f3f3f'
-}
-
-const StyledItem = styled('div')(`
-  display: flex;
-  // display: inline-block;
-  height: 100%;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 14px;
-  font-weight: 400;
-  box-sizing: border-box;
-  border: none;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  padding: 0px 12px;
-  border-radius: 0px;
-  min-width: 40px;
-  background-color: ${menbarTheme.blackBg};
-  color: ${menbarTheme.blackColor};
-  height: 100%;
-  user-select: none;
-  :hover {
-    background-color: ${menbarTheme.blackHover};
-    color: ;
-  }
-  :active {
-    background-color: ${menbarTheme.blackHover};
-    color: ${menbarTheme.blackColor};
-  }
-  `
-)
 
 interface IMenubar {
   id: string
@@ -102,18 +61,17 @@ export const EditorMenubar = ({ id }: IMenubar) => {
       background: menbarTheme.blackBg
     }}>
 
-    <StyledItem onClick={() => onMenubar(MenubarEvent.Back)} sx={{width: '50px'}}>
+    <MenubarItem onClick={() => onMenubar(MenubarEvent.Back)} sx={{width: '50px'}}>
       <Box component={ArrowLeft} size={20} sx={{ mr: '4px' }} />
-    </StyledItem>
+    </MenubarItem>
 
-    <StyledItem onClick={() => onMenubar(MenubarEvent.Save)}>
+    <MenubarItem onClick={() => onMenubar(MenubarEvent.Save)}>
       <Box component={Save} size={20} sx={{ mr: '4px' }} />
       Save
-    </StyledItem>
+    </MenubarItem>
 
-    <StyledItem onClick={() => onMenubar(MenubarEvent.Run)}>
-      <Box component={Play} size={20} sx={{ mr: '4px' }} />
+    <MenubarItem onClick={() => onMenubar(MenubarEvent.Run)}> <Box component={Play} size={20} sx={{ mr: '4px' }} />
       Run
-    </StyledItem>
+    </MenubarItem>
   </Box>
 }

@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { mainColor, mainTheme } from '../muiColor';
+import { mainColor, mainTheme } from '../mainColor';
 import { Close } from '@radix-ui/react-popover';
 
 interface TriggerBtnProps {

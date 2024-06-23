@@ -5,7 +5,7 @@ import { Bot, getOwnedBots } from "@/services/stgApi";
 import { BotStatus, SUCCESS } from "@/common/constants";
 import { BotList } from "@/components/views/bots/botList";
 import { BoterSelect } from "@/components/basics/select";
-import { mainTheme } from "@/components/basics/muiColor";
+import { mainTheme } from "@/components/basics/mainColor";
 
 const options: {
   value: BotStatus,

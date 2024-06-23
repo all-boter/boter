@@ -1,19 +1,24 @@
 import { Bot, StopBotEnum, stopBot } from "@/services/stgApi"
-import { Box } from "@mui/system"
+import { Box, styled } from "@mui/system"
 import { BotBtnPop } from "./botBtnPop"
 import { useState } from "react"
 import { BotStatus, SUCCESS } from "@/common/constants"
 import { Modal, ModalContent } from "@/components/basics/modal"
-import { mainTheme } from "@/components/basics/muiColor"
+import { mainTheme, muiGreen } from "@/components/basics/mainColor"
+import { Button } from "@/components/basics/button"
+import { useNavigate } from "react-router-dom"
 
 interface IBotList {
   bots: Bot[]
   refreshList: (botStatus: BotStatus) => void
 }
 
+const StyledButton = styled(Button)(`margin-left: 6px;`)
+
 export const BotList = ({ bots, refreshList }: IBotList) => {
   const [confirmStopOpen, setConfirmStopOpen] = useState(false);
   const [selectBotId, setSelectBotId] = useState<string>('');
+  const navigate = useNavigate();
 
   const btnPopCallback = (type: StopBotEnum, botId: string) => {
     if (type === StopBotEnum.forceStop) {
@@ -38,6 +43,11 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
     }
   }
 
+  const onDetail = (bot: Bot) => {
+    console.log('%c=onDetail','color:red',bot)
+    navigate(`/bot/${bot.id}`);
+  }
+
   return <Box sx={{
     display: 'grid',
     width: '100%',
@@ -58,15 +68,18 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           p: '20px',
           background: '#334155'
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: '20px' }}>
-            <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box>
+          <Box sx={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between', mb: '20px' }}>
+            {/* <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box> */}
 
             <Box sx={{ pl: '6px' }}>
               <Box sx={{ fontSize: '18px', fontWeight: 700, color: mainTheme.white }}>{item.name}</Box>
+
               <Box component={'span'} sx={{ color: '#9ca3af' }}>
                 {item.status}
               </Box>
             </Box>
+
+            <StyledButton onClick={() => onDetail(item)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>detail</StyledButton>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

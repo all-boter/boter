@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { styled } from '@mui/system';
-import { mainColor, muiGreen } from '../basics/muiColor';
+import { mainColor, muiGreen } from '../basics/mainColor';
 
 const Button = styled('a')(
   ({ theme }) => `

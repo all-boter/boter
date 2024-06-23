@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
-import { muiBlue, muiGrey } from '../muiColor';
+import { muiBlue, muiGrey } from '../mainColor';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   width?: number

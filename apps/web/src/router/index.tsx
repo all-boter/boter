@@ -7,6 +7,7 @@ import { Bots } from "@/pages/dashbord/bots";
 import { StgDetail } from "@/pages/dashbord/strategies/detail";
 import PageNotFound from "@/pages/pageNotFound";
 import Test from "@/pages/test";
+import { BotDetail } from "@/pages/bot-detail";
 
 export default function AppRouter() {
   return (
@@ -17,6 +18,7 @@ export default function AppRouter() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/editor/:source?/:codeId" element={<Editor />} />
+          <Route path="/bot/:botId" element={<BotDetail />} />
           <Route path="/test" element={<Test />} />
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />

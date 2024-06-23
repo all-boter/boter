@@ -4,7 +4,7 @@ import { IStrategy, editStg, getStgById } from "@/services/stgApi";
 import { Box, styled } from "@mui/system"
 import { useParams } from "react-router-dom";
 import { SUCCESS } from "@/common/constants";
-import { mainTheme } from "@/components/basics/muiColor";
+import { mainTheme } from "@/components/basics/mainColor";
 import { Input } from "@/components/basics/input";
 import { Textarea } from "@/components/basics/input/textarea";
 import { Switch } from "@/components/basics/switch";

@@ -1,6 +1,6 @@
 import { Root, Thumb } from '@radix-ui/react-switch';
 import { Box, styled } from "@mui/system"
-import { mainTheme } from '../muiColor';
+import { mainTheme } from '../mainColor';
 
 const SwitchRoot = styled(Root)`
   position: relative;

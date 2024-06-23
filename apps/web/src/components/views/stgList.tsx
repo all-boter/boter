@@ -3,7 +3,7 @@ import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
-import { mainColor, mainTheme, muiGreen } from "../basics/muiColor";
+import { mainColor, mainTheme, muiGreen } from "../basics/mainColor";
 import { Drawer } from "../basics/drawer/indenx";
 import { StgDrawer } from "./stgDrawer";
 import { AppDispatch, stgListState, useAppSelector } from "@/store";

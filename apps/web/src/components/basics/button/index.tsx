@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import { styled } from '@mui/system';
-import { mainColor, mainTheme, muiBlue, muiGrey } from '../muiColor';
+import { mainColor, mainTheme, muiBlue, muiGrey } from '../mainColor';
 import ButtonOrgin from './btnOrgin';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {

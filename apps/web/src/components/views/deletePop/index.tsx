@@ -1,7 +1,7 @@
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
-import { mainColor } from '@/components/basics/muiColor';
+import { mainColor } from '@/components/basics/mainColor';
 import { IStrategy, deleteStg } from '@/services/stgApi';
 import { AppDispatch } from "@/store";
 import { SUCCESS } from '@/common/constants';

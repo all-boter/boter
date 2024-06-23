@@ -6,7 +6,7 @@ import { Box, styled } from "@mui/system"
 import { useForm } from "react-hook-form"
 import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
-import { mainTheme } from "@/components/basics/muiColor"
+import { mainTheme } from "@/components/basics/mainColor"
 
 const formSchemaDefault: FormSchema[] = [
   {

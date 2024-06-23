@@ -7,7 +7,7 @@ import { fetchStrategies } from '@/store/appSlice';
 import { AppDispatch, socketConnectStatusState, useAppSelector } from '@/store';
 import { StgList } from '@/components/views/stgList';
 import { Button } from '@/components/basics/button';
-import { mainTheme } from '@/components/basics/muiColor';
+import { mainTheme } from '@/components/basics/mainColor';
 import { SocketConnector } from '@/common/socketConnector';
 
 export const Dashbord = () => {

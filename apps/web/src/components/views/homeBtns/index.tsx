@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, styled } from '@mui/system';
 import Cookies from 'js-cookie';
-import { muiGreen } from '../../basics/muiColor';
+import { muiGreen } from '../../basics/mainColor';
 import { Loginbtn } from '../loginBtn';
 import { useNavigate } from 'react-router-dom';
 import gitHubIcon from "@assets/gitHub.svg"

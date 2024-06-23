@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { Box } from "@mui/system"
 import { Logo } from "./logo";
 import { StgIcon } from "../icon/stgIcon";
-import { mainTheme } from "../basics/muiColor";
+import { mainTheme } from "../basics/mainColor";
 import { BotIcon } from "../icon/botIcon";
 
 export const Sidebar = () => {

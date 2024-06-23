@@ -1,6 +1,6 @@
 import React from 'react';
 import { Root, Portal, Overlay, Content } from '@radix-ui/react-dialog';
-import { muiGrey } from '@/components/basics/muiColor';
+import { muiGrey } from '@/components/basics/mainColor';
 import { css, styled } from '@mui/system';
 import './modal.css'
 

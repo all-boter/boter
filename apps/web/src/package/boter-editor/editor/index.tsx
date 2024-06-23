@@ -246,7 +246,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     panel
   })
 
-  return <div className="editor-box">
+  return <div className="full-box">
     <EditorMenubar id={codeId as string} />
     <Box sx={{
       display: 'flex',
