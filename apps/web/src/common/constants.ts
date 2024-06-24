@@ -41,5 +41,5 @@ export enum BotStatus {
 
   Stopped = 'Stopped',
 
-  Error = 'Error',
+  Offline = 'Offline',
 }

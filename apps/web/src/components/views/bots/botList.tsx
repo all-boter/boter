@@ -73,7 +73,6 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           background: '#334155'
         }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '20px' }}>
-            {/* <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box> */}
 
             <Box sx={{ pl: '6px' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -91,7 +90,11 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
                 </Box>
               </Box>
 
-              <Box component={'span'} sx={{ color: '#9ca3af' }}>
+              <Box component={'span'} sx={{
+                color: item.status === BotStatus.Offline ? 'red' :
+                  item.status === BotStatus.Running ? 'green' :
+                    '#9ca3af',
+              }}>
                 {item.status}
               </Box>
             </Box>
@@ -101,9 +104,11 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
-            {item.status === BotStatus.Running && <Box>
-              <BotBtnPop bot={item} callBack={btnPopCallback} />
-            </Box>}
+            <Box>
+              {item.status === BotStatus.Offline || item.status === BotStatus.Stopped  ? <BotBtnPop type='Restart' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Offline ? <BotBtnPop customStyle={{ marginLeft: '10px' }} type='Stop' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Running ? <BotBtnPop type='Stop' bot={item} callBack={btnPopCallback} /> : null}
+            </Box>
           </Box>
         </Box>
       ))

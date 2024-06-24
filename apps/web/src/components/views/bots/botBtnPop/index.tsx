@@ -4,6 +4,7 @@ import { Box, styled } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
 import { Bot, StopBotEnum, stopBot } from '@/services/stgApi';
 import { BotStatus, SUCCESS } from '@/common/constants';
+import { CSSProperties } from 'react';
 
 const StyledContent = styled(Content)(`
     display: flex;
@@ -11,36 +12,71 @@ const StyledContent = styled(Content)(`
     justify-content: center;
     flex-direction: column;
     height: 90px;
-   border-radius: 6px;
+    border-radius: 6px;
     background: ${mainTheme[106]};
     padding: 0 10px;
 `)
 
 interface IBotBtnPop {
   bot: Bot
+  type: 'Stop' | 'Restart'
+  customStyle?: CSSProperties;
   callBack: (type: StopBotEnum, botId: string) => void
 }
 
-export const BotBtnPop = ({ bot, callBack }: IBotBtnPop) => {
+export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
   const onOperat = async () => {
     if (bot.status === BotStatus.Running) {
-      const res = await stopBot(bot.id, StopBotEnum.normalStop)
-      if (res.code === SUCCESS) {
-        callBack(StopBotEnum.normalStop, bot.id)
-      } else {
-        callBack(StopBotEnum.forceStop, bot.id)
-      }
+
+      stopBotUtil(bot.id)
     } else if (bot.status === BotStatus.Stopped) {
+
       console.log('on start',)
+      startBotUtil(bot.id)
+    } else if (bot.status === BotStatus.Offline) {
+      if (type === 'Restart') {
+
+        console.log('on restart', bot.status)
+        restartBotUtil(bot.id)
+      } else if (type === 'Stop') {
+
+        console.log('on Stop', bot.status)
+        stopBotUtil(bot.id)
+      }
     }
   }
 
-  const text = bot.status === BotStatus.Running ? 'Stop' : bot.status === BotStatus.Stopped ? 'Restart' : null
+  const stopBotUtil = async (botId: string, type = StopBotEnum.normalStop) => {
+    const res = await stopBot(bot.id, type)
+    if (res.code === SUCCESS) {
+      callBack(type, bot.id)
+    } else {
+      callBack(StopBotEnum.forceStop, bot.id)
+    }
+  }
+
+  const restartBotUtil = async (botId: string) => {
+    // const res = await stopBot(bot.id)
+    // if (res.code === SUCCESS) {
+
+    // } else {
+
+    // }
+  }
+
+  const startBotUtil = async (botId: string) => {
+    // const res = await stopBot(bot.id)
+    // if (res.code === SUCCESS) {
+
+    // } else {
+
+    // }
+  }
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>
-        {text}
+      <TriggerBtn customStyle={customStyle} color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>
+        {type}
       </TriggerBtn>
     </Trigger>
     <Portal>
@@ -50,7 +86,7 @@ export const BotBtnPop = ({ bot, callBack }: IBotBtnPop) => {
           fontSize: '14px',
           color: '#FFF'
         }}>
-          Are you sure to &nbsp; {text} &nbsp;this strategy?
+          Are you sure to &nbsp;{type}&nbsp;this strategy?
         </Box>
         <Box sx={{
           display: 'flex',

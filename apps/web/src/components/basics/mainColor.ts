@@ -26,7 +26,7 @@ export const muiGrey = {
 export const muiGreen = {
   limeGreen: '#00e676',
   turquoiseGreen: '#0ecb81',
-  seaFoam:'#34d399'
+  seaFoam: '#34d399'
 }!
 
 export const mainTheme = {
