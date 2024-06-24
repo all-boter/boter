@@ -1,7 +1,7 @@
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
-import { mainColor } from '@/components/basics/mainColor';
+import { mainTheme } from '@/components/basics/mainColor';
 import { IStrategy, deleteStg } from '@/services/stgApi';
 import { AppDispatch } from "@/store";
 import { SUCCESS } from '@/common/constants';
@@ -15,7 +15,7 @@ const StyledContent = styled(Content)(`
     flex-direction: column;
     height: 90px;
    border-radius: 6px;
-    background: ${mainColor[106]};
+    background: ${mainTheme[106]};
     padding: 0 10px;
 `)
 
@@ -40,7 +40,7 @@ export const DeletePop = (props: IDeletePop) => {
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn color={mainColor[103]} bg={mainColor[108]} size={'small'}>
+      <TriggerBtn color={mainTheme[103]} bg={mainTheme[108]} size={'small'}>
         Delete
       </TriggerBtn>
     </Trigger>
@@ -61,16 +61,16 @@ export const DeletePop = (props: IDeletePop) => {
           px: '20px',
           mt: '10px',
         }}>
-          <CloseBtn aria-label="Close" bg={mainColor[100]} size='small'>
+          <CloseBtn aria-label="Close" bg={mainTheme[100]} size='small'>
             Cancel
           </CloseBtn>
 
-          <CloseBtn aria-label="Close" onClick={() => onDelete()} bg={mainColor[102]} size='small'>
+          <CloseBtn aria-label="Close" onClick={() => onDelete()} bg={mainTheme[102]} size='small'>
             Confirm
           </CloseBtn>
         </Box>
 
-        <Arrow fill={mainColor[106]} />
+        <Arrow fill={mainTheme[106]} />
       </StyledContent>
     </Portal>
   </Root>

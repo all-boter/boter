@@ -1,6 +1,11 @@
+import { Bot } from "@/services/stgApi"
 import { Box } from "@mui/system"
 
-export const Sidebar = ()=>{
+interface Props {
+  bot: Bot
+}
+
+export const Sidebar = ({bot}:Props)=>{
 
   return <Box sx={{
     display: 'block',
@@ -13,6 +18,6 @@ export const Sidebar = ()=>{
     backgroundColor: 'grey',
     color: 'white',
   }}>
-    Sidebar
+    {bot?.name}
   </Box>
 }

@@ -22,6 +22,17 @@ const formSchemaDefault: FormSchema[] = [
       placeholder: 'Type name',
     },
   },
+  {
+    type: 'Input',
+    id: 'name',
+    label: 'bot name',
+    control: {
+      value: '',
+      defaultValue: '',
+      placeholder: 'Type name',
+      width: 200,
+    },
+  },
 ]
 
 interface FormValues {
@@ -82,15 +93,15 @@ export const StgDrawer = ({ drawerOpen, stg, onClose }: Props) => {
 
     const res = await createBot({
       strategyId: stg.id,
-      name: stg.name,
+      stgName: stg.name,
       params: formValues
     })
 
     if (res.code === SUCCESS) {
-      showToast(`Create ${stg.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
+      showToast(`Create ${formValues?.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
       onClose()
     } else {
-      showToast(`Create ${stg.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+      showToast(`Create ${formValues?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       onClose()
     }
   }

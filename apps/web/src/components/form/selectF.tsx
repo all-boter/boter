@@ -5,7 +5,7 @@ import { SUCCESS } from "@/common/constants";
 import { useForm, Controller } from "react-hook-form"
 import { BoterSelect, SelectItem } from "../basics/select";
 import { ItemText } from "@radix-ui/react-select";
-import { mainColor, mainTheme } from "../basics/mainColor";
+import { mainTheme } from "../basics/mainColor";
 
 interface Props extends FormItem {
   values: any
@@ -27,7 +27,7 @@ const StatusStyled = styled('div') <{ status: boolean }>`
   font-size: 12px;
   text-align: center;
   border-radius: 8px;
-  background: ${props => props.status ? mainTheme.golden : mainColor[102]};
+  background: ${props => props.status ? mainTheme.golden : mainTheme[102]};
   color: ${props => props.status ? 'black' : mainTheme.white};
 `;
 

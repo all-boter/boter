@@ -3,7 +3,7 @@ import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
-import { mainColor, mainTheme, muiGreen } from "../basics/mainColor";
+import { mainTheme, muiGreen } from "../basics/mainColor";
 import { Drawer } from "../basics/drawer/indenx";
 import { StgDrawer } from "./stgDrawer";
 import { AppDispatch, stgListState, useAppSelector } from "@/store";
@@ -101,7 +101,7 @@ export const StgList = () => {
             <Box sx={{ color: mainTheme.white }}>Free</Box>
             <Box>
               <DeletePop stg={item} />
-              <StyledButton onClick={() => onCreate(item)} color={mainColor[103]} bg={mainColor[106]} size={'small'}>Create bot</StyledButton>
+              <StyledButton onClick={() => onCreate(item)} color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>Create bot</StyledButton>
             </Box>
           </Box>
         </Box>

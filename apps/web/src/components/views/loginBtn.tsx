@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { styled } from '@mui/system';
-import { mainColor, muiGreen } from '../basics/mainColor';
+import { mainTheme, muiGreen } from '../basics/mainColor';
 
 const Button = styled('a')(
   ({ theme }) => `
@@ -21,7 +21,7 @@ const Button = styled('a')(
   text-decoration: none;
 
   &:hover {
-    background-color: ${mainColor[900]};
+    background-color: ${mainTheme[900]};
   }`,
 );
 

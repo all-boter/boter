@@ -6,7 +6,7 @@ import { getModulesBySourceId } from "../boter-db/db-util"
 import { useNavigate } from "react-router-dom"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { useContext } from "react"
-import { menbarTheme } from "@/components/basics/mainColor"
+import { mainTheme } from "@/components/basics/mainColor"
 import { MenubarItem } from "@/components/views/menubarItem"
 
 enum MenubarEvent {
@@ -58,7 +58,7 @@ export const EditorMenubar = ({ id }: IMenubar) => {
     sx={{
       display: 'flex',
       height: '40px',
-      background: menbarTheme.blackBg
+      background: mainTheme.blackBg
     }}>
 
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Back)} sx={{width: '50px'}}>

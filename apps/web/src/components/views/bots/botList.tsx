@@ -44,8 +44,12 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
   }
 
   const onDetail = (bot: Bot) => {
-    console.log('%c=onDetail','color:red',bot)
+    console.log('%c=onDetail', 'color:red', bot)
     navigate(`/bot/${bot.id}`);
+  }
+
+  const onStg = (strategyId: string) => {
+    navigate(`/editor/server/${strategyId}`);
   }
 
   return <Box sx={{
@@ -68,11 +72,24 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           p: '20px',
           background: '#334155'
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between', mb: '20px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '20px' }}>
             {/* <Box sx={{ width: '32px', height: '32px', background: '#4b5563', borderRadius: '50%' }}></Box> */}
 
             <Box sx={{ pl: '6px' }}>
-              <Box sx={{ fontSize: '18px', fontWeight: 700, color: mainTheme.white }}>{item.name}</Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ fontSize: '20px', fontWeight: 700, color: mainTheme.white }}>{item.name}</Box>
+                <Box onClick={() => onStg(item.strategyId)} sx={{
+                  fontSize: '12px',
+                  ml: '10px',
+                  cursor: 'pointer',
+                  color: mainTheme[103],
+                  '&:hover': {
+                    color: mainTheme.golden
+                  }
+                }}>
+                  Strategy: {item.stgName}
+                </Box>
+              </Box>
 
               <Box component={'span'} sx={{ color: '#9ca3af' }}>
                 {item.status}

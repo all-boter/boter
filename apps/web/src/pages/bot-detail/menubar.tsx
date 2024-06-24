@@ -1,4 +1,4 @@
-import { menbarTheme } from "@/components/basics/mainColor";
+import { mainTheme } from "@/components/basics/mainColor";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Play, Save } from "lucide-react"
@@ -45,7 +45,7 @@ export const BotMenubar = ({botId }: Props) => {
     sx={{
       display: 'flex',
       height: '40px',
-      background: menbarTheme.blackBg
+      background: mainTheme.blackBg
     }}>
 
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Back)} sx={{ width: '50px' }}>

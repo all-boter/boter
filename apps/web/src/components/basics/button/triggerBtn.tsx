@@ -1,6 +1,6 @@
 import { styled } from '@mui/system';
-import { mainColor, mainTheme } from '../mainColor';
 import { Close } from '@radix-ui/react-popover';
+import { mainTheme } from '../mainColor';
 
 interface TriggerBtnProps {
   color?: string;
@@ -18,7 +18,7 @@ export const TriggerBtn = styled('button')(
   background-color: ${bg || mainTheme.golden};
   padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
  border-radius: 6px;
-  color: ${color || mainColor[101]};
+  color: ${color || mainTheme[101]};
   transition: all 150ms ease;
   cursor: pointer;
   border: 1px solid ${bg || mainTheme.golden};
@@ -39,7 +39,7 @@ export const CloseBtn = styled(Close)(
   background-color: ${bg || mainTheme.golden};
   padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
  border-radius: 6px;
-  color: ${ color || mainColor[101]};
+  color: ${ color || mainTheme[101]};
   transition: all 150ms ease;
   cursor: pointer;
   border: 1px solid ${bg || mainTheme.golden};

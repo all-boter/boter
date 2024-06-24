@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import { styled } from '@mui/system';
-import { mainColor, mainTheme, muiBlue, muiGrey } from '../mainColor';
 import ButtonOrgin from './btnOrgin';
+import { mainTheme, muiBlue, muiGrey } from '../mainColor';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element | string
@@ -27,7 +27,7 @@ const StyledButton = styled(ButtonOrgin)(
   padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
   width: ${width ? width + 'px' : 'auto'};
   border-radius: 6px;
-  color: ${color || mainColor[101]};
+  color: ${color || mainTheme[101]};
   transition: all 150ms ease;
   cursor: pointer;
   border: 1px solid ${bg || mainTheme.golden};;

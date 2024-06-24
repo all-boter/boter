@@ -33,21 +33,15 @@ export const mainTheme = {
   white: '#f3f4f6',
   warning: '#ff4d4f',
   golden: '#FCD535',
-  darkBule: '#1e293b'
-}!
+  darkBule: '#1e293b',
 
-
-export const menbarTheme = {
   whiteBg: 'rgb(255, 255, 255)',
   whiteColor: 'rgb(50, 49, 48)',
   whiteHover: 'rgb(243, 242, 241)',
 
   blackColor: '#f4f4f4',
   blackBg: '#2a2a2a',
-  blackHover: '#3f3f3f'
-}
-
-export const mainColor = { 
+  blackHover: '#3f3f3f',
   /**light blue*/
   100: '#b3e5fc',
   /**dark blue*/
@@ -64,4 +58,4 @@ export const mainColor = {
   107: '#1f2937',
   /**dark gray pure*/
   108: '#2e2e2e'
-}!
+}

@@ -1,7 +1,7 @@
 import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
-import { mainColor } from '@/components/basics/mainColor';
+import { mainTheme } from '@/components/basics/mainColor';
 import { Bot, StopBotEnum, stopBot } from '@/services/stgApi';
 import { BotStatus, SUCCESS } from '@/common/constants';
 
@@ -12,7 +12,7 @@ const StyledContent = styled(Content)(`
     flex-direction: column;
     height: 90px;
    border-radius: 6px;
-    background: ${mainColor[106]};
+    background: ${mainTheme[106]};
     padding: 0 10px;
 `)
 
@@ -39,7 +39,7 @@ export const BotBtnPop = ({ bot, callBack }: IBotBtnPop) => {
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn color={mainColor[103]} bg={mainColor[106]} size={'small'}>
+      <TriggerBtn color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>
         {text}
       </TriggerBtn>
     </Trigger>
@@ -60,16 +60,16 @@ export const BotBtnPop = ({ bot, callBack }: IBotBtnPop) => {
           px: '20px',
           mt: '10px',
         }}>
-          <CloseBtn aria-label="Close" bg={mainColor[100]} size='small'>
+          <CloseBtn aria-label="Close" bg={mainTheme[100]} size='small'>
             Cancel
           </CloseBtn>
 
-          <CloseBtn aria-label="Close" onClick={() => onOperat()} bg={mainColor[102]} size='small'>
+          <CloseBtn aria-label="Close" onClick={() => onOperat()} bg={mainTheme[102]} size='small'>
             Confirm
           </CloseBtn>
         </Box>
 
-        <Arrow fill={mainColor[106]} />
+        <Arrow fill={mainTheme[106]} />
       </StyledContent>
     </Portal>
   </Root>

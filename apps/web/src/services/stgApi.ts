@@ -12,6 +12,7 @@ interface ApiConfig {
   runners: string
   createBot: string
   getOwnedBots: string
+  botById: string
   stopBot: string
   codeByStgId: string
   editCodeByStgId: string
@@ -28,6 +29,7 @@ const apiConfig: ApiConfig = {
   runners: '/api/runners',
   createBot: '/api/bot/create',
   getOwnedBots: '/api/bot/owned',
+  botById: '/api/bot/byId',
   stopBot: '/api/bot/stop',
   codeByStgId: '/api/code/byStgId',
   editCodeByStgId: '/api/code/edit',
@@ -79,6 +81,7 @@ export interface Bot {
   strategyId: string;
   apiId: string;
   name: string;
+  stgName: string;
   apiKey: string;
   status: BotStatus;
   isPublic: boolean;
@@ -145,9 +148,15 @@ export async function getRunners(): Promise<ResType<IRunner[]>> {
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
 
+export async function getBotById(botId: string): Promise<ResType<Bot>> {
+  const url = `${apiConfig.botById}?botId=${botId}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+
 interface ICreateBot {
   strategyId: string;
-  name: string;
+  stgName: string;
   params: any;
   apiId?: number;
 }

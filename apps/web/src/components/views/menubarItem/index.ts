@@ -1,6 +1,5 @@
-import { menbarTheme } from "@/components/basics/mainColor";
+import { mainTheme } from "@/components/basics/mainColor";
 import { styled } from "@mui/system";
-
 
 export const MenubarItem = styled('div')(`
   display: flex;
@@ -19,17 +18,17 @@ export const MenubarItem = styled('div')(`
   padding: 0px 12px;
   border-radius: 0px;
   min-width: 40px;
-  background-color: ${menbarTheme.blackBg};
-  color: ${menbarTheme.blackColor};
+  background-color: ${mainTheme.blackBg};
+  color: ${mainTheme.blackColor};
   height: 100%;
   user-select: none;
   :hover {
-    background-color: ${menbarTheme.blackHover};
+    background-color: ${mainTheme.blackHover};
     color: ;
   }
   :active {
-    background-color: ${menbarTheme.blackHover};
-    color: ${menbarTheme.blackColor};
+    background-color: ${mainTheme.blackHover};
+    color: ${mainTheme.blackColor};
   }
   `
 )
