@@ -16,3 +16,7 @@ export function isJwtExpired(exp: number): boolean {
 }
 
 export type Nullable<T> = T | null
+
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}

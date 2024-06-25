@@ -1,4 +1,4 @@
-import { Bot, StopBotEnum, stopBot } from "@/services/stgApi"
+import { Bot, BotHandleEnum, stopBot } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { BotBtnPop } from "./botBtnPop"
 import { useState } from "react"
@@ -20,8 +20,8 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
   const [selectBotId, setSelectBotId] = useState<string>('');
   const navigate = useNavigate();
 
-  const btnPopCallback = (type: StopBotEnum, botId: string) => {
-    if (type === StopBotEnum.forceStop) {
+  const btnPopCallback = (botId: string, type: BotHandleEnum) => {
+    if (type === BotHandleEnum.forceStop) {
       botId && setConfirmStopOpen(true)
       setSelectBotId(botId)
     } else {
@@ -35,7 +35,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
   }
 
   const onForceStop = async () => {
-    const res = await stopBot(selectBotId, StopBotEnum.forceStop)
+    const res = await stopBot(selectBotId, BotHandleEnum.forceStop)
     if (res.code === SUCCESS) {
       handleClose()
     } else {
@@ -58,8 +58,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
     gridGap: '20px',
     gridTemplateColumns: {
       mobile: 'repeat(1, minmax(0px, 1fr))',
-      tablet: 'repeat(1, minmax(0px, 1fr))',
-      md: 'repeat(2, minmax(0px, 1fr))',
+      tablet: 'repeat(1, minmax(0px, 1fr))', md: 'repeat(2, minmax(0px, 1fr))',
       desktop: 'repeat(3, minmax(0px, 1fr))',
       xl: 'repeat(4, minmax(0px, 1fr))'
     },
@@ -105,7 +104,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
             <Box>
-              {item.status === BotStatus.Stopped ? <BotBtnPop type='Start' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Stopped ? <BotBtnPop type='Run' bot={item} callBack={btnPopCallback} /> : null}
               {item.status === BotStatus.Offline ? <>
                 <BotBtnPop type='Restart' bot={item} callBack={btnPopCallback} />
                 <BotBtnPop customStyle={{ marginLeft: '10px' }} type='Stop' bot={item} callBack={btnPopCallback} />
