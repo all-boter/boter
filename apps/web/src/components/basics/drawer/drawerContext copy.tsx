@@ -1,12 +1,12 @@
 import React, { createContext, useContext } from 'react';
-import { useMultiDrawerState } from './useMultiDrawerState';
+import { useDrawerState } from './useDrawerState';
 
-type DrawerContextType = ReturnType<typeof useMultiDrawerState>;
+type DrawerContextType = ReturnType<typeof useDrawerState>;
 
 const DrawerContext = createContext<DrawerContextType | undefined>(undefined);
 
 export const DrawerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const drawerState = useMultiDrawerState();
+  const drawerState = useDrawerState();
 
   return (
     <DrawerContext.Provider value={drawerState}>

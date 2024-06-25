@@ -50,7 +50,8 @@ interface Props {
 export const StgDrawer = ({ stg, onClose }: Props) => {
   const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<FormValues>({})
-  const { drawerOpen, closeDrawer } = useDrawerContext();
+  const { drawers,closeDrawer } = useDrawerContext();
+  const drawerOpen = drawers['createBot'];
 
   const { handleSubmit } = useForm({
     defaultValues: {
@@ -100,11 +101,11 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
 
     if (res.code === SUCCESS) {
       showToast(`Create ${formValues?.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
-      closeDrawer()
+      closeDrawer('createBot')
       onClose && onClose()
     } else {
       showToast(`Create ${formValues?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
-      closeDrawer()
+      closeDrawer('createBot')
       onClose && onClose()
     }
   }

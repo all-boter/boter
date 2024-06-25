@@ -12,6 +12,7 @@ import { fetchStrategies } from "@/store/appSlice";
 import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import { useDrawerContext } from "../basics/drawer/drawerContext";
+import { EditStg } from "./stgDrawer/editStg";
 
 enum EditerType {
   Code = 1,
@@ -40,7 +41,8 @@ export const StgList = () => {
         break;
 
       case EditerType.Config:
-        navigate(`/dashbord/strategy/${strategy.id}`);
+        // navigate(`/dashbord/strategy/${strategy.id}`);
+        toggleDrawer('editStg');
         break;
 
       default:
@@ -49,7 +51,7 @@ export const StgList = () => {
   }
 
   const onCreate = (stg: IStrategy) => {
-    toggleDrawer();
+    toggleDrawer('createBot');
     setCurrentStg(stg)
   }
 
@@ -109,8 +111,12 @@ export const StgList = () => {
       ))
     }
 
-    <Drawer anchor={"left"}>
+    <Drawer anchor={"left"} id="createBot">
       <StgDrawer stg={currentStg} />
+    </Drawer>
+
+    <Drawer anchor={"left"} id="editStg">
+      <EditStg />
     </Drawer>
   </Box>
 }

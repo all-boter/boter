@@ -8,6 +8,7 @@ interface IDrawer {
   anchor: 'left' | 'right'
   children: React.ReactNode;
   onClose?: () => void
+  id: string
 }
 
 const renderAnchor = (anchor: 'left' | 'right') => {
@@ -21,8 +22,9 @@ const renderAnchor = (anchor: 'left' | 'right') => {
   }
 };
 
-export const Drawer = ({ onClose, anchor, children }: IDrawer) => {
-  const { drawerOpen: visible, closeDrawer } = useDrawerContext();
+export const Drawer = ({ onClose, anchor, id,children }: IDrawer) => {
+  const { drawers, closeDrawer } = useDrawerContext();
+  const visible = drawers[id];
   const [opened, setOpened] = useState(visible);
   const [active, setActive] = useState(visible);
 
@@ -41,7 +43,7 @@ export const Drawer = ({ onClose, anchor, children }: IDrawer) => {
   }, [visible]);
 
   const onCloseDrawer = () => {
-    closeDrawer()
+    closeDrawer(id);
     onClose && onClose()
   }
 
