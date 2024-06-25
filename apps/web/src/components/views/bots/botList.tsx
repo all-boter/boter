@@ -105,8 +105,11 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
             <Box>
-              {item.status === BotStatus.Offline || item.status === BotStatus.Stopped  ? <BotBtnPop type='Restart' bot={item} callBack={btnPopCallback} /> : null}
-              {item.status === BotStatus.Offline ? <BotBtnPop customStyle={{ marginLeft: '10px' }} type='Stop' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Stopped ? <BotBtnPop type='Start' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Offline ? <>
+                <BotBtnPop type='Restart' bot={item} callBack={btnPopCallback} />
+                <BotBtnPop customStyle={{ marginLeft: '10px' }} type='Stop' bot={item} callBack={btnPopCallback} />
+              </> : null}
               {item.status === BotStatus.Running ? <BotBtnPop type='Stop' bot={item} callBack={btnPopCallback} /> : null}
             </Box>
           </Box>

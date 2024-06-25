@@ -19,7 +19,7 @@ const StyledContent = styled(Content)(`
 
 interface IBotBtnPop {
   bot: Bot
-  type: 'Stop' | 'Restart'
+  type: 'Stop' | 'Restart' | 'Start'
   customStyle?: CSSProperties;
   callBack: (type: StopBotEnum, botId: string) => void
 }
@@ -34,7 +34,7 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
       console.log('on start',)
       startBotUtil(bot.id)
     } else if (bot.status === BotStatus.Offline) {
-      if (type === 'Restart') {
+      if (type === 'Restart' || type === 'Start') {
 
         console.log('on restart', bot.status)
         restartBotUtil(bot.id)

@@ -9,6 +9,7 @@ import { StgList } from '@/components/views/stgList';
 import { Button } from '@/components/basics/button';
 import { mainTheme } from '@/components/basics/mainColor';
 import { SocketConnector } from '@/common/socketConnector';
+import { DrawerProvider } from '@/components/basics/drawer/drawerContext';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -94,7 +95,10 @@ export const Dashbord = () => {
         </Box> */}
       </Box>
 
-      <StgList />
+
+      <DrawerProvider>
+        <StgList />
+      </DrawerProvider>
     </Box>
 
     <CreateStg isOpen={isOpenCreateStg} handleClose={() => handleClose()} />

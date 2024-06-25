@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form"
 import { BoterSelect, SelectItem } from "../basics/select";
 import { ItemText } from "@radix-ui/react-select";
 import { mainTheme } from "../basics/mainColor";
+import { useDrawerContext } from "../basics/drawer/drawerContext";
 
 interface Props extends FormItem {
   values: any
@@ -35,6 +36,7 @@ export const SelectF = (props: Props) => {
   const { control, id, setFormValuesState } = props
   const [options, setOptions] = useState<any[]>([])
   const { control: controlF } = useForm();
+  const { drawerOpen } = useDrawerContext();
 
   const dataSourceFnUtil = async () => {
     if (props.dataSourceFn) {
@@ -57,8 +59,10 @@ export const SelectF = (props: Props) => {
   }
 
   useEffect(() => {
-    dataSourceFnUtil()
-  }, [props.dataSourceFn])
+    if (drawerOpen) {
+      dataSourceFnUtil()
+    }
+  }, [props.dataSourceFn, drawerOpen])
 
   return <>
     <Box sx={{ my: '8px', color: '#FFF' }}>{props.label}</Box>

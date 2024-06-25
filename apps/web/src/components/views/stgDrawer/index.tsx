@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { mainTheme } from "@/components/basics/mainColor"
+import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 
 const formSchemaDefault: FormSchema[] = [
   {
@@ -43,13 +44,13 @@ const StyledButton = styled(Button)(`margin-top: 10px;`)
 
 interface Props {
   stg: IStrategy
-  onClose: () => void
-  drawerOpen: boolean
+  onClose?: () => void
 }
 
-export const StgDrawer = ({ drawerOpen, stg, onClose }: Props) => {
+export const StgDrawer = ({ stg, onClose }: Props) => {
   const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<FormValues>({})
+  const { drawerOpen, closeDrawer } = useDrawerContext();
 
   const { handleSubmit } = useForm({
     defaultValues: {
@@ -99,10 +100,12 @@ export const StgDrawer = ({ drawerOpen, stg, onClose }: Props) => {
 
     if (res.code === SUCCESS) {
       showToast(`Create ${formValues?.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
-      onClose()
+      closeDrawer()
+      onClose && onClose()
     } else {
       showToast(`Create ${formValues?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
-      onClose()
+      closeDrawer()
+      onClose && onClose()
     }
   }
 
@@ -113,7 +116,7 @@ export const StgDrawer = ({ drawerOpen, stg, onClose }: Props) => {
   }, [drawerOpen]);
 
   return <Box sx={{ p: '20px' }}>
-    <Box sx={{mb: '10px',fontWeight: '500',color: mainTheme.golden}}>
+    <Box sx={{ mb: '10px', fontWeight: '500', color: mainTheme.golden }}>
       Create <span>{stg.name}</span> Bot
     </Box>
     <form onSubmit={handleSubmit(onSubmit)}>

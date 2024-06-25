@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Box } from "@mui/system"
+import { useDrawerContext } from './drawerContext';
 import './index.css'
 
 interface IDrawer {
-  visible: boolean;
   anchor: 'left' | 'right'
   children: React.ReactNode;
-  onClose: () => void
+  onClose?: () => void
 }
 
 const renderAnchor = (anchor: 'left' | 'right') => {
@@ -21,7 +21,8 @@ const renderAnchor = (anchor: 'left' | 'right') => {
   }
 };
 
-export const Drawer = ({ visible, anchor, onClose, children }: IDrawer) => {
+export const Drawer = ({ onClose, anchor, children }: IDrawer) => {
+  const { drawerOpen: visible, closeDrawer } = useDrawerContext();
   const [opened, setOpened] = useState(visible);
   const [active, setActive] = useState(visible);
 
@@ -39,20 +40,27 @@ export const Drawer = ({ visible, anchor, onClose, children }: IDrawer) => {
     });
   }, [visible]);
 
+  const onCloseDrawer = () => {
+    closeDrawer()
+    onClose && onClose()
+  }
+
   if (!opened && !visible) {
     return null;
   }
 
-  return <div className={clsx(renderAnchor(anchor), 'drawer', active && 'active')}>
-    <div className={'drawer-mask'} onClick={onClose} />
-    <Box sx={{
-      position: 'relative',
-      width: '300px',
-      height: '100%',
-      backgroundColor: '#1f2937',
-      borderRight: '1px solid #151e22'
-    }}>
-      {children}
-    </Box>
-  </div>
+  return (
+    <div className={clsx(renderAnchor(anchor), 'drawer', active && 'active')}>
+      <div className={'drawer-mask'} onClick={onCloseDrawer} />
+      <Box sx={{
+        position: 'relative',
+        width: '300px',
+        height: '100%',
+        backgroundColor: '#1f2937',
+        borderRight: '1px solid #151e22'
+      }}>
+        {children}
+      </Box>
+    </div>
+  );
 }

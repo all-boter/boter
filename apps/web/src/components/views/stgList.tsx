@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
 import { DeletePop } from "./deletePop";
 import { mainTheme, muiGreen } from "../basics/mainColor";
-import { Drawer } from "../basics/drawer/indenx";
+import { Drawer } from "../basics/drawer";
 import { StgDrawer } from "./stgDrawer";
 import { AppDispatch, stgListState, useAppSelector } from "@/store";
 import { useDispatch } from "react-redux";
 import { fetchStrategies } from "@/store/appSlice";
 import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
+import { useDrawerContext } from "../basics/drawer/drawerContext";
 
 enum EditerType {
   Code = 1,
@@ -22,7 +23,7 @@ const StyledButton = styled(Button)(`margin-left: 6px;`)
 export const StgList = () => {
   const dispatch: AppDispatch = useDispatch();
   const stgList = useAppSelector(stgListState)
-  const [drawerOpen, setDrawer] = useState(false);
+  const { toggleDrawer } = useDrawerContext();
   const [currentStg, setCurrentStg] = useState<IStrategy>({
     name: "",
     id: '',
@@ -48,7 +49,7 @@ export const StgList = () => {
   }
 
   const onCreate = (stg: IStrategy) => {
-    setDrawer(!drawerOpen)
+    toggleDrawer();
     setCurrentStg(stg)
   }
 
@@ -108,8 +109,8 @@ export const StgList = () => {
       ))
     }
 
-    <Drawer visible={drawerOpen} onClose={() => setDrawer(false)} anchor={"left"}>
-      <StgDrawer drawerOpen={drawerOpen} stg={currentStg} onClose={() => setDrawer(false)} />
+    <Drawer anchor={"left"}>
+      <StgDrawer stg={currentStg} />
     </Drawer>
   </Box>
 }
