@@ -4,7 +4,6 @@ import { PrivateRoute } from "./privateRoute";
 import { Editor } from "@/pages/editor";
 import { Dashbord } from "@/pages/dashbord/strategies";
 import { Bots } from "@/pages/dashbord/bots";
-import { StgDetail } from "@/pages/dashbord/strategies/detail";
 import PageNotFound from "@/pages/pageNotFound";
 import Test from "@/pages/test";
 import { BotDetail } from "@/pages/bot-detail";
@@ -23,7 +22,6 @@ export default function AppRouter() {
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />
             <Route path="/dashbord/strategies" element={<Dashbord />} />
-            <Route path="/dashbord/strategy/:stgId" element={<StgDetail />} />
             <Route path="bots" element={<Bots />} />
           </Route>
         </Route>

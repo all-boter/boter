@@ -41,7 +41,7 @@ export const StgList = () => {
         break;
 
       case EditerType.Config:
-        // navigate(`/dashbord/strategy/${strategy.id}`);
+        setCurrentStg(strategy)
         toggleDrawer('editStg');
         break;
 
@@ -51,8 +51,8 @@ export const StgList = () => {
   }
 
   const onCreate = (stg: IStrategy) => {
-    toggleDrawer('createBot');
     setCurrentStg(stg)
+    toggleDrawer('createBot');
   }
 
   useEffect(() => {
@@ -116,7 +116,7 @@ export const StgList = () => {
     </Drawer>
 
     <Drawer anchor={"left"} id="editStg">
-      <EditStg />
+      <EditStg stg={currentStg}  />
     </Drawer>
   </Box>
 }

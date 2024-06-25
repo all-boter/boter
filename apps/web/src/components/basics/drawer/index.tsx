@@ -56,7 +56,7 @@ export const Drawer = ({ onClose, anchor, id,children }: IDrawer) => {
       <div className={'drawer-mask'} onClick={onCloseDrawer} />
       <Box sx={{
         position: 'relative',
-        width: '300px',
+        width: '340px',
         height: '100%',
         backgroundColor: '#1f2937',
         borderRight: '1px solid #151e22'
