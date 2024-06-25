@@ -23,7 +23,7 @@ interface IBotBtnPop {
   bot: Bot
   type: 'Stop' | 'Restart' | 'Run'
   customStyle?: CSSProperties;
-  callBack: (botId: string, type: BotHandleEnum) => void
+  callBack: (botId: string, type: BotHandleEnum, botStatus?: BotStatus) => void
 }
 
 export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
@@ -40,7 +40,7 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
         runnerId: bot.params.runnerId,
         bot: null,
         isRestart: false
-      })
+      }, BotStatus.Stopped)
     } else if (bot.status === BotStatus.Offline) {
       if (type === 'Restart') {
 
@@ -61,12 +61,12 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
   }
 
   const stopBotUtil = async (botId: string, type = BotHandleEnum.normal) => {
-    const res = await stopBot(bot.id, type)
+    const res = await stopBot(botId, type)
     if (res.code === SUCCESS) {
-      callBack(bot.id, type)
+      callBack(botId, type)
       showToast(`Stop ${bot?.name} bot ok`, { type: ToastType.success, duration: 2000 })
     } else {
-      callBack(bot.id, BotHandleEnum.forceStop)
+      callBack(botId, BotHandleEnum.forceStop)
     }
   }
 
@@ -98,12 +98,12 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
     }
   }
 
-  const runBotUtil = async (runBotDto: IRunBot) => {
+  const runBotUtil = async (runBotDto: IRunBot, botStatus = BotStatus.Running) => {
     const res = await runBot(runBotDto)
     if (res.code === SUCCESS) {
       showToast(`Run ${bot?.name} bot ok`, { type: ToastType.success, duration: 2000 })
       await sleep(1000)
-      callBack(bot.id, BotHandleEnum.normal)
+      callBack(bot.id, BotHandleEnum.normal, botStatus)
     } else {
       showToast(`Run ${bot?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
     }

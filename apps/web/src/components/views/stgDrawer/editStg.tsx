@@ -40,9 +40,7 @@ interface Props {
 }
 
 export const EditStg = ({ stg }: Props) => {
-  const { drawers, closeDrawer } = useDrawerContext();
-  // const drawerOpen = drawers['editStg'];
-
+  const { closeDrawer } = useDrawerContext();
   const [strategy, setStrategy] = useState<IStrategy>()
   const { showToast } = useContext(ToastContext)!;
   const [schemaWarnning, setSchemaWarnning] = useState('')
@@ -80,10 +78,6 @@ export const EditStg = ({ stg }: Props) => {
       return
     }
 
-    console.log('%c===edit', 'color:red', {
-      ...strategy, paramsSchema, name: stgName
-    })
-
     const res = await editStg({ ...strategy, paramsSchema, name: stgName })
     if (res.code === SUCCESS) {
       showToast(res.msg, { type: ToastType.success, duration: 2000 })
@@ -95,7 +89,7 @@ export const EditStg = ({ stg }: Props) => {
   }
 
   useEffect(() => {
-    setStrategy({ ...stg })
+    setStrategy({ ...stg,intro:stg.intro || '' })
     setStgName(stg.name)
     if (stg?.paramsSchema?.length) {
       setSchemaStr(JSON.stringify(stg?.paramsSchema))

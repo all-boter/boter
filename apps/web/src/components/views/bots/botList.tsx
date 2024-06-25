@@ -20,12 +20,12 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
   const [selectBotId, setSelectBotId] = useState<string>('');
   const navigate = useNavigate();
 
-  const btnPopCallback = (botId: string, type: BotHandleEnum) => {
+  const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => {
     if (type === BotHandleEnum.forceStop) {
       botId && setConfirmStopOpen(true)
       setSelectBotId(botId)
     } else {
-      refreshList(BotStatus.Running)
+      refreshList(botStatus)
     }
   }
 

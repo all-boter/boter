@@ -40,7 +40,7 @@ interface FormValues {
   [key: string]: string;
 }
 
-const StyledButton = styled(Button)(`margin-top: 10px;`)
+const StyledButton = styled(Button)(`margin-top: 20px;`)
 
 interface Props {
   stg: IStrategy
@@ -130,7 +130,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
         )
       })}
 
-      <StyledButton type='submit'>Create a strategy</StyledButton>
+      <StyledButton type='submit'>Create bot</StyledButton>
     </form>
   </Box>
 }
