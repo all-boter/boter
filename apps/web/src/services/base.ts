@@ -25,7 +25,7 @@ export interface PaginationResType<T> {
 
 interface FetchOptions<T> extends Omit<AxiosRequestConfig, 'data'> {
   headers?: {
-    Authorization: string;
+    // Authorization: string;
   };
   data?: T | unknown;
 }
@@ -36,10 +36,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig<AxiosRequestConfig>) => {
-    const token = Cookies.get('token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
     config.headers['Content-Type'] = 'application/json';
 
     return config
@@ -58,13 +54,6 @@ instance.interceptors.response.use(
         msg: response.statusText as string,
         data: null,
       };
-    }
-
-    const newToken = response.headers.authorization;
-    const token = Cookies.get('token');
-    if (newToken && newToken !== token) {
-      Cookies.set('token', newToken);
-      Cookies.set('exp', response.headers.exp);
     }
 
     return response;

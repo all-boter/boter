@@ -6,6 +6,7 @@ import { BotLog } from "./log";
 import { useEffect, useState } from "react";
 import { Bot, getBotById } from "@/services/stgApi";
 import { SUCCESS } from "@/common/constants";
+import { botApi } from "@/services/botApi";
 
 export const BotDetail = () => {
   const routerParams = useParams<{
@@ -21,8 +22,19 @@ export const BotDetail = () => {
     }
   }
 
+  const getStream = ()=>{
+    console.log('%c=getStream==>','color:red',botApi.streamTest)
+    const eventSource = new EventSource(botApi.streamTest,{ withCredentials: true });
+    eventSource.onmessage = ({ data }) => {
+      console.log('New message', JSON.parse(data));
+    };
+  }
+
   useEffect(()=>{
-    if (routerParams.botId) getBotByIdUtil(routerParams.botId)
+    if (routerParams.botId) { 
+      getBotByIdUtil(routerParams.botId)
+      getStream()
+    }
   },[routerParams])
 
   console.log('%c=bot','color:red',bot)
