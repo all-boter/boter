@@ -87,7 +87,8 @@ export const fetchWithAuth = async <T>(
     if (res.response?.status === 401) {
       Cookies.remove('token');
       Cookies.remove('exp');
-      window.location.href = '/';
+      // TODO: for test
+      // window.location.href = '/';
       return { code: 0, msg: res.response.statusText } as ResType<T>;
     }
 

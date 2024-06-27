@@ -1,7 +1,7 @@
 interface ApiConfig {
-  streamTest: string
+  streamLogs: string
 }
 
 export const botApi: ApiConfig = {
-  streamTest: '/api/boter/streamtest',
+  streamLogs: '/api/boter/',
 }
