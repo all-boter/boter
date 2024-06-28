@@ -92,6 +92,6 @@ export const fetchWithAuth = async <T>(
       return { code: 0, msg: res.response.statusText } as ResType<T>;
     }
 
-    return { code: -1, msg: res?.response?.statusText || 'req error', data: null } as ResType<T>;
+    return { code: -1, msg: (res?.response?.data as any)?.msg || res?.response?.statusText || 'req error', data: null } as ResType<T>;
   }
 };

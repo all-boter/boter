@@ -111,7 +111,7 @@ export const StgList = () => {
       ))
     }
 
-    <Drawer anchor={"left"} id="createBot">
+    <Drawer anchor={"left"} id="BotDrawer">
       <StgDrawer stg={currentStg} />
     </Drawer>
 

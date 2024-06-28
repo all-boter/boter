@@ -101,11 +101,11 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
   const runBotUtil = async (runBotDto: IRunBot, botStatus = BotStatus.Running) => {
     const res = await runBot(runBotDto)
     if (res.code === SUCCESS) {
-      showToast(`Run ${bot?.name} bot ok`, { type: ToastType.success, duration: 2000 })
+      showToast(`${bot?.name}: ${res.msg}`, { type: ToastType.success, duration: 2000 })
       await sleep(1000)
       callBack(bot.id, BotHandleEnum.normal, botStatus)
     } else {
-      showToast(`Run ${bot?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+      showToast(`${bot?.name} error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
     }
   }
 
