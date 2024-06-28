@@ -6,6 +6,7 @@ import { BotStatus, SUCCESS } from "@/common/constants";
 import { BotList } from "@/components/views/bots/botList";
 import { BoterSelect } from "@/components/basics/select";
 import { mainTheme } from "@/components/basics/mainColor";
+import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 
 const options: {
   value: BotStatus,
@@ -57,7 +58,10 @@ export const Bots = () => {
         />
       </Box>
 
-      <BotList bots={bots} refreshList={getBotsUtil} />
+
+      <DrawerProvider>
+        <BotList bots={bots} refreshList={getBotsUtil} />
+      </DrawerProvider>
     </Box>
   </div>
 }

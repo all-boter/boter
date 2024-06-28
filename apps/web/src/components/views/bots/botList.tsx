@@ -7,10 +7,19 @@ import { Modal, ModalContent } from "@/components/basics/modal"
 import { mainTheme, muiGreen } from "@/components/basics/mainColor"
 import { Button } from "@/components/basics/button"
 import { useNavigate } from "react-router-dom"
+import { Pencil } from "lucide-react"
+import { Drawer } from "@/components/basics/drawer"
+import { EditBot } from "../botDrawer/editBot"
+import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 
 interface IBotList {
   bots: Bot[]
   refreshList: (botStatus: BotStatus) => void
+}
+
+enum EditerType {
+  editBot = 1,
+  viewStg = 2
 }
 
 const StyledButton = styled(Button)(`margin-left: 6px;`)
@@ -18,6 +27,24 @@ const StyledButton = styled(Button)(`margin-left: 6px;`)
 export const BotList = ({ bots, refreshList }: IBotList) => {
   const [confirmStopOpen, setConfirmStopOpen] = useState(false);
   const [selectBotId, setSelectBotId] = useState<string>('');
+  const { toggleDrawer } = useDrawerContext();
+  const [currentBot, setCurrentBot] = useState<Bot>({
+    id: "",
+    uid: "",
+    strategyId: "",
+    apiId: "",
+    name: "",
+    stgName: "",
+    apiKey: "",
+    status: BotStatus.Offline,
+    isPublic: false,
+    duration: 15000,
+    params: {},
+    backtestParams: {},
+    backtestBotParams: {},
+    storage: {},
+    backtestStatus: ''
+  })
   const navigate = useNavigate();
 
   const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => {
@@ -43,9 +70,14 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
     }
   }
 
-  const onDetail = (bot: Bot) => {
-    console.log('%c=onDetail', 'color:red', bot)
-    navigate(`/bot/${bot.id}`);
+  const onClick = (bot: Bot, type: EditerType) => {
+    if (type === EditerType.viewStg) {
+      navigate(`/bot/${bot.id}`);
+    } else if (type === EditerType.editBot) {
+      console.log('%c=edit bot', 'color:red',)
+      setCurrentBot(bot)
+      toggleDrawer('BotDrawer');
+    }
   }
 
   const onStg = (strategyId: string) => {
@@ -75,7 +107,9 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
 
             <Box sx={{ pl: '6px' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ fontSize: '20px', fontWeight: 700, color: mainTheme.white }}>{item.name}</Box>
+                <Box sx={{ fontSize: '20px', fontWeight: 700, color: mainTheme.white }}>{item.name}
+                  <Box component={Pencil} onClick={() => onClick(item, EditerType.editBot)} size={16} sx={{ ml: '6px', cursor: 'pointer' }} />
+                </Box>
                 <Box onClick={() => onStg(item.strategyId)} sx={{
                   fontSize: '12px',
                   ml: '10px',
@@ -98,7 +132,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
               </Box>
             </Box>
 
-            <StyledButton onClick={() => onDetail(item)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>detail</StyledButton>
+            <StyledButton onClick={() => onClick(item, EditerType.viewStg)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>detail</StyledButton>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -115,6 +149,10 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
         </Box>
       ))
     }
+
+    <Drawer anchor={"left"} id="BotDrawer">
+      <EditBot bot={currentBot} onClose={() => refreshList(BotStatus.Running)} />
+    </Drawer>
 
     <Modal isOpen={confirmStopOpen} handleClose={() => handleClose()}>
       <ModalContent sx={{ width: 400 }}>

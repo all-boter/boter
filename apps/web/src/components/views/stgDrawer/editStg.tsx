@@ -89,107 +89,105 @@ export const EditStg = ({ stg }: Props) => {
   }
 
   useEffect(() => {
-    setStrategy({ ...stg,intro:stg.intro || '' })
+    setStrategy({ ...stg, intro: stg.intro || '' })
     setStgName(stg.name)
     if (stg?.paramsSchema?.length) {
       setSchemaStr(JSON.stringify(stg?.paramsSchema))
     }
   }, [stg])
 
-  return <Box sx={{ color: mainTheme.white, pt:'10px',mx: '20px' }}>
-      <Box>
-        <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>
-          Edit&nbsp;
-          <Box component={'span'} sx={{ color: mainTheme.golden, fontSize: '22px' }}>
-            {strategy?.name}
-          </Box>
-        </Box>
-
-        <StyledFormItem>
-          <StyledCell>
-            <StyledLabel>
-              Name:
-            </StyledLabel>
-          </StyledCell>
-          <Box>
-            <Input
-              value={stgName}
-              width={300}
-              onChange={(event: ChangeEvent<HTMLInputElement>) => setStgName(event.target.value)}
-            />
-            {!strategy?.name && <FieldWarnning>
-              Please enter Name
-            </FieldWarnning>}
-          </Box>
-        </StyledFormItem>
-
-        <StyledFormItem>
-          <StyledCell>
-            <StyledLabel>
-              introduce:
-            </StyledLabel>
-          </StyledCell>
-          <Textarea
-            value={strategy?.intro}
-            width={300}
-            height={100}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 1)}
-            placeholder="Enter your text here"
-          />
-        </StyledFormItem>
-
-        <StyledFormItem>
-          <StyledCell>
-            <StyledLabel>
-              Params schema:
-            </StyledLabel>
-          </StyledCell>
-          <Box>
-            <Textarea
-              value={schemaStr}
-              width={300}
-              height={200}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 2)}
-              placeholder="Enter your text here"
-            />
-            {schemaWarnning && <FieldWarnning>
-              {schemaWarnning}
-            </FieldWarnning>}
-          </Box>
-        </StyledFormItem>
-
-        <StyledFormItem>
-          <StyledCell>
-            <StyledLabel>
-              Customize UI:
-            </StyledLabel>
-          </StyledCell>
-
-          <Switch isChecked={strategy?.enableUI as boolean} onCheckedChange={(status) => setStrategy({
-            ...strategy,
-            enableUI: status
-          } as IStrategy)} />
-        </StyledFormItem>
-
-        <StyledFormItem>
-          <StyledCell>
-            <StyledLabel>
-              Public:
-            </StyledLabel>
-          </StyledCell>
-
-          <Switch isChecked={strategy?.isPublic as boolean} onCheckedChange={(status) => setStrategy({
-            ...strategy,
-            isPublic: status
-          } as IStrategy)} />
-        </StyledFormItem>
-
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}>
-          <Button width="160" onClick={() => onSubmit()}>Submit</Button>
-        </Box>
+  return <Box sx={{ color: mainTheme.white, pt: '10px', mx: '20px' }}>
+    <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>
+      Edit&nbsp;
+      <Box component={'span'} sx={{ color: mainTheme.golden, fontSize: '22px' }}>
+        {strategy?.name}
       </Box>
     </Box>
+
+    <StyledFormItem>
+      <StyledCell>
+        <StyledLabel>
+          Name:
+        </StyledLabel>
+      </StyledCell>
+      <Box>
+        <Input
+          value={stgName}
+          width={300}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setStgName(event.target.value)}
+        />
+        {!strategy?.name && <FieldWarnning>
+          Please enter Name
+        </FieldWarnning>}
+      </Box>
+    </StyledFormItem>
+
+    <StyledFormItem>
+      <StyledCell>
+        <StyledLabel>
+          introduce:
+        </StyledLabel>
+      </StyledCell>
+      <Textarea
+        value={strategy?.intro}
+        width={300}
+        height={100}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 1)}
+        placeholder="Enter your text here"
+      />
+    </StyledFormItem>
+
+    <StyledFormItem>
+      <StyledCell>
+        <StyledLabel>
+          Params schema:
+        </StyledLabel>
+      </StyledCell>
+      <Box>
+        <Textarea
+          value={schemaStr}
+          width={300}
+          height={200}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleTextChange(e, 2)}
+          placeholder="Enter your text here"
+        />
+        {schemaWarnning && <FieldWarnning>
+          {schemaWarnning}
+        </FieldWarnning>}
+      </Box>
+    </StyledFormItem>
+
+    <StyledFormItem>
+      <StyledCell>
+        <StyledLabel>
+          Customize UI:
+        </StyledLabel>
+      </StyledCell>
+
+      <Switch isChecked={strategy?.enableUI as boolean} onCheckedChange={(status) => setStrategy({
+        ...strategy,
+        enableUI: status
+      } as IStrategy)} />
+    </StyledFormItem>
+
+    <StyledFormItem>
+      <StyledCell>
+        <StyledLabel>
+          Public:
+        </StyledLabel>
+      </StyledCell>
+
+      <Switch isChecked={strategy?.isPublic as boolean} onCheckedChange={(status) => setStrategy({
+        ...strategy,
+        isPublic: status
+      } as IStrategy)} />
+    </StyledFormItem>
+
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+    }}>
+      <Button width="160" onClick={() => onSubmit()}>Submit</Button>
+    </Box>
+  </Box>
 }

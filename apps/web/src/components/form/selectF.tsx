@@ -37,7 +37,7 @@ export const SelectF = (props: Props) => {
   const [options, setOptions] = useState<any[]>([])
   const { control: controlF } = useForm();
   const { drawers } = useDrawerContext();
-  const drawerOpen = drawers['createBot'];
+  const drawerOpen = drawers['BotDrawer'];
 
   const dataSourceFnUtil = async () => {
     if (props.dataSourceFn) {

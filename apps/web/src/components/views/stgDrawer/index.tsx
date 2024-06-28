@@ -9,7 +9,7 @@ import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { mainTheme } from "@/components/basics/mainColor"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 
-const formSchemaDefault: FormSchema[] = [
+export const botFormSchemaDefault: FormSchema[] = [
   {
     type: 'Select',
     id: 'runnerId',
@@ -36,11 +36,11 @@ const formSchemaDefault: FormSchema[] = [
   },
 ]
 
-interface FormValues {
+export interface BotFormValues {
   [key: string]: string;
 }
 
-const StyledButton = styled(Button)(`margin-top: 20px;`)
+export const StyledButton = styled(Button)(`margin-top: 20px;`)
 
 interface Props {
   stg: IStrategy
@@ -49,9 +49,9 @@ interface Props {
 
 export const StgDrawer = ({ stg, onClose }: Props) => {
   const { showToast } = useContext(ToastContext)!;
-  const [formValues, setFormValuesState] = useState<FormValues>({})
+  const [formValues, setFormValuesState] = useState<BotFormValues>({})
   const { drawers,closeDrawer } = useDrawerContext();
-  const drawerOpen = drawers['createBot'];
+  const drawerOpen = drawers['BotDrawer'];
 
   const { handleSubmit } = useForm({
     defaultValues: {
@@ -60,9 +60,10 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
   });
 
   const { formSchema, defaultFormValues } = useMemo<{ formSchema: FormSchema[], defaultFormValues: any }>(() => {
-    const newSchema = [...formSchemaDefault, ...stg.paramsSchema]
+    const newSchema = [...botFormSchemaDefault, ...stg.paramsSchema]
 
-    const formValues: FormValues = newSchema.reduce((obj: FormValues, item) => {
+    console.log('%c=newSchema','color:red',newSchema)
+    const formValues: BotFormValues = newSchema.reduce((obj: BotFormValues, item) => {
       obj[item.id] = "";
       return obj;
     }, {});
@@ -81,7 +82,6 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
   };
 
   const onSubmit = async () => {
-
     console.log('%c=', 'color:red', {
       strategyId: stg.id,
       name: stg.name,
@@ -101,11 +101,11 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
 
     if (res.code === SUCCESS) {
       showToast(`Create ${formValues?.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
-      closeDrawer('createBot')
+      closeDrawer('BotDrawer')
       onClose && onClose()
     } else {
       showToast(`Create ${formValues?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
-      closeDrawer('createBot')
+      closeDrawer('BotDrawer')
       onClose && onClose()
     }
   }

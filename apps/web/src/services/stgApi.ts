@@ -93,11 +93,11 @@ export interface Bot {
   backtestBotParams: { [key: string]: any }
   storage: { [key: string]: any }
   backtestStatus: string
-  stopPassword: string
-  endTime: Date
-  deletedAt: Date
-  createdAt: Date
-  updatedAt: Date
+  stopPassword?: string
+  endTime?: Date
+  deletedAt?: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export async function getOwnedBots(status: BotStatus): Promise<ResType<Bot[]>> {

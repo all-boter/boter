@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { BotMenubar } from "./menubar";
 import { Box } from "@mui/system";
-import { Sidebar } from "./sidebar";
 import { useEffect, useState } from "react";
 import { Bot, getBotById } from "@/services/stgApi";
 import { SUCCESS } from "@/common/constants";
@@ -27,7 +26,7 @@ export const BotDetail = () => {
     let eventSource: EventSource;
     if (botId) {
       getBotByIdUtil(botId)
-      eventSource = new EventSource(`${botApi.streamLogs}${botId}/logs`, { withCredentials: true });
+      eventSource = new EventSource(`${botApi.streamLogs}${botId}`, { withCredentials: true });
       eventSource.onmessage = ({ data }) => {
         const parsedData = JSON.parse(data);
         if (parsedData?.type === 'close') {
@@ -58,7 +57,7 @@ export const BotDetail = () => {
     <Box sx={{
       display: 'flex',
       minheight: "calc(100vh - 40px)",
-      // background: '#111827'
+      pt: '32px',
     }}
     >
       <Box sx={{
@@ -69,6 +68,9 @@ export const BotDetail = () => {
             color: '#fff',
             overflowY: 'auto',
             maxWidth: '100vw',
+            boxSizing: 'border-box',
+            pl: '10px',
+            pb: '10px'
         }}>
           <pre>
             {logContent}

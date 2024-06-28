@@ -52,7 +52,7 @@ export const StgList = () => {
 
   const onCreate = (stg: IStrategy) => {
     setCurrentStg(stg)
-    toggleDrawer('createBot');
+    toggleDrawer('BotDrawer');
   }
 
   useEffect(() => {

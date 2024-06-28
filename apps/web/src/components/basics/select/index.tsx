@@ -1,7 +1,7 @@
 import { Trigger, Root, ItemText, Content, Item, Icon } from '@radix-ui/react-select';
 import { Box, css, styled } from '@mui/system';
 import arrowIcon from "@assets/arrow.svg"
-import { useMemo } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 
 interface ICss {
   width: number
@@ -80,41 +80,48 @@ interface IBoterSelect {
 }
 
 export const BoterSelect = (props: IBoterSelect) => {
-  const { children, options, id = 'value', label = 'label', value, onChange } = props
+  const { children, options, id = 'value', label = 'label', value, onChange, width } = props;
+  const [internalValue, setInternalValue] = useState(value);
+
+  useLayoutEffect(() => {
+    setInternalValue(value);
+  }, [value]);
 
   const labelView = useMemo<string>(() => {
-    if (!value) return ''
+    if (!internalValue) return '';
 
-    return options.find((item) => {
-      return item[id] === value
-    })?.[label] || ''
-  }, [value])
+    return options.find((item) => item[id] === internalValue)?.[label] || '';
+  }, [internalValue, options, id, label]);
 
-  return <Root
-    value={value}
-    dir="ltr"
-    onValueChange={onChange && onChange}
-  >
-    <Trigger asChild>
-      <RadixSelTrigger width={props.width || 0}>
-        <Box component={'span'}>{labelView}</Box>
-        <Icon asChild>
-          <Box component={'img'} src={arrowIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
-        </Icon>
-      </RadixSelTrigger>
-    </Trigger>
+  const handleValueChange = (newValue: string) => {
+    setInternalValue(newValue);
+    onChange && onChange(newValue);
+  };
 
-    <Content position="popper">
-      <Dropdown width={props.width || 0}>
-        {children ? children : options.map((item, i) => {
-          return (
+  return (
+    <Root
+      value={internalValue}
+      dir="ltr"
+      onValueChange={handleValueChange}
+    >
+      <Trigger asChild>
+        <RadixSelTrigger width={width || 0}>
+          <Box component={'span'}>{labelView}</Box>
+          <Icon asChild>
+            <Box component={'img'} src={arrowIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
+          </Icon>
+        </RadixSelTrigger>
+      </Trigger>
+
+      <Content position="popper">
+        <Dropdown width={width || 0}>
+          {children ? children : options.map((item, i) => (
             <SelectItem key={item[id] || i} value={item[id]}>
-              <ItemText> {item[label]} </ItemText>
+              <ItemText>{item[label]}</ItemText>
             </SelectItem>
-          );
-        })}
-
-      </Dropdown>
-    </Content>
-  </Root>
-}
+          ))}
+        </Dropdown>
+      </Content>
+    </Root>
+  );
+};

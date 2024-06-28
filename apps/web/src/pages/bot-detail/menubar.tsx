@@ -43,8 +43,11 @@ export const BotMenubar = ({botId }: Props) => {
 
   return <Box component={'div'}
     sx={{
+      position: 'fixed',
+      top: '0px',
       display: 'flex',
       height: '40px',
+      width: '100%',
       background: mainTheme.blackBg
     }}>
 
