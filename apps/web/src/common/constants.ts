@@ -43,3 +43,10 @@ export enum BotStatus {
 
   Offline = 'Offline',
 }
+
+export type IBotOperate = 'run' | 'stop' | 'restart'
+
+export interface INotifyBotMsg {
+  id: string;
+  status: BotStatus;
+}

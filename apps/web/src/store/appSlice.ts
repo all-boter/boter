@@ -1,7 +1,7 @@
 import { GithubRepository } from "@/services/githubService";
 import { IStrategy, strateies } from "@/services/stgApi";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SUCCESS } from "@/common/constants";
+import { BotStatus, INotifyBotMsg, SUCCESS } from "@/common/constants";
 import { ConnectStatus } from "@/common/socketConnector";
 
 export const fetchStrategies = createAsyncThunk(
@@ -28,6 +28,11 @@ interface InitialState {
   githubRepository: GithubRepository | null
   stgList: IStrategy[]
   socketConnectStatus: ConnectStatus,
+  activeBots: {
+    [botId: string]: {
+      status: BotStatus
+    }
+  }
 }
 
 const initialState: InitialState = {
@@ -39,7 +44,8 @@ const initialState: InitialState = {
   },
   githubRepository: null,
   stgList: [],
-  socketConnectStatus: { type: 1, msg: 'not init' }
+  socketConnectStatus: { type: 1, msg: 'not init' },
+  activeBots: {}
 }
 
 const loadStatePersiste = () => {
@@ -83,7 +89,27 @@ export const appSlice = createSlice({
       state.socketConnectStatus = action.payload;
 
       return state
-    }
+    },
+    setBotStatus: (state, action: PayloadAction<INotifyBotMsg>) => {
+      // state.socketConnectStatus = action.payload;
+      console.log('%c===>store--setBotStatus==>', 'color:pink', action.payload)
+      if (action.payload) {
+        state.activeBots[action.payload.id] = action.payload
+      }
+
+      return state
+    },
+    updateAllBotStatus: (state, action: PayloadAction<string[]>) => {
+      console.log('%c===>store--updateAllBotStatus==>', 'color:pink', action.payload)
+
+      action.payload.forEach(botId => {
+        state.activeBots[botId] = {
+          status: BotStatus.Running
+        }
+      })
+
+      return state
+    },
   },
   extraReducers(builder) {
     builder.addCase(

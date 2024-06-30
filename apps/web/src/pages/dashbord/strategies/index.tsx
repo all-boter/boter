@@ -4,7 +4,7 @@ import { Box } from "@mui/system"
 import { CreateStg } from '@/components/views/modal/createStg';
 import { Sidebar } from '@/components/views/Sidebar';
 import { fetchStrategies } from '@/store/appSlice';
-import { AppDispatch, socketConnectStatusState, useAppSelector } from '@/store';
+import { activeBotsState, AppDispatch, socketConnectStatusState, useAppSelector } from '@/store';
 import { StgList } from '@/components/views/stgList';
 import { Button } from '@/components/basics/button';
 import { mainTheme } from '@/components/basics/mainColor';
@@ -16,6 +16,7 @@ export const Dashbord = () => {
   const [isOpenCreateStg, openCreateStg] = useState(false);
 
   const socketConnectStatus = useAppSelector(socketConnectStatusState)
+  const activeBots = useAppSelector(activeBotsState)
 
   const onCreateStg = () => {
     openCreateStg(true)
@@ -27,6 +28,7 @@ export const Dashbord = () => {
   }
 
   const handleConnection = () => {
+    console.log('%c===>activeBotsState','color:pink',activeBots)
     const socket = SocketConnector.getInstance()
     if (socket) {
       socket.emitQuerySocket()

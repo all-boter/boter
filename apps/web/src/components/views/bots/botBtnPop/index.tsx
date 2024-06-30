@@ -3,7 +3,7 @@ import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
 import { Bot, IRunBot, BotHandleEnum, runBot, stopBot } from '@/services/stgApi';
-import { BotStatus, SUCCESS } from '@/common/constants';
+import { BotStatus, IBotOperate, SUCCESS } from '@/common/constants';
 import { CSSProperties, useContext } from 'react';
 import { ToastContext, ToastType } from '@/components/basics/toast/toastContext';
 import { sleep } from '@/common';
@@ -21,7 +21,7 @@ const StyledContent = styled(Content)(`
 
 interface IBotBtnPop {
   bot: Bot
-  type: 'Stop' | 'Restart' | 'Run'
+  type: IBotOperate
   customStyle?: CSSProperties;
   callBack: (botId: string, type: BotHandleEnum, botStatus?: BotStatus) => void
 }
@@ -29,7 +29,7 @@ interface IBotBtnPop {
 export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
   const { showToast } = useContext(ToastContext)!;
 
-  const onOperat = async () => {
+  const onOperate = async () => {
     if (bot.status === BotStatus.Running) {
 
       stopBotUtil(bot.id)
@@ -42,13 +42,13 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
         isRestart: false
       }, BotStatus.Stopped)
     } else if (bot.status === BotStatus.Offline) {
-      if (type === 'Restart') {
+      if (type === 'restart') {
 
         restartBotUtil(bot)
-      } else if (type === 'Stop') {
+      } else if (type === 'stop') {
 
         stopBotUtil(bot.id)
-      } else if (type === 'Run') {
+      } else if (type === 'run') {
 
         runBotUtil({
           botId: bot.id,
@@ -83,7 +83,7 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
 
       const res = await stopBot(bot.id, BotHandleEnum.normal)
       if (res.code === SUCCESS) {
-        await sleep(1000)
+        await sleep(1500)
         runBotUtil({
           botId: bot.id,
           runnerId: bot.params.runnerId,
@@ -136,7 +136,7 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
             Cancel
           </CloseBtn>
 
-          <CloseBtn aria-label="Close" onClick={() => onOperat()} bg={mainTheme[102]} size='small'>
+          <CloseBtn aria-label="Close" onClick={() => onOperate()} bg={mainTheme[102]} size='small'>
             Confirm
           </CloseBtn>
         </Box>

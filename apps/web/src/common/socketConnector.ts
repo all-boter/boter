@@ -10,7 +10,11 @@ enum ConnectStatusType {
 }
 
 enum MessageType {
+  RUN_CODE = 1024,
+  STOP_BOT = 77,
+  BOT_STATUS = 100,
   LOG = 101,
+  RM_BOT_FOR_RUNER = 401,
 }
 
 export interface ConnectStatus {
@@ -61,20 +65,25 @@ export class SocketConnector {
     }
   }
 
-  private setSocketConnectStatus() {
-    store.dispatch(appSlice.actions.setSocketConnectStatus(this.connectStatus));
-  }
-
   private setupListeners() {
     this.socket.on('private-msg', (data) => {
       console.log('%c=Received private messageType:', 'color:cyan', data.type, data)
       switch (data.type) {
         case MessageType.LOG:
+
           break;
+        case MessageType.BOT_STATUS:
+          store.dispatch(appSlice.actions.setBotStatus(data?.data));
+
+          break
         default:
           break;
       }
     });
+  }
+
+  private setSocketConnectStatus() {
+    store.dispatch(appSlice.actions.setSocketConnectStatus(this.connectStatus));
   }
 
   static getInstance(): SocketConnector {

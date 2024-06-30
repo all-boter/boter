@@ -23,5 +23,6 @@ export const userState = (state: AppState) => state.appSlice.user
 export const stgListState = (state: AppState) => state.appSlice.stgList
 export const githubReposState = (state: AppState) => state.appSlice.githubRepository
 export const socketConnectStatusState = (state: AppState) => state.appSlice.socketConnectStatus
+export const activeBotsState = (state: AppState) => state.appSlice.activeBots
 
 export default store;

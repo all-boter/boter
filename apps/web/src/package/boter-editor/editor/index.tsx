@@ -24,6 +24,8 @@ import './inspectorPanel.css'
 import { useDispatch } from "react-redux";
 import { editorSlice, panelState } from "@/store/editorSlice";
 import { StatusBar } from "./statusBar";
+import { getOwnedAllBotsStatus } from "@/services/botApi";
+import { appSlice } from "@/store/appSlice";
 
 const dummyDir: Directory = {
   id: "1",
@@ -110,10 +112,10 @@ const buildModuleUtil = async (modules: IModule[]) => {
 
 interface IBoterEditor {
   editerType: EditorSource,
-  codeId?: string
+  stgId?: string
 }
 
-export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
+export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
   const githubRepos = useAppSelector(githubReposState)
@@ -229,13 +231,22 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
     fetchData();
     */
 
-    if (editerType === EditorSource.server && codeId) {
-      fetchCodeByStg(codeId)
+    if (editerType === EditorSource.server && stgId) {
+      fetchCodeByStg(stgId)
     }
 
     console.log('%c=useEffect init', 'color: blue', {
-      codeId,
+      stgId,
       codes,
+    })
+
+    getOwnedAllBotsStatus().then((res) => {
+      if (res.code === SUCCESS) {
+        console.log('%c===getOwnedAllBotsStatus', 'color:red', res.data)
+        dispatch(appSlice.actions.updateAllBotStatus(res?.data || []))
+      } else {
+        alert('get owned bots error')
+      }
     })
   }, [])
 
@@ -247,7 +258,7 @@ export const BoterEditor = ({ editerType, codeId }: IBoterEditor) => {
   })
 
   return <div className="full-box">
-    <EditorMenubar id={codeId as string} />
+    <EditorMenubar id={stgId as string} />
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',

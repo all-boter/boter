@@ -2,7 +2,6 @@ import { Box, styled } from "@mui/system"
 import { IStrategy } from '@/services/stgApi';
 import { useEffect, useState } from "react";
 import { Button } from "../basics/button";
-import { DeletePop } from "./deletePop";
 import { mainTheme, muiGreen } from "../basics/mainColor";
 import { Drawer } from "../basics/drawer";
 import { StgDrawer } from "./stgDrawer";
@@ -13,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import { useDrawerContext } from "../basics/drawer/drawerContext";
 import { EditStg } from "./stgDrawer/editStg";
+import { DeletePop } from "./btnPop/deletePop";
 
 enum EditerType {
   Code = 1,

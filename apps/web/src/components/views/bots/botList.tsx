@@ -74,7 +74,6 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
     if (type === EditerType.viewStg) {
       navigate(`/bot/${bot.id}`);
     } else if (type === EditerType.editBot) {
-      console.log('%c=edit bot', 'color:red',)
       setCurrentBot(bot)
       toggleDrawer('BotDrawer');
     }
@@ -138,12 +137,12 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
             <Box>
-              {item.status === BotStatus.Stopped ? <BotBtnPop type='Run' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Stopped ? <BotBtnPop type='run' bot={item} callBack={btnPopCallback} /> : null}
               {item.status === BotStatus.Offline ? <>
-                <BotBtnPop type='Restart' bot={item} callBack={btnPopCallback} />
-                <BotBtnPop customStyle={{ marginLeft: '10px' }} type='Stop' bot={item} callBack={btnPopCallback} />
+                <BotBtnPop type='restart' bot={item} callBack={btnPopCallback} />
+                <BotBtnPop customStyle={{ marginLeft: '10px' }} type='stop' bot={item} callBack={btnPopCallback} />
               </> : null}
-              {item.status === BotStatus.Running ? <BotBtnPop type='Stop' bot={item} callBack={btnPopCallback} /> : null}
+              {item.status === BotStatus.Running ? <BotBtnPop type='stop' bot={item} callBack={btnPopCallback} /> : null}
             </Box>
           </Box>
         </Box>

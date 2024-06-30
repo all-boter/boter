@@ -12,14 +12,14 @@ export enum EditorSource {
 export const Editor = (props: IEditor) => {
   const routerParams = useParams<{
     source: string,
-    codeId: string
+    stgId: string
   }>();
 
   if (
     routerParams?.source === EditorSource.server ||
     routerParams?.source === EditorSource.github
   ) {
-    return <BoterEditor editerType={routerParams?.source} codeId={routerParams.codeId} />
+    return <BoterEditor editerType={routerParams?.source} stgId={routerParams.stgId} />
   } else {
     return <PageNotFound />;
   }
