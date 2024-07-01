@@ -1,13 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { DynamicFormProvider, FormItem, FormSchema } from "@/components/basics/DynamicFormProvider"
 import { Button } from "@/components/basics/button"
-import { IStrategy, createBot, getRunners } from "@/services/stgApi"
+import { IJsonValue, getRunners, stgEditParams } from "@/services/stgApi"
 import { Box, styled } from "@mui/system"
 import { useForm } from "react-hook-form"
-import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { mainTheme } from "@/components/basics/mainColor"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
+import { SUCCESS } from "@/common/constants"
 
 export const botFormSchemaDefault: FormSchema[] = [
   {
@@ -37,15 +37,28 @@ export interface BotFormValues {
 
 export const StyledButton = styled(Button)(`margin-top: 20px;`)
 
+function updateParamsSchema(form: BotFormValues, paramsSchema: FormSchema[]) {
+  return paramsSchema.map(param => {
+    const formValue = form[param.id];
+    if (formValue !== undefined && formValue !== '' && formValue !== null) {
+      return { ...param, value: formValue };
+    }
+    return param;
+  });
+}
+
 interface Props {
-  stg: IStrategy
+  paramsSchema: IJsonValue[]
+  stgId: string
+  runnerId: string
   onClose?: () => void
 }
 
-export const StgDrawer = ({ stg, onClose }: Props) => {
+export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) => {
+  const { closeDrawer } = useDrawerContext();
   const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<BotFormValues>({})
-  const { drawers, closeDrawer } = useDrawerContext();
+  const { drawers } = useDrawerContext();
   const drawerOpen = drawers['BotDrawer'];
 
   const { handleSubmit } = useForm({
@@ -55,17 +68,16 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
   });
 
   const { formSchema, defaultFormValues } = useMemo<{ formSchema: FormSchema[], defaultFormValues: any }>(() => {
-    const newSchema = [...botFormSchemaDefault, ...stg.paramsSchema]
-
+    const newSchema = [...botFormSchemaDefault, ...(paramsSchema as unknown as FormSchema[])]
     const formValues: BotFormValues = newSchema.reduce((obj: BotFormValues, item) => {
-      obj[item.id] = "";
+      obj[item?.id] = item.value as string || "";
       return obj;
     }, {});
 
-    setFormValuesState(formValues)
+    setFormValuesState({ ...formValues, runnerId })
 
     return { formSchema: newSchema, defaultFormValues: { ...formValues } }
-  }, [stg])
+  }, [stgId, paramsSchema])
 
   const renderFormItem = (
     formItem: FormItem,
@@ -76,23 +88,24 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
   };
 
   const onSubmit = async () => {
-    if (!formValues['runnerId']) {
+    const runnerId = formValues['runnerId']
+    if (!runnerId) {
       showToast('Please select a runner', { type: ToastType.info, duration: 2000 })
       return
     }
 
-    const res = await createBot({
-      strategyId: stg.id,
-      stgName: stg.name,
-      params: formValues
+    const updatedParamsSchema = updateParamsSchema(formValues, paramsSchema as unknown as FormSchema[]);
+    const res = await stgEditParams({
+      id: stgId,
+      runnerId,
+      paramsSchema: updatedParamsSchema
     })
-
     if (res.code === SUCCESS) {
-      showToast(`Create ${formValues?.name} bot ${res.msg}`, { type: ToastType.success, duration: 2000 })
+      showToast(`Edit Params schema: ${res.msg}`, { type: ToastType.success, duration: 2000 })
       closeDrawer('BotDrawer')
       onClose && onClose()
     } else {
-      showToast(`Create ${formValues?.name} bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+      showToast(`Edit Params schema bot error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       closeDrawer('BotDrawer')
       onClose && onClose()
     }
@@ -101,12 +114,14 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
   useEffect(() => {
     if (!drawerOpen) {
       setFormValuesState(defaultFormValues)
+    } else {
+      setFormValuesState({ ...formValues, runnerId })
     }
   }, [drawerOpen]);
 
   return <Box sx={{ p: '20px' }}>
     <Box sx={{ mb: '10px', fontWeight: '500', color: mainTheme.golden }}>
-      Create <span>{stg.name}</span> Bot
+      Edit params schema
     </Box>
     <form onSubmit={handleSubmit(onSubmit)}>
       {formSchema.map((formItem, index) => {
@@ -118,7 +133,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
         )
       })}
 
-      <StyledButton type='submit'>Create bot</StyledButton>
+      <StyledButton type='submit'>Save</StyledButton>
     </form>
   </Box>
 }

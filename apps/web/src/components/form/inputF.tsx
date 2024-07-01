@@ -11,7 +11,7 @@ interface Props extends FormItem {
 
 export const InputF = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { control: controlF } = useForm();
-  const { control, id, setFormValuesState } = props
+  const { maxLength = 200, placeholder, width = 250, id, setFormValuesState } = props
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
@@ -30,9 +30,9 @@ export const InputF = forwardRef<HTMLInputElement, Props>((props, ref) => {
       render={({ field: { onChange, onBlur, value } }) => (
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
-          maxLength={control?.maxLength}
-          placeholder={control?.placeholder}
-          width={control.width}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          width={width}
           value={props.values[id]}
         />
       )}

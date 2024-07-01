@@ -25,8 +25,8 @@ export async function editBot(args: IEditBot): Promise<ResTypeNoData> {
   return await fetchWithAuth<any>(url, { data: args }, 'POST');
 }
 
-export async function runTempBot(stgId: string, type: 1 | 2): Promise<ResTypeNoData> {
-  const url = `${botApi.runTempBot}?stgId=${stgId}&type=${type}`
+export async function runTempBot(stgId: string, runnerId: string, type: 1 | 2): Promise<ResTypeNoData> {
+  const url = `${botApi.runTempBot}?stgId=${stgId}&runnerId=${runnerId}&type=${type}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }

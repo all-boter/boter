@@ -18,11 +18,8 @@ const formSchema: FormSchema[] = [
     type: 'Input',
     id: 'name',
     label: 'Strategy name:',
-    control: {
-      value: '',
-      defaultValue: '',
-      placeholder: 'Type name',
-    },
+    value: '',
+    placeholder: 'Type name',
   },
 ]
 

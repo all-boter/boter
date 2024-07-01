@@ -97,7 +97,6 @@ export const Dashbord = () => {
         </Box> */}
       </Box>
 
-
       <DrawerProvider>
         <StgList />
       </DrawerProvider>

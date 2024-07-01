@@ -21,30 +21,35 @@ const StyledContent = styled(Content)(`
 
 interface IEditorPop {
   stgId: string
+  runnerId: string
   children: React.ReactNode
   type: IBotOperate
-  // callback: () => void
 }
 
-export const EditorPop = ({ children, type, stgId }: IEditorPop) => {
+export const EditorPop = ({ children, type, stgId, runnerId }: IEditorPop) => {
   const { showToast } = useContext(ToastContext)!;
 
   const onOperate = async () => {
     if (type === 'restart') {
 
       await sleep(1500)
-      botUtil(1)
+      runBotUtil(1)
     } else if (type === 'stop') {
 
-      botUtil(2)
+      runBotUtil(2)
     } else if (type === 'run') {
 
-      botUtil(1)
+      runBotUtil(1)
     }
   }
 
-  const botUtil = async (type: 1 | 2) => {
-    const res = await runTempBot(stgId, type)
+  const runBotUtil = async (type: 1 | 2) => {
+    if (!runnerId) {
+      showToast('Please select a runner in the settings', { type: ToastType.info, duration: 2000 })
+      return
+    }
+
+    const res = await runTempBot(stgId, runnerId, type)
     if (res.code === SUCCESS) {
       showToast(`Ok:`, { type: ToastType.success, duration: 2000 })
     } else {

@@ -4,6 +4,7 @@
   width: 100%;
   position: fixed;
   transition: transform 0.3s;
+  z-index: 999;
 }
 
 .drawer.active {

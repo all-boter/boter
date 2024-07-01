@@ -13,14 +13,14 @@ interface Props extends FormItem {
   setFormValuesState: (val: any) => void
 }
 
-const ItemContainer = styled('div') <{ status: boolean }>`
+export const SelectItemContainer = styled('div') <{ status: boolean }>`
   display: flex;
   justify-content: space-between;
   cursor: ${props => props.status ? 'pointer' : 'not-allowed'};
   height: 100%;
 `
 
-const StatusStyled = styled('div') <{ status: boolean }>`
+export const SelectStatusStyled = styled('div') <{ status: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@ const StatusStyled = styled('div') <{ status: boolean }>`
 `;
 
 export const SelectF = (props: Props) => {
-  const { control, id, setFormValuesState } = props
+  const { id, setFormValuesState } = props
   const [options, setOptions] = useState<any[]>([])
   const { control: controlF } = useForm();
   const { drawers } = useDrawerContext();
@@ -51,12 +51,10 @@ export const SelectF = (props: Props) => {
   }
 
   const handleChange = (value: any) => {
-    if (control.id) {
-      setFormValuesState({
-        ...props.values,
-        [id]: value
-      })
-    }
+    setFormValuesState({
+      ...props.values,
+      [id]: value
+    })
   }
 
   useEffect(() => {
@@ -86,12 +84,12 @@ export const SelectF = (props: Props) => {
               return (
                 <SelectItem key={item['id']} value={item['id']} disabled={!item.status}>
                   <ItemText>
-                    <ItemContainer status={item.status}>
+                    <SelectItemContainer status={item.status}>
                       {item['name']}
-                      <StatusStyled status={item.status}>
+                      <SelectStatusStyled status={item.status}>
                         {item.status ? 'Online' : 'Offline'}
-                      </StatusStyled>
-                    </ItemContainer>
+                      </SelectStatusStyled>
+                    </SelectItemContainer>
                   </ItemText>
                 </SelectItem>
               );

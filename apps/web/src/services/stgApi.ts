@@ -7,6 +7,7 @@ interface ApiConfig {
   strateies: string
   stgById: string
   stgEdit: string
+  stgEditParams: string
   deleteStg: string
   createRunner: string
   runners: string
@@ -25,6 +26,7 @@ const apiConfig: ApiConfig = {
   strateies: '/api/strateies',
   stgById: '/api/stg/byId',
   stgEdit: '/api/stg/edit',
+  stgEditParams: '/api/stg/paramsEdit',
   deleteStg: '/api/stg/delete',
   createRunner: '/api/runner/create',
   runners: '/api/runners',
@@ -67,6 +69,18 @@ export interface IStrategy {
 
 export async function editStg(params: IStrategy): Promise<ResTypeNoData> {
   const url = `${apiConfig.stgEdit}`
+
+  return await fetchWithAuth<any>(url, { data: params }, 'POST');
+}
+
+interface IEditParams {
+  id: string
+  runnerId: string;
+  paramsSchema: FormSchema[]
+}
+
+export async function stgEditParams(params: IEditParams): Promise<ResTypeNoData> {
+  const url = `${apiConfig.stgEditParams}`
 
   return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
@@ -202,11 +216,21 @@ export async function runBot(params: IRunBot): Promise<ResTypeNoData> {
 interface IServerCode {
   id: string;
   strategyId: string;
+  runnerId: string;
   strategyCode: string;
+  paramsSchema: IJsonValue[];
   uiCode: string;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type IJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | IJsonValue[]
+  | { [key: string]: IJsonValue };
 
 export async function getCodeByStgId(stgId: string): Promise<ResType<IServerCode>> {
   const url = `${apiConfig.codeByStgId}?stgId=${stgId}`

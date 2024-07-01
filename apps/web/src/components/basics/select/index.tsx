@@ -113,7 +113,7 @@ export const BoterSelect = (props: IBoterSelect) => {
         </RadixSelTrigger>
       </Trigger>
 
-      <Content position="popper">
+      <Content position="popper" style={{ zIndex: '999' }}>
         <Dropdown width={width || 0}>
           {children ? children : options.map((item, i) => (
             <SelectItem key={item[id] || i} value={item[id]}>

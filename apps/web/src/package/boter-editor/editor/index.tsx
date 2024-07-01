@@ -16,7 +16,7 @@ import "../components/file-tree/style.css";
 import { GithubRepository } from "../../../services/githubService";
 import { EditorSource } from "@/pages/editor";
 import { getCodeByStgId } from "@/services/stgApi";
-import { EditorMenubar } from "./menubar";
+import { EditorMenubar, IEditStgParams } from "./menubar";
 import { Box } from "@mui/system";
 import { InspectorPanel } from "./inspectorPanel";
 import { computeSizePercentage } from "./utils";
@@ -26,6 +26,7 @@ import { editorSlice, panelState } from "@/store/editorSlice";
 import { StatusBar } from "./statusBar";
 import { getOwnedAllBotsStatus } from "@/services/botApi";
 import { appSlice } from "@/store/appSlice";
+import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 
 const dummyDir: Directory = {
   id: "1",
@@ -118,8 +119,10 @@ interface IBoterEditor {
 export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
   const [rootDir, setRootDir] = useState(dummyDir);
   const [selectedFile, setSelectedFile] = useState<CodeFile | undefined>(undefined)
+  const [stgParams, setStgParams] = useState<IEditStgParams>({ schema: [], runnerId: '' })
   const githubRepos = useAppSelector(githubReposState)
   const editorcontainerRef = useRef<HTMLDivElement>(null)
+
 
   const dispatch: AppDispatch = useDispatch();
   const panel = useAppSelector(panelState)
@@ -171,32 +174,36 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
     })
   }, [rootDir])
 
-  const fetchCodeByStg = async (stgId: string) => {
+  const fetchCodeByStg = async (stgId: string, isUpdeCode = false) => {
     const res = await getCodeByStgId(stgId)
     if (res.code === SUCCESS) {
       const data = res.data
 
-      setSelectedFile({
-        content: data.strategyCode,
-        code_id: data.id,
-        id: data.strategyId,
-        type: Type.FILE,
-        name: 'strategy',
-        parentId: undefined,
-        depth: 1,
-      })
+      setStgParams({ schema: data.paramsSchema, runnerId: data.runnerId })
 
-      buildModuleUtil([{
-        code: data.strategyCode,
-        id: data.id,
-        is_binary: false,
-        title: 'strategy',
-        shortid: "",
-        source_id: data.strategyId,
-        directory_shortid: null,
-        inserted_at: data.updatedAt as unknown as string,
-        updated_at: data.createdAt as unknown as string
-      }])
+      if (isUpdeCode) {
+        setSelectedFile({
+          content: data.strategyCode,
+          code_id: data.id,
+          id: data.strategyId,
+          type: Type.FILE,
+          name: 'strategy',
+          parentId: undefined,
+          depth: 1,
+        })
+
+        buildModuleUtil([{
+          code: data.strategyCode,
+          id: data.id,
+          is_binary: false,
+          title: 'strategy',
+          shortid: "",
+          source_id: data.strategyId,
+          directory_shortid: null,
+          inserted_at: data.updatedAt as unknown as string,
+          updated_at: data.createdAt as unknown as string
+        }])
+      }
     } else {
       alert('fetchCodeByStg error')
     }
@@ -232,7 +239,7 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
     */
 
     if (editerType === EditorSource.server && stgId) {
-      fetchCodeByStg(stgId)
+      fetchCodeByStg(stgId, true)
     }
 
     console.log('%c=useEffect init', 'color: blue', {
@@ -250,15 +257,25 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
     })
   }, [])
 
+  const menubarCallback = () => {
+    console.log('===>menubarCallback:', stgId)
+    if (stgId) {
+      fetchCodeByStg(stgId as string)
+    }
+  }
+
   console.log('%c=boter-editer-render', 'color:red', {
     // bundlerUrl,
     rootDir,
     selectedFile,
-    panel
+    panel,
+    stgParams
   })
 
   return <div className="full-box">
-    <EditorMenubar id={stgId as string} />
+    <DrawerProvider>
+      <EditorMenubar menubarCallback={() => menubarCallback()} stgParams={stgParams} id={stgId as string} />
+    </DrawerProvider>
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
@@ -315,6 +332,7 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
             // dispatch(dispatchPanelLayoutChange(result))
           }}
         />
+
         {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}
       </Box>
       <StatusBar />

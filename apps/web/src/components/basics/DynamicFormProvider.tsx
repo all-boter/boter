@@ -1,11 +1,10 @@
 import { InputF } from "../form/inputF"
 import { SelectF } from "../form/selectF"
 
-export interface FormItem {
+export interface FormItem extends Control {
   id: string
   type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Switch' | 'Checkbox' | 'Upload' | 'textArea'
   label?: string
-  control: Control
   dataSourceFn?: () => Promise<any>;
 }
 
@@ -24,8 +23,8 @@ export enum FormItemType {
 }
 
 interface Control {
-  id?: string
-  label?: string
+  controlId?: string
+  controlLabel?: string
   value: number | string | string[]
   defaultValue?: number | string
   maxLength?: number
@@ -41,7 +40,7 @@ export class DynamicFormProvider {
         return <InputF {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       case FormItemType.Select:
-        return <SelectF {...formItem}  values={values} setFormValuesState={setFormValuesState} />
+        return <SelectF {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       default:
         console.log('unknow component', formItem.type)
