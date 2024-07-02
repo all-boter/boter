@@ -4,6 +4,7 @@ import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_WIDTH_PERCENT, LayoutType, MIN_HEIG
 import { useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
 import { SocketConnector } from "@/common/socketConnector"
+import { botApi } from "@/services/botApi"
 
 export interface Props {
   /**
@@ -45,6 +46,8 @@ export interface Props {
    * @param collapsed
    */
   onCollapsed: (collapsed: boolean) => void
+
+  id: string
 }
 
 export const InspectorPanel = ({
@@ -53,11 +56,13 @@ export const InspectorPanel = ({
   height = DEFAULT_PANEL_HEIGHT,
   widthPercent = DEFAULT_PANEL_WIDTH_PERCENT,
   collapsed,
+  id,
   onResize,
   onLayoutChange,
   onCollapsed,
 }: Props) => {
   const isCollapsed = collapsed && layout === LayoutType.Vertical
+  const [logContent, setLogContent] = useState<string>("");
 
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
@@ -93,17 +98,42 @@ export const InspectorPanel = ({
     topLeft: false,
   }
 
-  const handleConnection = ()=>{
-    // if(socket){
-    //   console.log('%c=handleConnection','color:red',)
-    //   socket.emitQuerySocket()
-    // }
-    console.log('%c=handleConnection:','color:red',SocketConnector.getInstance())
+  const handleConnection = () => {
+    console.log('%c=handleConnection:', 'color:red', SocketConnector.getInstance())
     const socket = SocketConnector.getInstance()
-    if(socket) {
+    if (socket) {
       socket.emitQuerySocket()
     }
   }
+
+  useEffect(() => {
+    let eventSource: EventSource;
+    if (id) {
+      eventSource = new EventSource(`${botApi.streamLogs}${id}`, { withCredentials: true });
+      eventSource.onmessage = ({ data }) => {
+        const parsedData = JSON.parse(data);
+        if (parsedData?.type === 'close') {
+          console.log('%c==Closing connection A:', 'color:red')
+          eventSource.close();
+        } else {
+          const logText = parsedData.msg || "";
+          setLogContent(prev => prev + logText);
+        }
+      };
+
+      eventSource.onerror = (error) => {
+        console.error('SSE connection error:', error);
+        eventSource.close();
+      };
+    }
+
+    return () => {
+      if (eventSource) {
+        console.log('%c===eventSource.close B:', 'color:red',)
+        eventSource.close();
+      }
+    };
+  }, [id])
 
   return <Resizable
     className={clsx('InspectorPanel', isCollapsed && 'InspectorPanel--collapsed', `InspectorPanel--${layout}`)}
@@ -114,9 +144,23 @@ export const InspectorPanel = ({
     minHeight={MIN_HEIGHT}
     minWidth={MIN_WIDTH}
   >
-    <Box sx={{ background: 'green' }}>
-      InspectorPanel
-      <button onClick={handleConnection}>handleConnection</button>
+    <Box sx={{
+      background: '#313131',
+      height: "calc(100vh - 60px)",
+      overflowY: 'auto',
+    }}>
+      <Box sx={{
+        color: '#fff',
+        overflowY: 'auto',
+        maxWidth: '100vw',
+        boxSizing: 'border-box',
+        pl: '10px',
+        pb: '200px'
+      }}>
+        <pre>
+          {logContent}
+        </pre>
+      </Box>
     </Box>
   </Resizable>
 }

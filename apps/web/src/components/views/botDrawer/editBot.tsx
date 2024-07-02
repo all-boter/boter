@@ -90,7 +90,7 @@ export const EditBot = ({ bot, onClose }: Props) => {
         )
       })}
 
-      <StyledButton type='submit'>Edit bot</StyledButton>
+      <StyledButton type='submit' padding="20px 10px">Edit bot</StyledButton>
     </form>
   </Box>
 }

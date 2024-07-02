@@ -131,7 +131,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
               </Box>
             </Box>
 
-            <StyledButton onClick={() => onClick(item, EditerType.viewStg)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>detail</StyledButton>
+            <StyledButton padding='6px 8px' onClick={() => onClick(item, EditerType.viewStg)} color={'#fff1f1'} bg={muiGreen.seaFoam}>detail</StyledButton>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

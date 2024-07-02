@@ -25,10 +25,17 @@ export async function editBot(args: IEditBot): Promise<ResTypeNoData> {
   return await fetchWithAuth<any>(url, { data: args }, 'POST');
 }
 
-export async function runTempBot(stgId: string, runnerId: string, type: 1 | 2): Promise<ResTypeNoData> {
-  const url = `${botApi.runTempBot}?stgId=${stgId}&runnerId=${runnerId}&type=${type}`
+interface IRunTemp {
+  stgId: string;
+  type: 1 | 2;
+  runnerId: string;
+  params: { [key: string]: any };
+}
 
-  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+export async function runTempBot(args: IRunTemp): Promise<ResTypeNoData> {
+  const url = `${botApi.runTempBot}`
+
+  return await fetchWithAuth<any>(url, { data: args }, 'POST');
 }
 
 export async function getOwnedAllBotsStatus(): Promise<ResType<string[]>> {

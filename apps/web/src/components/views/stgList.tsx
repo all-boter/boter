@@ -96,7 +96,14 @@ export const StgList = () => {
             </Box>
 
             <Box>
-              <StyledButton onClick={() => onEdit(item, EditerType.Code)} color={'#fff1f1'} bg={muiGreen.seaFoam} size={'small'}>coding</StyledButton>
+              <StyledButton 
+                onClick={() => onEdit(item, EditerType.Code)} 
+                color={'#fff1f1'} 
+                bg={muiGreen.seaFoam}
+                padding='6px 8px'
+              >
+                Coding
+              </StyledButton>
             </Box>
           </Box>
 
@@ -104,7 +111,14 @@ export const StgList = () => {
             <Box sx={{ color: mainTheme.white }}>Free</Box>
             <Box>
               <DeletePop stg={item} />
-              <StyledButton onClick={() => onCreate(item)} color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>Create bot</StyledButton>
+              <StyledButton 
+                onClick={() => onCreate(item)} 
+                color={mainTheme[103]} 
+                bg={mainTheme[106]}
+                padding='6px 8px'
+              >
+                Create bot
+              </StyledButton>
             </Box>
           </Box>
         </Box>

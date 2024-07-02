@@ -331,6 +331,8 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
             dispatch(editorSlice.actions.changePanelLayout(result))
             // dispatch(dispatchPanelLayoutChange(result))
           }}
+
+          id={stgId as string}
         />
 
         {/* {isEmptyObject(codes) && <CodeRenderer files={codes} bundlerURL={bundlerUrl} />} */}

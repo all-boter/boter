@@ -7,8 +7,9 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element | string
   color?: string
   bg?: string
-  size?: 'small' | 'middle'
   width?: string
+  height?: string
+  padding: string
   // onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -18,14 +19,15 @@ export function Button(props: Props) {
 }
 
 const StyledButton = styled(ButtonOrgin)(
-  ({ theme, bg, color, width, size = 'middle' }) => `
+  ({ theme, bg, color,padding='0px' ,height = 'auto', width = 'auto' }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
   line-height: 1.5;
   background-color: ${bg || mainTheme.golden};
-  padding: ${size === 'small' ? '5px 10px' : '8px 16px'};
-  width: ${width ? width + 'px' : 'auto'};
+  padding: ${padding};
+  width: ${width};
+  height: ${height};
   border-radius: 6px;
   color: ${color || mainTheme[101]};
   transition: all 150ms ease;

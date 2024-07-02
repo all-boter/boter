@@ -111,8 +111,8 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn customStyle={customStyle} color={mainTheme[103]} bg={mainTheme[106]} size={'small'}>
-        {type}
+      <TriggerBtn padding='2px 10px' customStyle={customStyle} color={mainTheme[103]} bg={mainTheme[106]} width='auto'>
+        { type.charAt(0).toUpperCase() + type.slice(1) }
       </TriggerBtn>
     </Trigger>
     <Portal>
@@ -132,11 +132,11 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
           px: '20px',
           mt: '10px',
         }}>
-          <CloseBtn aria-label="Close" bg={mainTheme[100]} size='small'>
+          <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
             Cancel
           </CloseBtn>
 
-          <CloseBtn aria-label="Close" onClick={() => onOperate()} bg={mainTheme[102]} size='small'>
+          <CloseBtn padding='2px 10px' aria-label="Close" onClick={() => onOperate()} bg={mainTheme[102]} width='auto'>
             Confirm
           </CloseBtn>
         </Box>

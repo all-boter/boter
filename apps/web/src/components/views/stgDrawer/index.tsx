@@ -118,7 +118,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
         )
       })}
 
-      <StyledButton type='submit'>Create bot</StyledButton>
+      <StyledButton padding='6px 8px' type='submit'>Create bot</StyledButton>
     </form>
   </Box>
 }

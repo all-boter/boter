@@ -78,7 +78,7 @@ export const CreateStg = (props: IModal) => {
           )
         })}
 
-        <StyledButton type='submit'>Create a strategy</StyledButton>
+        <StyledButton padding='6px 8px' type='submit'>Create a strategy</StyledButton>
       </form>
     </ModalContent>
   </Modal>

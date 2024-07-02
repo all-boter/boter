@@ -84,7 +84,7 @@ export const Dashbord = () => {
           </Box>
           <button onClick={() => handleConnection()}>query-socket</button>
           <button onClick={() => handleConnection2()}>test</button>
-          <Button onClick={() => onCreateStg()}>Create strategy</Button>
+          <Button onClick={() => onCreateStg()} padding='6px 8px'>Create strategy</Button>
 
           <Box sx={{
             color: socketConnectStatus?.type === 8 ? 'green' : 'red'

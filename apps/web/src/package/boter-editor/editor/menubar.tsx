@@ -71,7 +71,6 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
         break;
 
       case MenubarEvent.Params:
-        console.log('%c=Params schema', 'color:red',)
         toggleDrawer('BotDrawer')
 
         break;
@@ -106,7 +105,7 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
       Save
     </MenubarItem>
 
-    <EditorPop type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
+    <EditorPop schema={stgParams.schema} type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
       <MenubarItem >
         <Box component={Play} size={20} sx={{ mr: '4px' }} />
         {botStatus.botOperate}
@@ -117,7 +116,7 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
       lineHeight: '40px',
       fontSize: '12px',
       color: mainTheme.blackColor
-    }}>Test status:
+    }}>Code test:
       <Box component={'span'} sx={{
         pl: '2px',
         color: botStatus.status === BotStatus.Running ? 'green' : 'red'

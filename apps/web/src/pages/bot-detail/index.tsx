@@ -43,9 +43,10 @@ export const BotDetail = () => {
         eventSource.close();
       };
     }
+
     return () => {
       if (eventSource) {
-        console.log('%c===eventSource.close B:','color:red',)
+        console.log('%c===eventSource.close B:', 'color:red',)
         eventSource.close();
       }
     };
@@ -62,15 +63,16 @@ export const BotDetail = () => {
     >
       <Box sx={{
         flexGrow: 1,
+        background: '#313131',
       }}
       >
         <Box sx={{
-            color: '#fff',
-            overflowY: 'auto',
-            maxWidth: '100vw',
-            boxSizing: 'border-box',
-            pl: '10px',
-            pb: '10px'
+          color: '#fff',
+          overflowY: 'auto',
+          maxWidth: '100vw',
+          boxSizing: 'border-box',
+          pl: '10px',
+          pb: '200px'
         }}>
           <pre>
             {logContent}

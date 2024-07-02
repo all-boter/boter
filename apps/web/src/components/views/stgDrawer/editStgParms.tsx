@@ -20,15 +20,15 @@ export const botFormSchemaDefault: FormSchema[] = [
     controlId: 'id',
     controlLabel: 'name',
   },
-  {
-    type: 'Input',
-    id: 'name',
-    label: 'bot name',
-    value: '',
-    defaultValue: '',
-    placeholder: 'Type name',
-    width: 200,
-  },
+  // {
+  //   type: 'Input',
+  //   id: 'name',
+  //   label: 'bot name',
+  //   value: '',
+  //   defaultValue: '',
+  //   placeholder: 'Type name',
+  //   width: 200,
+  // },
 ]
 
 export interface BotFormValues {
@@ -133,7 +133,7 @@ export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) 
         )
       })}
 
-      <StyledButton type='submit'>Save</StyledButton>
+      <StyledButton padding='6px 8px' type='submit'>Save</StyledButton>
     </form>
   </Box>
 }

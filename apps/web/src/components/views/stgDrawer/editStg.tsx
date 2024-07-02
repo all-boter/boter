@@ -187,7 +187,7 @@ export const EditStg = ({ stg }: Props) => {
       display: 'flex',
       justifyContent: 'center',
     }}>
-      <Button width="160" onClick={() => onSubmit()}>Submit</Button>
+      <Button padding='6px 8px' onClick={() => onSubmit()}>Submit</Button>
     </Box>
   </Box>
 }
