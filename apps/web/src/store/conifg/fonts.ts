@@ -96,7 +96,6 @@ export const getDefaultFontFamily = () => fallbackFonts
 export function loadFont(fontName: string) {
   const font = fontsList[fontName]
   if (!font || loadedFonts.has(fontName)) return
-  console.log('Loading font "%s"...', font.label)
   const elem = document.createElement('style')
   elem.id = `font-${fontName}`
   elem.innerText = fontToStyle(font)

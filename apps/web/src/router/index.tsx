@@ -5,8 +5,8 @@ import { Editor } from "@/pages/editor";
 import { Dashbord } from "@/pages/dashbord/strategies";
 import { Bots } from "@/pages/dashbord/bots";
 import PageNotFound from "@/pages/pageNotFound";
-import Test from "@/pages/test";
 import { BotDetail } from "@/pages/bot-detail";
+import { Notifier } from "@/pages/notifier";
 
 export default function AppRouter() {
   return (
@@ -18,11 +18,11 @@ export default function AppRouter() {
         <Route element={<PrivateRoute />}>
           <Route path="/editor/:source?/:stgId" element={<Editor />} />
           <Route path="/bot/:botId" element={<BotDetail />} />
-          <Route path="/test" element={<Test />} />
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />
             <Route path="/dashbord/strategies" element={<Dashbord />} />
             <Route path="bots" element={<Bots />} />
+            <Route path="notifier" element={<Notifier />} />
           </Route>
         </Route>
         <Route path='*' element={<PageNotFound />} />

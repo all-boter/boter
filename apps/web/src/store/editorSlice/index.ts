@@ -35,7 +35,6 @@ export const editorSlice = createSlice({
   initialState,
   reducers: {
     changePanelLayout: (state, action: PayloadAction<PanelState>) => {
-      console.log('%c=changePanelLayout:', 'color:red', action.payload)
 
       state.panel = {
         ...state.panel,

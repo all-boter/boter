@@ -16,7 +16,6 @@ export interface IGithubInstallation {
 }
 
 interface ApiConfig {
-  authVerify: string
   authTest: string
   githubOauth: string
   githubToken: string
@@ -25,7 +24,6 @@ interface ApiConfig {
 }
 
 const apiConfig: ApiConfig = {
-  authVerify: '/api/auth/verify',
   authTest: '/api/auth/test',
   githubOauth: '/api/github-oauth',
   githubToken: '/api/github/token',
@@ -37,11 +35,6 @@ const apiConfig: ApiConfig = {
 export async function authTestApi(): Promise<ResType<User>> {
   const url = `${apiConfig.authTest}`
 
-  return await fetchWithAuth<User>(url, { data: {} }, 'GET');
-}
-
-export async function authVerifyApi(): Promise<ResType<User>> {
-  const url = `${apiConfig.authVerify}`
   return await fetchWithAuth<User>(url, { data: {} }, 'GET');
 }
 

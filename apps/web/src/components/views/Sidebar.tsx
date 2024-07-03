@@ -4,6 +4,7 @@ import { Logo } from "./logo";
 import { StgIcon } from "../icon/stgIcon";
 import { mainTheme } from "../basics/mainColor";
 import { BotIcon } from "../icon/botIcon";
+import { BellRing } from "lucide-react";
 
 export const Sidebar = () => {
   return <Box sx={{ display: 'flex', flexDirection: 'column', width: '15%', minWidth: '280px', borderRight: '1px solid #374151' }}>
@@ -14,7 +15,6 @@ export const Sidebar = () => {
     <NavLink
       className="navLink"
       to="/dashbord/strategies"
-      // to="/strategies"
     >
       {({ isActive }) => (
         <>
@@ -32,6 +32,20 @@ export const Sidebar = () => {
         <>
           <BotIcon fill={isActive ? mainTheme.golden : '#FFF'} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
+        </>
+      )}
+    </NavLink>
+
+    <NavLink
+      className="navLink"
+      to="/dashbord/notifier"
+    >
+      {({ isActive }) => (
+        <>
+          <Box component={BellRing} size={22} sx={{
+            color: isActive ? mainTheme.golden : '#FFF'
+          }} />
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>Notification</Box>
         </>
       )}
     </NavLink>

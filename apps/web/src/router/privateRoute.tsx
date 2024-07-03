@@ -11,8 +11,7 @@ export function PrivateRoute() {
   useEffect(() => {
     const token = Cookies.get(TOKEN_FIELD)
     if (token) {
-      const socketConnector = new SocketConnector(token);
-      console.log('%c=useEffect-AppRouter-2', 'color:red', socketConnector)
+      new SocketConnector(token);
     }
   }, [])
 

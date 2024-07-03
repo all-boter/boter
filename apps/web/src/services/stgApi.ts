@@ -1,6 +1,6 @@
 import { FormSchema } from '@/components/basics/DynamicFormProvider'
 import { ResType, ResTypeNoData, fetchWithAuth } from './base'
-import { BotStatus } from '@/common/constants'
+import { BotStatus, IJsonValue } from '@/common/constants'
 
 interface ApiConfig {
   createStg: string
@@ -9,7 +9,6 @@ interface ApiConfig {
   stgEdit: string
   stgEditParams: string
   deleteStg: string
-  createRunner: string
   runners: string
   createBot: string
   getOwnedBots: string
@@ -28,7 +27,6 @@ const apiConfig: ApiConfig = {
   stgEdit: '/api/stg/edit',
   stgEditParams: '/api/stg/paramsEdit',
   deleteStg: '/api/stg/delete',
-  createRunner: '/api/runner/create',
   runners: '/api/runners',
   createBot: '/api/bot/create',
   getOwnedBots: '/api/bot/owned',
@@ -132,13 +130,6 @@ export async function deleteStg(id: string): Promise<ResTypeNoData> {
   return await fetchWithAuth<any>(url, { data: { id } }, 'POST');
 }
 
-interface IRegisterRunner {
-  name: string;
-  token: string;
-  machineHash: string;
-  machineIp: string;
-}
-
 export interface IRunner {
   id: string;
   uid: string;
@@ -150,12 +141,6 @@ export interface IRunner {
   deletedAt: Date;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export async function createRunner(params: IRegisterRunner): Promise<ResTypeNoData> {
-  const url = `${apiConfig.createRunner}`
-
-  return await fetchWithAuth<any>(url, { data: params }, 'POST');
 }
 
 export async function getRunners(): Promise<ResType<IRunner[]>> {
@@ -223,14 +208,6 @@ interface IServerCode {
   createdAt: Date;
   updatedAt: Date;
 }
-
-export type IJsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | IJsonValue[]
-  | { [key: string]: IJsonValue };
 
 export async function getCodeByStgId(stgId: string): Promise<ResType<IServerCode>> {
   const url = `${apiConfig.codeByStgId}?stgId=${stgId}`

@@ -66,7 +66,6 @@ export const InspectorPanel = ({
   const handleResize = useCallback(
     (e: any, direction: any, ref: any, delta: any) => {
       const { height, width } = ref.getBoundingClientRect()
-      console.log('%c=handleResize', 'color:red',)
       switch (layout) {
         case LayoutType.Vertical:
           onResize?.({ height })
@@ -104,7 +103,6 @@ export const InspectorPanel = ({
       eventSource.onmessage = ({ data }) => {
         const parsedData = JSON.parse(data);
         if (parsedData?.type === 'close') {
-          console.log('%c==Closing connection A:', 'color:red')
           eventSource.close();
         } else {
           const logText = parsedData.msg || "";
@@ -120,7 +118,6 @@ export const InspectorPanel = ({
 
     return () => {
       if (eventSource) {
-        console.log('%c===eventSource.close B:', 'color:red',)
         eventSource.close();
       }
     };

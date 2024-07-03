@@ -2,12 +2,11 @@ import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
 import { Box, styled } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
-import { IBotOperate, SUCCESS } from '@/common/constants';
+import { IBotOperate, IJsonValue, SUCCESS } from '@/common/constants';
 import { runTempBot } from '@/services/botApi';
 import { useContext } from 'react';
 import { ToastContext, ToastType } from '@/components/basics/toast/toastContext';
 import { sleep } from '@/common';
-import { IJsonValue } from '@/services/stgApi';
 
 const StyledContent = styled(Content)(`
   display: flex;

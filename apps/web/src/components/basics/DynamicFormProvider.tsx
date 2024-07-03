@@ -43,7 +43,6 @@ export class DynamicFormProvider {
         return <SelectF {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       default:
-        console.log('unknow component', formItem.type)
         return <div>unknow component:{formItem.type}</div>
     }
   }

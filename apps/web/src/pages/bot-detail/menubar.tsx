@@ -25,7 +25,6 @@ export const BotMenubar = ({ botId, bot,refreshBot }: Props) => {
   const activeBots = useAppSelector(activeBotsState)
 
   const onMenubar = async (event: MenubarEvent) => {
-    console.log('%c===onMenubar', 'color:red', event)
     switch (event) {
       case MenubarEvent.Params:
         toggleDrawer('BotDrawer');
@@ -54,16 +53,7 @@ export const BotMenubar = ({ botId, bot,refreshBot }: Props) => {
     }
   }, [activeBots, botId])
 
-  const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => {
-    if (type === BotHandleEnum.forceStop) {
-      console.log('%c=btnPopCallback====AA:', 'color:yellow',)
-      // botId && setConfirmStopOpen(true)
-      // setSelectBotId(botId)
-    } else {
-      console.log('%c=btnPopCallback====BB:', 'color:yellow',)
-      // refreshList(botStatus)
-    }
-  }
+  const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => {}
 
   return <Box component={'div'}
     sx={{

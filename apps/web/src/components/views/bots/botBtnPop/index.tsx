@@ -65,12 +65,12 @@ export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, childr
   const onOperate = async () => {
     if (type === 'restart') {
 
-      console.log('%c=onOperate==>restart', 'color:red',)
       restartBotUtil(bot)
     } else if (type === 'stop') {
 
       stopBotUtil(bot.id)
     } else if (type === 'run') {
+
       runBotUtil({
         botId: bot.id,
         runnerId: bot.params.runnerId,

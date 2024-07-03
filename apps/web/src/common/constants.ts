@@ -52,3 +52,12 @@ export interface INotifyBotMsg {
 }
 
 export const TOKEN_FIELD = 'botToken';
+
+export type IJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | IJsonValue[]
+  | { [key: string]: IJsonValue };
+

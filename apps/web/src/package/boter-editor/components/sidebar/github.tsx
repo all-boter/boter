@@ -89,9 +89,9 @@ export const Github = () => {
   }, [user.id])
 
   const onChangeSelect = (val: number) => {
-    const rep = repos.find(item=> item.id === val)
-    console.log('onChangeSelect',{val,rep})
-    if(rep){
+    const rep = repos.find(item => item.id === val)
+    console.log('onChangeSelect', { val, rep })
+    if (rep) {
       selectRepository(rep)
     }
   }

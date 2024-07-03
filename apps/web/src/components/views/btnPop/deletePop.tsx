@@ -29,7 +29,6 @@ export const DeletePop = (props: IDeletePop) => {
 
   const onDelete = async () => {
     const { stg } = props
-    console.log('onDelete', props.stg)
     const res = await deleteStg(stg.id)
     if (res.code === SUCCESS) {
       dispatch(fetchStrategies());

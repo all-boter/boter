@@ -21,7 +21,6 @@ export const queryOwnedAllBotsStatus = createAsyncThunk(
   "owned/allStatus",
   async () => {
     const res = await getOwnedAllBotsStatus();
-    console.log('%c===queryOwnedAllBotsStatus', 'color:yellow', res.data)
     if (res.code === SUCCESS) {
       return res.data;
     }
@@ -105,8 +104,6 @@ export const appSlice = createSlice({
       return state
     },
     setBotStatus: (state, action: PayloadAction<INotifyBotMsg>) => {
-      // state.socketConnectStatus = action.payload;
-      console.log('%c===>store--setBotStatus==>', 'color:pink', action.payload)
       if (action.payload) {
         state.activeBots[action.payload.id] = action.payload
       }
@@ -114,8 +111,6 @@ export const appSlice = createSlice({
       return state
     },
     updateAllBotStatus: (state, action: PayloadAction<string[]>) => {
-      console.log('%c===>store--updateAllBotStatus==>', 'color:pink', action.payload)
-
       action.payload.forEach(botId => {
         state.activeBots[botId] = {
           status: BotStatus.Running
