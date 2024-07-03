@@ -8,7 +8,7 @@ import gitHubIcon from "@assets/gitHub.svg"
 import googleIcon from "@assets/google.svg"
 import launchIcon from "@assets/launch.svg"
 import { isJwtExpired } from '@/common';
-import { githubAuthUrl, googleAuthUrl } from '@/common/constants';
+import { githubAuthUrl, googleAuthUrl, TOKEN_FIELD } from '@/common/constants';
 
 const LaunchBtn = styled('a')(
   ({ theme }) => `
@@ -43,7 +43,7 @@ export function HomeBtns() {
 
   return <>
     {
-      Cookies.get('token') && isJwtExpired(Number(Cookies.get('exp'))) ? <LaunchBtn onClick={() => onLaunch()}>
+      Cookies.get(TOKEN_FIELD) && isJwtExpired(Number(Cookies.get('exp'))) ? <LaunchBtn onClick={() => onLaunch()}>
         Launch App
         <Box component={'img'} src={launchIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
       </LaunchBtn> : <>

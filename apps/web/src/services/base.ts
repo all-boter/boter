@@ -1,3 +1,4 @@
+import { TOKEN_FIELD } from '@/common/constants';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -85,7 +86,7 @@ export const fetchWithAuth = async <T>(
   } catch (error: any) {
     const res = error as AxiosError;
     if (res.response?.status === 401) {
-      Cookies.remove('token');
+      Cookies.remove(TOKEN_FIELD);
       Cookies.remove('exp');
       // TODO: for test
       // window.location.href = '/';

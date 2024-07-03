@@ -22,14 +22,16 @@ const StyledContent = styled(Content)(`
 interface IBotBtnPop {
   bot: Bot
   type: IBotOperate
+  padding?: string
   customStyle?: CSSProperties;
+  children: React.ReactNode
   callBack: (botId: string, type: BotHandleEnum, botStatus?: BotStatus) => void
 }
 
-export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
+export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, children, callBack }: IBotBtnPop) => {
   const { showToast } = useContext(ToastContext)!;
 
-  const onOperate = async () => {
+  const onOperate2 = async () => {
     if (bot.status === BotStatus.Running) {
 
       stopBotUtil(bot.id)
@@ -60,6 +62,25 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
     }
   }
 
+  const onOperate = async () => {
+    if (type === 'restart') {
+
+      console.log('%c=onOperate==>restart', 'color:red',)
+      restartBotUtil(bot)
+    } else if (type === 'stop') {
+
+      stopBotUtil(bot.id)
+    } else if (type === 'run') {
+      runBotUtil({
+        botId: bot.id,
+        runnerId: bot.params.runnerId,
+        bot: null,
+        isRestart: false
+      }, BotStatus.Stopped)
+    }
+  }
+
+
   const stopBotUtil = async (botId: string, type = BotHandleEnum.normal) => {
     const res = await stopBot(botId, type)
     if (res.code === SUCCESS) {
@@ -83,7 +104,7 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
 
       const res = await stopBot(bot.id, BotHandleEnum.normal)
       if (res.code === SUCCESS) {
-        await sleep(1500)
+        await sleep(2000)
         runBotUtil({
           botId: bot.id,
           runnerId: bot.params.runnerId,
@@ -111,8 +132,8 @@ export const BotBtnPop = ({ type, bot, customStyle, callBack }: IBotBtnPop) => {
 
   return <Root>
     <Trigger asChild>
-      <TriggerBtn padding='2px 10px' customStyle={customStyle} color={mainTheme[103]} bg={mainTheme[106]} width='auto'>
-        { type.charAt(0).toUpperCase() + type.slice(1) }
+      <TriggerBtn padding={padding} customStyle={customStyle} color={mainTheme[103]} bg={mainTheme[106]} width='auto'>
+        {children}
       </TriggerBtn>
     </Trigger>
     <Portal>

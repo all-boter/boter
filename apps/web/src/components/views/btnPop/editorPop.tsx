@@ -34,7 +34,8 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
   const onOperate = async () => {
     if (type === 'restart') {
 
-      await sleep(1500)
+      runBotUtil(2)
+      await sleep(2000)
       runBotUtil(1)
     } else if (type === 'stop') {
 

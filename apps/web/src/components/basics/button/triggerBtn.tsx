@@ -28,7 +28,7 @@ export const TriggerBtn = styled('button')<TriggerBtnProps>(
       color: color || mainTheme[101],
       transition: 'all 150ms ease',
       cursor: 'pointer',
-      border: `1px solid ${bg || mainTheme.golden}`,
+      border: '0px',
       boxShadow: `0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'
         }, inset 0 1.5px 1px ${bg || mainTheme.golden}, inset 0 -2px 1px ${bg || mainTheme.golden}`,
       '&:hover': {
@@ -53,7 +53,7 @@ export const CloseBtn = styled(Close)<TriggerBtnProps>(
   color: ${color || mainTheme[101]};
   transition: all 150ms ease;
   cursor: pointer;
-  border: 1px solid ${bg || mainTheme.golden};
+  border: 0px;
   box-shadow: 0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'}, inset 0 1.5px 1px ${bg || mainTheme.golden}, inset 0 -2px 1px ${bg || mainTheme.golden};
 
   &:hover {

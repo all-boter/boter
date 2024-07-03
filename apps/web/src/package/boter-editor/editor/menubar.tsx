@@ -1,7 +1,7 @@
 import { BotStatus, IBotOperate, SUCCESS } from "@/common/constants"
 import { editCodeByStgId, IJsonValue } from "@/services/stgApi"
 import { Box } from "@mui/system"
-import { ArrowLeft, Play, Save, Settings } from "lucide-react"
+import { ArrowLeft, Play, Save, Settings, RotateCcw, Power } from "lucide-react"
 import { getModulesBySourceId } from "../boter-db/db-util"
 import { useNavigate } from "react-router-dom"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
@@ -14,7 +14,7 @@ import { Drawer } from "@/components/basics/drawer"
 import { EditStgParms } from "@/components/views/stgDrawer/editStgParms"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 
-enum MenubarEvent {
+export enum MenubarEvent {
   Save = 1,
   Run = 2,
   Back = 3,
@@ -107,10 +107,17 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
 
     <EditorPop schema={stgParams.schema} type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
       <MenubarItem >
-        <Box component={Play} size={20} sx={{ mr: '4px' }} />
-        {botStatus.botOperate}
+        <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
+        {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)}
       </MenubarItem>
     </EditorPop>
+
+    {botStatus.status === BotStatus.Running && <EditorPop schema={stgParams.schema} type={'restart'} stgId={id} runnerId={stgParams.runnerId}>
+      <MenubarItem >
+        <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />
+        Restart
+      </MenubarItem>
+    </EditorPop>}
 
     <Box sx={{
       lineHeight: '40px',

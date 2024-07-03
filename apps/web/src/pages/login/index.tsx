@@ -1,4 +1,4 @@
-import { googleAuthUrl } from "@/common/constants"
+import { googleAuthUrl, TOKEN_FIELD } from "@/common/constants"
 import { authTestApi } from "@/services/userApi"
 import Cookies from "js-cookie"
 
@@ -8,7 +8,7 @@ export const Login = () => {
     console.log('onTestReq', res)
   }
 
-  if (Cookies.get('token')) {
+  if (Cookies.get(TOKEN_FIELD)) {
     // eslint-disable-next-line no-restricted-globals
     location.href = '/dashbord'
     return null

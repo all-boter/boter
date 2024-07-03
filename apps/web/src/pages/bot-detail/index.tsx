@@ -3,15 +3,37 @@ import { BotMenubar } from "./menubar";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Bot, getBotById } from "@/services/stgApi";
-import { SUCCESS } from "@/common/constants";
+import { BotStatus, SUCCESS } from "@/common/constants";
 import { botApi } from "@/services/botApi";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store";
+import { queryOwnedAllBotsStatus } from "@/store/appSlice";
+import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 
 export const BotDetail = () => {
+  const dispatch: AppDispatch = useDispatch();
   const routerParams = useParams<{
     botId: string,
   }>();
 
-  const [bot, setBot] = useState<Bot>()
+  const [bot, setBot] = useState<Bot>({
+    id: "",
+    uid: "",
+    strategyId: "",
+    apiId: "",
+    name: "",
+    stgName: "",
+    apiKey: "",
+    status: BotStatus.Booting,
+    isPublic: false,
+    duration: 15000,
+    params: {},
+    backtestParams: {},
+    backtestBotParams: {},
+    storage: {},
+    backtestStatus: ''
+  })
+
   const [logContent, setLogContent] = useState<string>("");
 
   const getBotByIdUtil = async (botId: string) => {
@@ -52,8 +74,19 @@ export const BotDetail = () => {
     };
   }, [routerParams])
 
+  const refreshBot = () => {
+    console.log('%c=refreshBot===>', 'color:red',)
+    getBotByIdUtil(bot.id)
+  }
+
+  useEffect(() => {
+    dispatch(queryOwnedAllBotsStatus());
+  }, [])
+
   return <div className="full-box" >
-    <BotMenubar botId={routerParams?.botId!} />
+    <DrawerProvider>
+      <BotMenubar bot={bot} botId={routerParams?.botId!} refreshBot={refreshBot} />
+    </DrawerProvider>
 
     <Box sx={{
       display: 'flex',
@@ -63,13 +96,12 @@ export const BotDetail = () => {
     >
       <Box sx={{
         flexGrow: 1,
-        background: '#313131',
       }}
       >
         <Box sx={{
           color: '#fff',
           overflowY: 'auto',
-          maxWidth: '100vw',
+          minHeight: '100%',
           boxSizing: 'border-box',
           pl: '10px',
           pb: '200px'

@@ -3,7 +3,6 @@ import { Resizable } from 're-resizable'
 import { DEFAULT_PANEL_HEIGHT, DEFAULT_PANEL_WIDTH_PERCENT, LayoutType, MIN_HEIGHT, MIN_WIDTH, SizeChanges, handleClasses } from "./constants"
 import { useCallback, useEffect, useState } from "react"
 import clsx from "clsx"
-import { SocketConnector } from "@/common/socketConnector"
 import { botApi } from "@/services/botApi"
 
 export interface Props {
@@ -98,14 +97,6 @@ export const InspectorPanel = ({
     topLeft: false,
   }
 
-  const handleConnection = () => {
-    console.log('%c=handleConnection:', 'color:red', SocketConnector.getInstance())
-    const socket = SocketConnector.getInstance()
-    if (socket) {
-      socket.emitQuerySocket()
-    }
-  }
-
   useEffect(() => {
     let eventSource: EventSource;
     if (id) {
@@ -152,7 +143,7 @@ export const InspectorPanel = ({
       <Box sx={{
         color: '#fff',
         overflowY: 'auto',
-        maxWidth: '100vw',
+        minHeight: '100%',
         boxSizing: 'border-box',
         pl: '10px',
         pb: '200px'

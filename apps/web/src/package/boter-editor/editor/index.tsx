@@ -24,8 +24,7 @@ import './inspectorPanel.css'
 import { useDispatch } from "react-redux";
 import { editorSlice, panelState } from "@/store/editorSlice";
 import { StatusBar } from "./statusBar";
-import { getOwnedAllBotsStatus } from "@/services/botApi";
-import { appSlice } from "@/store/appSlice";
+import { queryOwnedAllBotsStatus } from "@/store/appSlice";
 import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 
 const dummyDir: Directory = {
@@ -123,7 +122,6 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
   const githubRepos = useAppSelector(githubReposState)
   const editorcontainerRef = useRef<HTMLDivElement>(null)
 
-
   const dispatch: AppDispatch = useDispatch();
   const panel = useAppSelector(panelState)
 
@@ -154,13 +152,6 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
     const rootDir = buildFileTree(data);
     initCallback(rootDir);
   }, []);
-
-  useEffect(() => {
-    console.log('editor source_id test 1:', { githubRepos })
-    if (githubRepos) {
-      buildFileUtil(githubRepos.source_id, githubRepos)
-    }
-  }, [githubRepos])
 
   const onSelectFile = (file: CodeFile) => {
     console.log('%c=onSelect', 'color:yellow', file)
@@ -247,15 +238,15 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
       codes,
     })
 
-    getOwnedAllBotsStatus().then((res) => {
-      if (res.code === SUCCESS) {
-        console.log('%c===getOwnedAllBotsStatus', 'color:red', res.data)
-        dispatch(appSlice.actions.updateAllBotStatus(res?.data || []))
-      } else {
-        alert('get owned bots error')
-      }
-    })
+    dispatch(queryOwnedAllBotsStatus());
   }, [])
+
+  useEffect(() => {
+    console.log('editor source_id test 1:', { githubRepos })
+    if (githubRepos) {
+      buildFileUtil(githubRepos.source_id, githubRepos)
+    }
+  }, [githubRepos])
 
   const menubarCallback = () => {
     console.log('===>menubarCallback:', stgId)

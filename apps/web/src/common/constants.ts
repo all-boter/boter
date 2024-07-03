@@ -50,3 +50,5 @@ export interface INotifyBotMsg {
   id: string;
   status: BotStatus;
 }
+
+export const TOKEN_FIELD = 'botToken';

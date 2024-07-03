@@ -3,11 +3,25 @@ import { IStrategy, strateies } from "@/services/stgApi";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BotStatus, INotifyBotMsg, SUCCESS } from "@/common/constants";
 import { ConnectStatus } from "@/common/socketConnector";
+import { getOwnedAllBotsStatus } from "@/services/botApi";
 
 export const fetchStrategies = createAsyncThunk(
   "strategies/fetch",
   async () => {
     const res = await strateies();
+    if (res.code === SUCCESS) {
+      return res.data;
+    }
+
+    return []
+  }
+);
+
+export const queryOwnedAllBotsStatus = createAsyncThunk(
+  "owned/allStatus",
+  async () => {
+    const res = await getOwnedAllBotsStatus();
+    console.log('%c===queryOwnedAllBotsStatus', 'color:yellow', res.data)
     if (res.code === SUCCESS) {
       return res.data;
     }
@@ -44,7 +58,7 @@ const initialState: InitialState = {
   },
   githubRepository: null,
   stgList: [],
-  socketConnectStatus: { type: 1, msg: 'not init' },
+  socketConnectStatus: { type: 1, msg: '' },
   activeBots: {}
 }
 
@@ -118,6 +132,15 @@ export const appSlice = createSlice({
 
         state.stgList = action.payload;
       },
+    ).addCase(
+      queryOwnedAllBotsStatus.fulfilled,
+      (state, action: PayloadAction<string[]>) => {
+        action.payload.forEach(botId => {
+          state.activeBots[botId] = {
+            status: BotStatus.Running
+          }
+        })
+      }
     )
   },
 });
