@@ -42,7 +42,7 @@ export const Sidebar = () => {
     >
       {({ isActive }) => (
         <>
-          <Box component={BellRing} size={22} sx={{
+          <Box component={BellRing} size={20} sx={{
             color: isActive ? mainTheme.golden : '#FFF'
           }} />
           <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>Notification</Box>

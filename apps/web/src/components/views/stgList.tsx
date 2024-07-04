@@ -130,7 +130,7 @@ export const StgList = () => {
     </Drawer>
 
     <Drawer anchor={"left"} id="editStg">
-      <EditStg stg={currentStg}  />
+      <EditStg stg={currentStg} />
     </Drawer>
   </Box>
 }

@@ -25,7 +25,6 @@ export const Dashbord = () => {
     dispatch(fetchStrategies());
   }
 
-
   return <div className="page-box">
     <Sidebar />
 

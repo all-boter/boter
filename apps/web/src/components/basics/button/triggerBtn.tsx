@@ -41,8 +41,8 @@ export const TriggerBtn = styled('button')<TriggerBtnProps>(
 
 export const CloseBtn = styled(Close)<TriggerBtnProps>(
   ({ theme, bg, color, padding = '0px', height = 'auto', width = 'auto' }: TriggerBtnProps) => `
-  width: ${width},
-  height: ${height},
+  width: ${width};
+  height: ${height};
   padding: ${padding};
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;

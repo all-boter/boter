@@ -6,7 +6,7 @@ import { Dashbord } from "@/pages/dashbord/strategies";
 import { Bots } from "@/pages/dashbord/bots";
 import PageNotFound from "@/pages/pageNotFound";
 import { BotDetail } from "@/pages/bot-detail";
-import { Notifier } from "@/pages/notifier";
+import { NotifierPage } from "@/pages/notifier";
 
 export default function AppRouter() {
   return (
@@ -22,7 +22,7 @@ export default function AppRouter() {
             <Route index element={<Dashbord />} />
             <Route path="/dashbord/strategies" element={<Dashbord />} />
             <Route path="bots" element={<Bots />} />
-            <Route path="notifier" element={<Notifier />} />
+            <Route path="notifier" element={<NotifierPage />} />
           </Route>
         </Route>
         <Route path='*' element={<PageNotFound />} />

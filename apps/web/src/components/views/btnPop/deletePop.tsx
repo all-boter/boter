@@ -8,7 +8,7 @@ import { SUCCESS } from '@/common/constants';
 import { useDispatch } from 'react-redux';
 import { fetchStrategies } from '@/store/appSlice';
 
-const StyledContent = styled(Content)(`
+export const StyledDeleteContent = styled(Content)(`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +44,7 @@ export const DeletePop = (props: IDeletePop) => {
       </TriggerBtn>
     </Trigger>
     <Portal>
-      <StyledContent sideOffset={5}>
+      <StyledDeleteContent sideOffset={5}>
         <Box sx={{
           fontWeight: 700,
           fontSize: '14px',
@@ -70,7 +70,7 @@ export const DeletePop = (props: IDeletePop) => {
         </Box>
 
         <Arrow fill={mainTheme[106]} />
-      </StyledContent>
+      </StyledDeleteContent>
     </Portal>
   </Root>
 }

@@ -11,6 +11,7 @@ interface ApiConfig {
   editNotifier: string
   getNotifierById: string
   getNotifiers: string
+  deleteNotifier: string
 }
 
 export const botApi: ApiConfig = {
@@ -19,10 +20,11 @@ export const botApi: ApiConfig = {
   ownedAllBotsStatus: '/api/bot/owned/allStatus',
   editBot: '/api/bot/edit',
 
-  addNotifier: '/notifier/edit',
-  editNotifier: '/notifier/add',
-  getNotifierById: '/notifier/byId',
-  getNotifiers: '/notifiers',
+  addNotifier: '/api/notifier/add',
+  editNotifier: '/api/notifier/edit',
+  getNotifierById: '/api/notifier/byId',
+  getNotifiers: '/api/notifiers',
+  deleteNotifier: '/api/notifier/delete',
 }
 
 interface IEditBot {
@@ -61,20 +63,20 @@ export async function getOwnedAllBotsStatus(): Promise<ResType<string[]>> {
 */
 
 export enum NotifierType {
-  Twitter = 'Twitter',
   Telegram = 'Telegram',
   Discord = 'Discord',
   Slack = 'Slack',
   Dingtalk = 'Dingtalk',
   Feishu = 'Feishu',
-  Email = 'Email',
+  // Twitter = 'Twitter',
+  // Email = 'Email',
 }
 
 export interface INotifier {
   id: string;
   uid: string;
   name: string;
-  type: NotifierType;
+  type: NotifierType | null;
   config: IJsonValue;
   description: string;
 }
@@ -96,8 +98,7 @@ export async function getNotifierById(notifierId: string): Promise<ResType<INoti
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
 
-
-export async function getNotifiers(): Promise<ResType<INotifier>> {
+export async function getNotifiers(): Promise<ResType<INotifier[]>> {
   const url = `${botApi.getNotifiers}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
@@ -110,9 +111,15 @@ export async function addNotifier(args: IAddNotifier): Promise<ResTypeNoData> {
 }
 
 export async function editNotifier(args: IEditNotifier): Promise<ResTypeNoData> {
-  const url = `${botApi.editBot}`
+  const url = `${botApi.editNotifier}`
 
   return await fetchWithAuth<any>(url, { data: args }, 'POST');
+}
+
+export async function deleteNotifier(notifierId: string): Promise<ResTypeNoData> {
+  const url = `${botApi.deleteNotifier}?id=${notifierId}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
 /**
  * Notifier end

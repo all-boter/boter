@@ -58,7 +58,6 @@ export const Bots = () => {
         />
       </Box>
 
-
       <DrawerProvider>
         <BotList bots={bots} refreshList={getBotsUtil} />
       </DrawerProvider>

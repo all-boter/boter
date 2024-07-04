@@ -13,23 +13,22 @@ import { AppDispatch } from "@/store";
 import { useDispatch } from "react-redux";
 import { fetchStrategies } from "@/store/appSlice";
 
-const StyledFormItem = styled('div')(`
+export const StyledFormItem = styled('div')(`
   margin-bottom: 10px;
 `)
 
-const FieldWarnning = styled('div')(`
+export const FieldWarnning = styled('div')(`
   font-size: 14px;
   color: ${mainTheme.warning};
   height: 18px;
   line-height: 18px;
 `)
 
-const StyledCell = styled('div')(`
+export const StyledCell = styled('div')(`
   display: inline-block;
-  width: 130px;
 `)
 
-const StyledLabel = styled('label')(`
+export const StyledLabel = styled('label')(`
   display: inline-flex;
   align-items: center;
   height: 32px;
@@ -84,7 +83,7 @@ export const EditStg = ({ stg }: Props) => {
       closeDrawer('editStg')
       dispatch(fetchStrategies());
     } else {
-      showToast(res.msg, { type: ToastType.success })
+      showToast(res.msg, { type: ToastType.error })
     }
   }
 
@@ -117,7 +116,7 @@ export const EditStg = ({ stg }: Props) => {
           onChange={(event: ChangeEvent<HTMLInputElement>) => setStgName(event.target.value)}
         />
         {!strategy?.name && <FieldWarnning>
-          Please enter Name
+          Please enter name
         </FieldWarnning>}
       </Box>
     </StyledFormItem>
@@ -125,7 +124,7 @@ export const EditStg = ({ stg }: Props) => {
     <StyledFormItem>
       <StyledCell>
         <StyledLabel>
-          introduce:
+          Introduce:
         </StyledLabel>
       </StyledCell>
       <Textarea
@@ -186,8 +185,9 @@ export const EditStg = ({ stg }: Props) => {
     <Box sx={{
       display: 'flex',
       justifyContent: 'center',
+      pt: '20px'
     }}>
-      <Button padding='6px 8px' onClick={() => onSubmit()}>Submit</Button>
+      <Button padding='6px 20px' onClick={() => onSubmit()}>Submit</Button>
     </Box>
   </Box>
 }
