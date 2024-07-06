@@ -20,3 +20,8 @@ export type Nullable<T> = T | null
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
+export function getValidInterval(interval: number | string) {
+  const _interval = Number(interval);
+  return isNaN(_interval) ? 8000 : Math.max(_interval || 0, 8000);
+}

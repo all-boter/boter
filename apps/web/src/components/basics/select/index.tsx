@@ -8,7 +8,7 @@ interface ICss {
   theme?: any
 }
 
-const selectTheme = {
+export const selectTheme = {
   whiteBg: 'rgb(255, 255, 255)',
   whiteColor: 'rgb(9, 9, 11)',
   whiteHover: 'hsl(240 4.8% 95.9%)',
@@ -32,7 +32,7 @@ export const SelectItem = styled(Item)(
   `
 );
 
-const Dropdown = styled('div')(
+export const Dropdown = styled('div')(
   ({ theme, width }: ICss) => css`
     position: relative;
     box-sizing: border-box;
@@ -48,7 +48,7 @@ const Dropdown = styled('div')(
   `
 );
 
-const RadixSelTrigger = styled('div')(
+export const RadixSelTrigger = styled('div')(
   ({ theme, width }: ICss) => css`
     position: relative;
     cursor: pointer;

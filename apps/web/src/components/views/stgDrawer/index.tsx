@@ -21,9 +21,15 @@ export const botFormSchemaDefault: FormSchema[] = [
     controlLabel: 'name',
   },
   {
+    type: 'Notifier',
+    id: 'notifier',
+    label: 'Notification (optional):',
+    value: [],
+  },
+  {
     type: 'Input',
     id: 'name',
-    label: 'bot name',
+    label: 'Bot name:',
     value: '',
     defaultValue: '',
     placeholder: 'Type name',
@@ -32,7 +38,7 @@ export const botFormSchemaDefault: FormSchema[] = [
 ]
 
 export interface BotFormValues {
-  [key: string]: string;
+  [key: string]: string | number | any[];
 }
 
 export const StyledButton = styled(Button)(`margin-top: 20px;`)
@@ -58,7 +64,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
     const newSchema = [...botFormSchemaDefault, ...stg.paramsSchema]
 
     const formValues: BotFormValues = newSchema.reduce((obj: BotFormValues, item) => {
-      obj[item.id] = "";
+      obj[item.id] = item.value;
       return obj;
     }, {});
 

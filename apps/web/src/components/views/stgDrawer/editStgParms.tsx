@@ -8,6 +8,7 @@ import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { mainTheme } from "@/components/basics/mainColor"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 import { IJsonValue, SUCCESS } from "@/common/constants"
+import { getValidInterval } from "@/common"
 
 export const botFormSchemaDefault: FormSchema[] = [
   {
@@ -32,7 +33,7 @@ export const botFormSchemaDefault: FormSchema[] = [
 ]
 
 export interface BotFormValues {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export const StyledButton = styled(Button)(`margin-top: 20px;`)
@@ -88,13 +89,19 @@ export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) 
   };
 
   const onSubmit = async () => {
-    const runnerId = formValues['runnerId']
+    const runnerId = formValues['runnerId'] as string
     if (!runnerId) {
       showToast('Please select a runner', { type: ToastType.info, duration: 2000 })
       return
     }
 
-    const updatedParamsSchema = updateParamsSchema(formValues, paramsSchema as unknown as FormSchema[]);
+    const interval = formValues['interval']
+    const newFormValues = {
+      ...formValues,
+      interval: getValidInterval(interval)
+    }
+
+    const updatedParamsSchema = updateParamsSchema(newFormValues, paramsSchema as unknown as FormSchema[]);
     const res = await stgEditParams({
       id: stgId,
       runnerId,

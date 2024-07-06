@@ -59,7 +59,7 @@ const initialFormState: FormState = {
 };
 
 export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
-  const { closeDrawer,drawers } = useDrawerContext();
+  const { closeDrawer, drawers } = useDrawerContext();
   const { showToast } = useContext(ToastContext)!;
   const [formState, setFormState] = useState<FormState>(initialFormState);
   const [errors, setErrors] = useState<any>({});
@@ -140,11 +140,11 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
     })
   }, [notifier.id]);
 
-  useEffect(()=>{
-    if(!drawerOpen){
+  useEffect(() => {
+    if (!drawerOpen) {
       setErrors({})
     }
-  },[drawerOpen])
+  }, [drawerOpen])
 
   return (
     <Box sx={{ color: mainTheme.white, pt: '10px', mx: '20px' }}>

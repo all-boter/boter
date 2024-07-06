@@ -89,7 +89,7 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
           px: '20px',
           mt: '10px',
         }}>
-          <CloseBtn padding='10px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
+          <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
             Cancel
           </CloseBtn>
 
