@@ -15,6 +15,29 @@ interface Props {
   notifier: INotifier
 }
 
+const notifierTypeMap = new Map<NotifierType, { label: string, keyLabel: string }>([
+  [NotifierType.Feishu, {
+    label: 'Webhook',
+    keyLabel: 'KeyWords',
+  }],
+  [NotifierType.Telegram, {
+    label: 'Webhook',
+    keyLabel: 'ChatId',
+  }],
+  [NotifierType.Discord, {
+    label: 'Webhook',
+    keyLabel: '',
+  }],
+  [NotifierType.Slack, {
+    label: 'Webhook',
+    keyLabel: '',
+  }],
+  [NotifierType.Dingtalk, {
+    label: 'Webhook access_token',
+    keyLabel: 'KeyWords',
+  }],
+]);
+
 const typeOptions = [
   {
     value: 'Telegram',
@@ -178,18 +201,7 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
       />
 
       <FormField
-        label="KeyWords:"
-        component={
-          <Input
-            value={formState.keyWords}
-            width={300}
-            onChange={handleInputChange('keyWords')}
-          />
-        }
-      />
-
-      <FormField
-        label="WebhookUrl:"
+        label={notifierTypeMap.get(formState.type!)?.label || "WebhookUrl:"}
         component={
           <Input
             value={formState.webhookUrl}
@@ -198,6 +210,19 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
           />
         }
       />
+
+      {
+        (formState.type !== NotifierType.Discord && formState.type !== NotifierType.Slack)  && <FormField
+          label={notifierTypeMap.get(formState.type!)?.keyLabel || "KeyWords:"}
+          component={
+            <Input
+              value={formState.keyWords}
+              width={300}
+              onChange={handleInputChange('keyWords')}
+            />
+          }
+        />
+      }
 
       <FormField
         label="Description (optional):"
