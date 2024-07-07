@@ -75,9 +75,9 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
   const validateForm = (): boolean => {
     const newErrors: Partial<FormState> = {};
     if (!formState.notiName) newErrors.notiName = 'Please enter name';
-    if (formState.notiName.length > 5) newErrors.notiName = 'Maximum length: 40 characters';
+    if (formState.notiName?.length > 20) newErrors.notiName = 'Maximum length: 20 characters';
     if (!formState.type) (newErrors as any).type = 'Please select notifier type';
-    if (formState.description.length > 400) newErrors.description = 'Maximum length: 400 characters';
+    if (formState.description?.length > 400) newErrors.description = 'Maximum length: 400 characters';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

@@ -119,12 +119,12 @@ export const NotifierList = forwardRef<NotifierListRef, Props>((props, ref) => {
               key: &nbsp;<Box>{(item.config as any)?.keyWords}</Box>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', pb: '10px' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', pb: '10px' }}>
               WebhookUrl: &nbsp;<Box>{(item.config as any)?.webhookUrl}</Box>
-            </Box>
-            {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              Info: &nbsp;<Box>{item.description || 'none'}</Box>
             </Box> */}
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              Info: &nbsp;<Box>{item.description || 'none'}</Box>
+            </Box>
           </Box>
         ))
       }
