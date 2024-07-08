@@ -11,6 +11,7 @@ const initialState: IEditor = {
   status: {
     loading: true,
   },
+  runBotSuccess: false,
   settings: {
     darkMode: config.darkThemeEnabled,
     autoFormat: true,
@@ -40,6 +41,11 @@ export const editorSlice = createSlice({
         ...state.panel,
         ...action.payload,
       }
+
+      return state;
+    },
+    setRunBotSuccess: (state, action: PayloadAction<boolean>) => {
+      state.runBotSuccess = action.payload
 
       return state;
     },
@@ -146,4 +152,5 @@ export const editorSlice = createSlice({
 export const monacoSettingsState = (state: AppState) => state.editorSlice.monaco
 export const editorSettingsState = (state: AppState) => state.editorSlice.settings
 export const panelState = (state: AppState) => state.editorSlice.panel
+export const runBotSuccessState = (state: AppState) => state.editorSlice.runBotSuccess
 export const vimState = (state: AppState) => state.editorSlice.vim

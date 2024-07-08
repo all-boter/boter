@@ -48,6 +48,7 @@ export interface UIState {
 }
 
 export interface IEditor {
+  runBotSuccess: boolean
   status: StatusState
   settings: SettingsState
   runTarget: RunTargetConfig

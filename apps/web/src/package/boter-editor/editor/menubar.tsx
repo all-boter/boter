@@ -106,14 +106,14 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
     </MenubarItem>
 
     <EditorPop schema={stgParams.schema} type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
-      <MenubarItem >
+      <MenubarItem>
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
         {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)}
       </MenubarItem>
     </EditorPop>
 
     {botStatus.status === BotStatus.Running && <EditorPop schema={stgParams.schema} type={'restart'} stgId={id} runnerId={stgParams.runnerId}>
-      <MenubarItem >
+      <MenubarItem>
         <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />
         Restart
       </MenubarItem>

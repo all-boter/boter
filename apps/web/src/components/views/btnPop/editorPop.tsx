@@ -7,6 +7,9 @@ import { runTempBot } from '@/services/botApi';
 import { useContext } from 'react';
 import { ToastContext, ToastType } from '@/components/basics/toast/toastContext';
 import { sleep } from '@/common';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from '@/store';
+import { editorSlice } from '@/store/editorSlice';
 
 const StyledContent = styled(Content)(`
   display: flex;
@@ -29,6 +32,7 @@ interface IEditorPop {
 
 export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPop) => {
   const { showToast } = useContext(ToastContext)!;
+  const dispatch: AppDispatch = useDispatch();
 
   const onOperate = async () => {
     if (type === 'restart') {
@@ -60,6 +64,10 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
       const res = await runTempBot({ stgId, runnerId, type, params })
       if (res.code === SUCCESS) {
         showToast(`Test Bot: ${res.msg}`, { type: ToastType.success, duration: 2000 })
+
+        sleep(1000)
+
+        dispatch(editorSlice.actions.setRunBotSuccess(true))
       } else {
         showToast(`Test Bot Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       }
