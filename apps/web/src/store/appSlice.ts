@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BotStatus, INotifyBotMsg, SUCCESS } from "@/common/constants";
 import { ConnectStatus } from "@/common/socketConnector";
 import { getOwnedAllBotsStatus } from "@/services/botApi";
+import { getAuthUser } from "@/services/userApi";
 
 export const fetchStrategies = createAsyncThunk(
   "strategies/fetch",
@@ -29,11 +30,32 @@ export const queryOwnedAllBotsStatus = createAsyncThunk(
   }
 );
 
+export const fetchAuthUser = createAsyncThunk(
+  "auth/user",
+  async () => {
+    const res = await getAuthUser();
+    if (res.code === SUCCESS) {
+      return res.data;
+    }
+
+    return null
+  }
+);
+
+enum PlanType {
+  Free = 'Free',
+  Basic = 'Basic',
+  Advanced = 'Advanced',
+  God = 'God',
+}
+
 export interface User {
   id: string;
   username: string;
   email: string;
-  exp: number;
+  avatar: string;
+  planType: PlanType;
+  exp?: number;
 }
 
 interface InitialState {
@@ -53,7 +75,9 @@ const initialState: InitialState = {
     id: '',
     username: '',
     email: '',
-    exp: 0
+    exp: 0,
+    avatar: "",
+    planType: PlanType.Free
   },
   githubRepository: null,
   stgList: [],
@@ -63,20 +87,24 @@ const initialState: InitialState = {
 
 const loadStatePersiste = () => {
   try {
-    const serializedState = localStorage.getItem('reduxState');
+    const serializedState = localStorage.getItem('botUser');
     if (serializedState === null) {
       return initialState;
     }
-    return JSON.parse(serializedState);
+
+    return {
+      ...initialState,
+      user: JSON.parse(serializedState)
+    };
   } catch (err) {
     return initialState;
   }
 };
 
-const saveStatePersiste = (state: InitialState) => {
+const saveStatePersiste = (state: any) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('reduxState', serializedState);
+    localStorage.setItem('botUser', serializedState);
   } catch {
     console.error('saveStatePersiste error')
   }
@@ -86,13 +114,6 @@ export const appSlice = createSlice({
   name: "appSlice",
   initialState: loadStatePersiste() as InitialState,
   reducers: {
-    addUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-
-      saveStatePersiste(state);
-
-      return state;
-    },
     addGithubRepository: (state, action: PayloadAction<GithubRepository>) => {
       state.githubRepository = action.payload;
 
@@ -135,6 +156,14 @@ export const appSlice = createSlice({
             status: BotStatus.Running
           }
         })
+      }
+    ).addCase(
+      fetchAuthUser.fulfilled,
+      (state, action: PayloadAction<User | null>) => {
+        if (action.payload) {
+          saveStatePersiste(action.payload);
+          state.user = action.payload
+        }
       }
     )
   },

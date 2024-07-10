@@ -1,5 +1,5 @@
 import { User } from '@/store/appSlice';
-import { ResType, fetchWithAuth } from './base'
+import { ResType, ResTypeNoData, fetchWithAuth } from './base'
 
 export interface IGithubToken {
   token: string;
@@ -16,7 +16,8 @@ export interface IGithubInstallation {
 }
 
 interface ApiConfig {
-  authTest: string
+  authUser: string
+  authLogout: string
   githubOauth: string
   githubToken: string
   githubInsByuid: string
@@ -24,7 +25,8 @@ interface ApiConfig {
 }
 
 const apiConfig: ApiConfig = {
-  authTest: '/api/auth/test',
+  authUser: '/api/auth/user',
+  authLogout: '/api/auth/logout',
   githubOauth: '/api/github-oauth',
   githubToken: '/api/github/token',
   githubInsByuid: '/api/github/ins/byuid',
@@ -32,10 +34,16 @@ const apiConfig: ApiConfig = {
   // downloadZip: '/api/downloadZip'
 }
 
-export async function authTestApi(): Promise<ResType<User>> {
-  const url = `${apiConfig.authTest}`
+export async function getAuthUser(): Promise<ResType<User>> {
+  const url = `${apiConfig.authUser}`
 
   return await fetchWithAuth<User>(url, { data: {} }, 'GET');
+}
+
+export async function logoutApi(): Promise<ResTypeNoData> {
+  const url = `${apiConfig.authLogout}`
+
+  return await fetchWithAuth<null>(url, { data: {} }, 'GET');
 }
 
 export async function getGithubToken(uid: string): Promise<ResType<IGithubInstallation[]>> {

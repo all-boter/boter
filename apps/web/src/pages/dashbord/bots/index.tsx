@@ -7,6 +7,7 @@ import { BotList } from "@/components/views/bots/botList";
 import { BoterSelect } from "@/components/basics/select";
 import { mainTheme } from "@/components/basics/mainColor";
 import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
+import { UserMenu } from "@/components/views/userMenu";
 
 const options: {
   value: BotStatus,
@@ -45,17 +46,21 @@ export const Bots = () => {
   return <div className="page-box">
     <Sidebar />
 
-    <Box sx={{ width: '85%', mx: '20px', mt: '20px' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: '10px' }}>
-        <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '700', fontSize: '20px' }}>
-          My bots
+    <Box sx={{ width: '85%', mx: '20px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: '10px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mt: '14px' }}>
+          <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '700', fontSize: '20px' }}>
+            My bots
+          </Box>
+          <BoterSelect
+            options={options}
+            value={botStatusFilter}
+            width={140}
+            onChange={onChangeBotFilter}
+          />
         </Box>
-        <BoterSelect
-          options={options}
-          value={botStatusFilter}
-          width={140}
-          onChange={onChangeBotFilter}
-        />
+
+        <UserMenu />
       </Box>
 
       <DrawerProvider>

@@ -249,7 +249,6 @@ export const BoterEditor = ({ editerType, stgId }: IBoterEditor) => {
   }, [githubRepos])
 
   const menubarCallback = () => {
-    console.log('===>menubarCallback:', stgId)
     if (stgId) {
       fetchCodeByStg(stgId as string)
     }

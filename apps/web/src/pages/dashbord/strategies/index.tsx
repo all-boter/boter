@@ -9,6 +9,7 @@ import { StgList } from '@/components/views/stgList';
 import { Button } from '@/components/basics/button';
 import { mainTheme } from '@/components/basics/mainColor';
 import { DrawerProvider } from '@/components/basics/drawer/drawerContext';
+import { UserMenu } from '@/components/views/userMenu';
 
 export const Dashbord = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -31,11 +32,10 @@ export const Dashbord = () => {
     <Box sx={{
       width: '85%',
       mx: '20px',
-      mt: '20px',
       flexGrow: 1
     }}>
-      <Box sx={{ width: '100%', mb: '20px' }}>
-        <Box sx={{ fontWeight: '700', fontSize: '20px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: '10px' }}>
+        <Box sx={{ mt: '14px', fontWeight: '700', fontSize: '20px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
             My strategies
           </Box>
@@ -46,6 +46,8 @@ export const Dashbord = () => {
             color: socketConnectStatus?.type === 8 ? 'green' : 'red'
           }}>Network: {socketConnectStatus?.msg}</Box>
         </Box>
+
+        <UserMenu />
       </Box>
 
       <DrawerProvider>

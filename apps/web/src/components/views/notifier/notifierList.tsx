@@ -82,7 +82,7 @@ export const NotifierList = forwardRef<NotifierListRef, Props>((props, ref) => {
     fetchNotifiers();
   }, []);
 
-  return <Box sx={{ mx: '20px' }}>
+  return <Box>
     <Box sx={{
       display: 'grid',
       width: '100%',
