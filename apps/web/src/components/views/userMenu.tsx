@@ -9,6 +9,7 @@ import { logoutApi } from "@/services/userApi"
 import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "../basics/toast/toastContext"
 import { useNavigate } from "react-router-dom"
+import { Languages } from "lucide-react"
 
 const MenuItem = styled(Close)(`
   width: 100%;
@@ -42,6 +43,10 @@ export const UserMenu = () => {
       } else {
         showToast(`Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       }
+    } else if (type === 2) {
+      console.log('%c=lang', 'color:red',)
+    } else if (type === 3) {
+      console.log('%c=lang', 'color:red',)
     }
   }
 
@@ -51,8 +56,34 @@ export const UserMenu = () => {
     }
   }, [user.id])
 
-  return <Box sx={{ display: 'flex', alignItems: 'center',height: '60px', color: '#FFF', }}>
-    {/* background: 'yellow' */}
+  return <Box sx={{ display: 'flex', alignItems: 'center', height: '60px', color: '#FFF', }}>
+    <Root>
+      <Trigger asChild>
+        <Box component={Languages} size={20} sx={{ mr: '8px', cursor: 'pointer' }} />
+      </Trigger>
+      <Portal>
+        <Box
+          component={Content}
+          sideOffset={6}
+          sx={{
+            outline: 'none',
+            background: mainTheme.darkBule,
+            border: '1px solid #343e4f',
+            borderRadius: '6px',
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',width: '80px', height: '80px', color: '#FFF' }}>
+            <MenuItem aria-label="Close" onClick={() => onMenu(2)}>
+              English
+            </MenuItem>
+            <MenuItem aria-label="Close" onClick={() => onMenu(3)}>
+              中文
+            </MenuItem>
+          </Box>
+        </Box>
+      </Portal>
+    </Root>
+
     {user.username}
     <Root>
       <Trigger asChild>
@@ -69,7 +100,6 @@ export const UserMenu = () => {
           }}
         />
       </Trigger>
-
       <Portal>
         <Box
           component={Content}
