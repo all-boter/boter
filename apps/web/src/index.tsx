@@ -5,9 +5,10 @@ import { ThemeProvider, createTheme } from '@mui/system';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './router';
 import store from './store'
-import './index.css';
 import { ToastProvider } from './components/basics/toast/toastContext';
 import { Toast } from './components/basics/toast';
+import './i18n';
+import './index.css';
 
 declare module '@mui/system' {
   interface BreakpointOverrides {

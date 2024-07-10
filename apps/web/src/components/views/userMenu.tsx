@@ -10,6 +10,8 @@ import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "../basics/toast/toastContext"
 import { useNavigate } from "react-router-dom"
 import { Languages } from "lucide-react"
+import { useTranslation } from 'react-i18next';
+
 
 const MenuItem = styled(Close)(`
   width: 100%;
@@ -32,6 +34,7 @@ export const UserMenu = () => {
   const { showToast } = useContext(ToastContext)!;
   const user = useAppSelector(userState)
   const dispatch: AppDispatch = useDispatch();
+  const { i18n } = useTranslation();
 
   const onMenu = async (type: number) => {
     if (type === 1) {
@@ -44,9 +47,9 @@ export const UserMenu = () => {
         showToast(`Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       }
     } else if (type === 2) {
-      console.log('%c=lang', 'color:red',)
+      i18n.changeLanguage('en');
     } else if (type === 3) {
-      console.log('%c=lang', 'color:red',)
+      i18n.changeLanguage('zh');
     }
   }
 
@@ -72,7 +75,7 @@ export const UserMenu = () => {
             borderRadius: '6px',
           }}
         >
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',width: '80px', height: '80px', color: '#FFF' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px', height: '80px', color: '#FFF' }}>
             <MenuItem aria-label="Close" onClick={() => onMenu(2)}>
               English
             </MenuItem>
