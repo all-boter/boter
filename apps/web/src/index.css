@@ -22,6 +22,7 @@ body {
   align-items: center;
   height: 30px;
   padding: 8px 20px;
+  border-radius: 4px;
   text-decoration: none;
   color: #FFF;
 }
@@ -45,14 +46,6 @@ body {
 .y-center {
   display: flex;
   align-items: center;
-}
-
-.page-box {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  min-height: 100vh;
-  width: 100%;
 }
 
 .full-box {

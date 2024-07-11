@@ -1,12 +1,11 @@
 import { DrawerProvider } from "@/components/basics/drawer/drawerContext"
+import { Layout } from "@/components/views/layout"
 import { Notifier } from "@/components/views/notifier"
-import { Sidebar } from "@/components/views/Sidebar"
 
 export const NotifierPage = () => {
-  return <div className="page-box">
-    <Sidebar />
+  return <Layout>
     <DrawerProvider>
       <Notifier />
     </DrawerProvider>
-  </div>
+  </Layout>
 }

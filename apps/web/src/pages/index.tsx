@@ -29,8 +29,7 @@ function App() {
             color: 'transparent',
             backgroundClip: 'text',
             fontWeight: 900
-          }
-          }>
+          }}>
             {t('slogan1')}
           </Box>
           <Box sx={{

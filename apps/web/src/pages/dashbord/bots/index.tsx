@@ -1,5 +1,4 @@
 import { Box } from "@mui/system"
-import { Sidebar } from "@/components/views/Sidebar"
 import { useEffect, useState } from "react";
 import { Bot, getOwnedBots } from "@/services/stgApi";
 import { BotStatus, SUCCESS } from "@/common/constants";
@@ -7,8 +6,8 @@ import { BotList } from "@/components/views/bots/botList";
 import { BoterSelect } from "@/components/basics/select";
 import { mainTheme } from "@/components/basics/mainColor";
 import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
-import { UserMenu } from "@/components/views/userMenu";
 import { useTranslation } from "react-i18next";
+import { Layout } from "@/components/views/layout";
 
 const options: {
   value: BotStatus,
@@ -45,29 +44,21 @@ export const Bots = () => {
     getBotsUtil(BotStatus.Running)
   }, [])
 
-  return <div className="page-box">
-    <Sidebar />
-
-    <Box sx={{ width: '85%', mx: '20px' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: '10px' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mt: '14px' }}>
-          <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '700', fontSize: '20px' }}>
-            {t('myBots')}
-          </Box>
-          <BoterSelect
-            options={options}
-            value={botStatusFilter}
-            width={140}
-            onChange={onChangeBotFilter}
-          />
-        </Box>
-
-        <UserMenu />
+  return <Layout>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', mb: '10px' }}>
+      <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '600', fontSize: '20px' }}>
+        {t('myBots')}
       </Box>
-
-      <DrawerProvider>
-        <BotList bots={bots} refreshList={getBotsUtil} />
-      </DrawerProvider>
+      <BoterSelect
+        options={options}
+        value={botStatusFilter}
+        width={140}
+        onChange={onChangeBotFilter}
+      />
     </Box>
-  </div>
+
+    <DrawerProvider>
+      <BotList bots={bots} refreshList={getBotsUtil} />
+    </DrawerProvider>
+  </Layout>
 }

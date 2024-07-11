@@ -57,9 +57,12 @@ export const UserMenu = () => {
     }
   }, [user.id])
 
-  console.log('%c=urser','color:red',user)
-
-  return <Box sx={{ display: 'flex', alignItems: 'center', height: '60px', color: '#FFF', }}>
+  return <Box sx={{
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
+    color: '#FFF',
+  }}>
     <I18n />
 
     {user.username}
@@ -71,10 +74,11 @@ export const UserMenu = () => {
           alt="icon"
           sx={{
             cursor: 'pointer',
-            width: '34px',
-            height: '34px',
+            width: '30px',
+            height: '30px',
             borderRadius: '50%',
             ml: '6px',
+            mr: '20px',
             background: '#1e5953'
           }}
         />
