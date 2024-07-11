@@ -8,6 +8,7 @@ import { BoterSelect } from "@/components/basics/select";
 import { mainTheme } from "@/components/basics/mainColor";
 import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 import { UserMenu } from "@/components/views/userMenu";
+import { useTranslation } from "react-i18next";
 
 const options: {
   value: BotStatus,
@@ -24,6 +25,7 @@ const options: {
   ]
 
 export const Bots = () => {
+  const { t } = useTranslation();
   const [bots, setBots] = useState<Bot[]>([])
   const [botStatusFilter, setBotStatusFilter] = useState<BotStatus>(BotStatus.Running);
 
@@ -50,7 +52,7 @@ export const Bots = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: '10px' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mt: '14px' }}>
           <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white, fontWeight: '700', fontSize: '20px' }}>
-            My bots
+            {t('myBots')}
           </Box>
           <BoterSelect
             options={options}

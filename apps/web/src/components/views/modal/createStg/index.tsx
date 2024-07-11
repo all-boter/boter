@@ -6,6 +6,7 @@ import { Button } from '@/components/basics/button';
 import { createStg } from '@/services/stgApi';
 import { SUCCESS } from '@/common/constants';
 import { Modal, ModalContent } from '@/components/basics/modal';
+import { useTranslation } from 'react-i18next';
 
 interface IModal {
   isOpen: boolean
@@ -30,6 +31,7 @@ const formValuesInit = {
 const StyledButton = styled(Button)(`margin-top: 10px;`)
 
 export const CreateStg = (props: IModal) => {
+  const { t } = useTranslation();
   const [formValues, setFormValuesState] = useState<{ name: string }>(formValuesInit)
 
   const { handleSubmit } = useForm({
@@ -78,7 +80,9 @@ export const CreateStg = (props: IModal) => {
           )
         })}
 
-        <StyledButton padding='6px 8px' type='submit'>Create a strategy</StyledButton>
+        <StyledButton padding='6px 8px' type='submit'>
+          {t('createStg')}
+        </StyledButton>
       </form>
     </ModalContent>
   </Modal>

@@ -41,7 +41,9 @@ export const Dashbord = () => {
             {t('myStg')}
           </Box>
 
-          <Button onClick={() => onCreateStg()} padding='6px 8px'>Create strategy</Button>
+          <Button onClick={() => onCreateStg()} padding='6px 8px'>
+            {t('createStg')}
+          </Button>
 
           <Box sx={{
             color: socketConnectStatus?.type === 8 ? 'green' : 'red'

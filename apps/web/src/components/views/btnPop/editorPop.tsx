@@ -1,6 +1,6 @@
-import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
+import { Root, Trigger, Portal, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
 import { IBotOperate, IJsonValue, SUCCESS } from '@/common/constants';
 import { runTempBot } from '@/services/botApi';
@@ -10,17 +10,8 @@ import { sleep } from '@/common';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '@/store';
 import { editorSlice } from '@/store/editorSlice';
-
-const StyledContent = styled(Content)(`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 90px;
-  border-radius: 6px;
-  background: ${mainTheme[106]};
-  padding: 0 10px;
-`)
+import { StyledPopoverContent } from '../bots/botBtnPop';
+import { useTranslation } from 'react-i18next';
 
 interface IEditorPop {
   stgId: string
@@ -31,6 +22,7 @@ interface IEditorPop {
 }
 
 export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPop) => {
+  const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
   const dispatch: AppDispatch = useDispatch();
 
@@ -57,7 +49,7 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
       }, {});
 
       if (!runnerId) {
-        showToast('Please select a runner in the settings', { type: ToastType.info, duration: 2000 })
+        showToast(t('runStgTips'), { type: ToastType.info, duration: 2000 })
         return
       }
 
@@ -83,12 +75,14 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
       </TriggerBtn>
     </Trigger>
     <Portal>
-      <StyledContent sideOffset={5}>
+      <StyledPopoverContent sideOffset={5}>
         <Box sx={{
           fontWeight: 700,
           fontSize: '14px',
           color: '#FFF'
-        }}> Are you sure to {type} this strategy?  </Box>
+        }}>
+          {t('stgBtnTips', { type: { type: t(type) } })}
+        </Box>
         <Box sx={{
           display: 'flex',
           boxSizing: 'border-box',
@@ -98,16 +92,16 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
           mt: '10px',
         }}>
           <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
-            Cancel
+            {t('cancel')}
           </CloseBtn>
 
           <CloseBtn padding='2px 10px' aria-label="Close" onClick={() => onOperate()} bg={mainTheme[102]} width='auto'>
-            Confirm
+            {t('confirm')}
           </CloseBtn>
         </Box>
 
         <Arrow fill={mainTheme[106]} />
-      </StyledContent>
+      </StyledPopoverContent>
     </Portal>
   </Root>
 }

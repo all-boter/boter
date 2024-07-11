@@ -23,5 +23,5 @@ export function sleep(ms: number) {
 
 export function getValidInterval(interval: number | string) {
   const _interval = Number(interval);
-  return isNaN(_interval) ? 8000 : Math.max(_interval || 0, 8000);
+  return isNaN(_interval) ? 10 : Math.max(_interval || 0, 10);
 }

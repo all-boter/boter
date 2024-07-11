@@ -13,6 +13,7 @@ import { activeBotsState, useAppSelector } from "@/store"
 import { Drawer } from "@/components/basics/drawer"
 import { EditStgParms } from "@/components/views/stgDrawer/editStgParms"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
+import { useTranslation } from "react-i18next"
 
 export enum MenubarEvent {
   Save = 1,
@@ -33,6 +34,7 @@ interface IMenubar {
 }
 
 export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { showToast } = useContext(ToastContext)!;
   const activeBots = useAppSelector(activeBotsState)
@@ -97,25 +99,26 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
 
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Params)}>
       <Box component={Settings} size={20} sx={{ mr: '4px' }} />
-      Params
+      {t('stgParams')}
     </MenubarItem>
 
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Save)}>
       <Box component={Save} size={20} sx={{ mr: '4px' }} />
-      Save
+      {t('save')}
     </MenubarItem>
 
     <EditorPop schema={stgParams.schema} type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
       <MenubarItem>
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
-        {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)}
+        {/* {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)} */}
+        {t(botStatus.botOperate)}
       </MenubarItem>
     </EditorPop>
 
     {botStatus.status === BotStatus.Running && <EditorPop schema={stgParams.schema} type={'restart'} stgId={id} runnerId={stgParams.runnerId}>
       <MenubarItem>
         <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />
-        Restart
+        {t('restart')}
       </MenubarItem>
     </EditorPop>}
 
@@ -123,7 +126,8 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
       lineHeight: '40px',
       fontSize: '12px',
       color: mainTheme.blackColor
-    }}>Code test:
+    }}>
+      {t('codeTest')}
       <Box component={'span'} sx={{
         pl: '2px',
         color: botStatus.status === BotStatus.Running ? 'green' : 'red'

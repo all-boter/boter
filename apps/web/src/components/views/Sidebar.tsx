@@ -5,8 +5,11 @@ import { StgIcon } from "../icon/stgIcon";
 import { mainTheme } from "../basics/mainColor";
 import { BotIcon } from "../icon/botIcon";
 import { BellRing } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Sidebar = () => {
+  const { t } = useTranslation();
+
   return <Box sx={{ display: 'flex', flexDirection: 'column', width: '15%', minWidth: '280px', borderRight: '1px solid #374151' }}>
     <Box className='y-center' sx={{ height: '68px', ml: '20px' }}>
       <Logo />
@@ -19,7 +22,9 @@ export const Sidebar = () => {
       {({ isActive }) => (
         <>
           <StgIcon fill={isActive ? mainTheme.golden : '#FFF'} />
-          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Strategies</Box>
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>
+            {t('myStg')}
+          </Box>
         </>
       )}
     </NavLink>
@@ -31,7 +36,9 @@ export const Sidebar = () => {
       {({ isActive }) => (
         <>
           <BotIcon fill={isActive ? mainTheme.golden : '#FFF'} />
-          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>My Bots</Box>
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>
+            {t('myBots')}
+          </Box>
         </>
       )}
     </NavLink>
@@ -45,7 +52,9 @@ export const Sidebar = () => {
           <Box component={BellRing} size={20} sx={{
             color: isActive ? mainTheme.golden : '#FFF'
           }} />
-          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>Notification</Box>
+          <Box component={'span'} sx={{ pl: '8px', color: isActive ? '#FCD535' : '#FFF' }}>
+            {t('notiC')}
+          </Box>
         </>
       )}
     </NavLink>

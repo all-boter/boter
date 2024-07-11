@@ -3,11 +3,12 @@ import { CloseBtn } from '@/components/basics/button/triggerBtn';
 import { Box } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
 import { SUCCESS } from '@/common/constants';
-import { StyledDeleteContent } from '../btnPop/deletePop';
 import { Trash2 } from 'lucide-react';
 import { useContext } from 'react';
 import { ToastContext, ToastType } from '@/components/basics/toast/toastContext';
 import { deleteNotifier } from '@/services/botApi';
+import { useTranslation } from 'react-i18next';
+import { StyledPopoverContent } from '../bots/botBtnPop';
 
 interface IDeletePop {
   id: string
@@ -15,6 +16,7 @@ interface IDeletePop {
 }
 
 export const DeletePop = ({ id, callback }: IDeletePop) => {
+  const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
 
   const onDelete = async () => {
@@ -33,13 +35,13 @@ export const DeletePop = ({ id, callback }: IDeletePop) => {
       <Box component={Trash2} size={20} sx={{ cursor: 'pointer' }} />
     </Trigger>
     <Portal>
-      <StyledDeleteContent sideOffset={5}>
+      <StyledPopoverContent sideOffset={5}>
         <Box sx={{
           fontWeight: 700,
           fontSize: '14px',
           color: '#FFF'
         }}>
-          Are you sure to delete this channel?
+          {t('delNotiTips')}
         </Box>
         <Box sx={{
           display: 'flex',
@@ -50,16 +52,16 @@ export const DeletePop = ({ id, callback }: IDeletePop) => {
           mt: '10px',
         }}>
           <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
-            Cancel
+            {t('cancel')}
           </CloseBtn>
 
           <CloseBtn padding='2px 10px' aria-label="Close" onClick={() => onDelete()} bg={mainTheme[102]} width='auto'>
-            Confirm
+            {t('confirm')}
           </CloseBtn>
         </Box>
 
         <Arrow fill={mainTheme[106]} />
-      </StyledDeleteContent>
+      </StyledPopoverContent>
     </Portal>
   </Root>
 }

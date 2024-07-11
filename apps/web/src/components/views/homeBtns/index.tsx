@@ -9,6 +9,7 @@ import googleIcon from "@assets/google.svg"
 import launchIcon from "@assets/launch.svg"
 import { isJwtExpired } from '@/common';
 import { githubAuthUrl, googleAuthUrl, TOKEN_FIELD } from '@/common/constants';
+import { useTranslation } from 'react-i18next';
 
 const LaunchBtn = styled('a')(
   ({ theme }) => `
@@ -35,6 +36,7 @@ const LaunchBtn = styled('a')(
 );
 
 export function HomeBtns() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onLaunch = () => {
@@ -44,17 +46,17 @@ export function HomeBtns() {
   return <>
     {
       Cookies.get(TOKEN_FIELD) && isJwtExpired(Number(Cookies.get('exp'))) ? <LaunchBtn onClick={() => onLaunch()}>
-        Launch App
+        {t('launchApp')}
         <Box component={'img'} src={launchIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
       </LaunchBtn> : <>
         <Loginbtn url={githubAuthUrl} style={{ marginRight: '10px' }}>
           <Box component={'img'} src={gitHubIcon} sx={{ width: 22, height: 22, pr: '6px' }} />
-          Login with GitHub
+          {t('loginWGitHub')}
         </Loginbtn>
 
         <Loginbtn style={{ marginLeft: '10px', position: 'relative' }} url={googleAuthUrl}>
           <Box component={'img'} src={googleIcon} sx={{ position: 'relative', top: '3px', width: 22, height: 22, pr: '6px' }} />
-          Login with Google
+          {t('loginWGoogle')}
         </Loginbtn>
       </>
     }

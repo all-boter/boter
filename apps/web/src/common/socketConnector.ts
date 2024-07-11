@@ -85,4 +85,13 @@ export class SocketConnector {
   public getConnectionStatus(): ConnectStatus {
     return this.connectStatus;
   }
+
+  public disconnect(): void {
+    if (this.socket) {
+      console.log('%c=Manually disconnecting WebSocket', 'color:cyan');
+      this.socket.disconnect();
+      this.connectStatus = { type: ConnectStatusType.disconnect, msg: 'Manually disconnected' };
+      this.setSocketConnectStatus();
+    }
+  }
 }

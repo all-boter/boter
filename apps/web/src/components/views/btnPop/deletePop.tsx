@@ -1,23 +1,14 @@
-import { Root, Trigger, Portal, Content, Arrow } from '@radix-ui/react-popover';
+import { Root, Trigger, Portal, Arrow } from '@radix-ui/react-popover';
 import { CloseBtn, TriggerBtn } from '@/components/basics/button/triggerBtn';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { mainTheme } from '@/components/basics/mainColor';
 import { IStrategy, deleteStg } from '@/services/stgApi';
 import { AppDispatch } from "@/store";
 import { SUCCESS } from '@/common/constants';
 import { useDispatch } from 'react-redux';
 import { fetchStrategies } from '@/store/appSlice';
-
-export const StyledDeleteContent = styled(Content)(`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 90px;
-  border-radius: 6px;
-  background: ${mainTheme[106]};
-  padding: 0 10px;
-`)
+import { useTranslation } from 'react-i18next';
+import { StyledPopoverContent } from '../bots/botBtnPop';
 
 interface IDeletePop {
   stg: IStrategy
@@ -25,6 +16,7 @@ interface IDeletePop {
 }
 
 export const DeletePop = (props: IDeletePop) => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
 
   const onDelete = async () => {
@@ -40,17 +32,17 @@ export const DeletePop = (props: IDeletePop) => {
   return <Root>
     <Trigger asChild>
       <TriggerBtn padding='6px 8px' color={mainTheme[103]} bg={mainTheme[108]} width={'80px'}>
-        Delete
+        {t('del')}
       </TriggerBtn>
     </Trigger>
     <Portal>
-      <StyledDeleteContent sideOffset={5}>
+      <StyledPopoverContent sideOffset={5}>
         <Box sx={{
           fontWeight: 700,
           fontSize: '14px',
           color: '#FFF'
         }}>
-          Are you sure to delete this strategy?
+          {t('delTips')}
         </Box>
         <Box sx={{
           display: 'flex',
@@ -61,16 +53,16 @@ export const DeletePop = (props: IDeletePop) => {
           mt: '10px',
         }}>
           <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
-            Cancel
+            {t('cancel')}
           </CloseBtn>
 
           <CloseBtn padding='2px 10px' aria-label="Close" onClick={() => onDelete()} bg={mainTheme[102]} width='auto'>
-            Confirm
+            {t('confirm')}
           </CloseBtn>
         </Box>
 
         <Arrow fill={mainTheme[106]} />
-      </StyledDeleteContent>
+      </StyledPopoverContent>
     </Portal>
   </Root>
 }

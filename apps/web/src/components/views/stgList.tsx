@@ -13,6 +13,7 @@ import { Pencil } from "lucide-react";
 import { useDrawerContext } from "../basics/drawer/drawerContext";
 import { EditStg } from "./stgDrawer/editStg";
 import { DeletePop } from "./btnPop/deletePop";
+import { useTranslation } from "react-i18next";
 
 enum EditerType {
   Code = 1,
@@ -22,6 +23,7 @@ enum EditerType {
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const StgList = () => {
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const stgList = useAppSelector(stgListState)
   const { toggleDrawer } = useDrawerContext();
@@ -102,7 +104,7 @@ export const StgList = () => {
                 bg={muiGreen.seaFoam}
                 padding='6px 8px'
               >
-                Coding
+                {t('coding')}
               </StyledButton>
             </Box>
           </Box>
@@ -117,7 +119,7 @@ export const StgList = () => {
                 bg={mainTheme[106]}
                 padding='6px 8px'
               >
-                Create bot
+                {t('createBot')}
               </StyledButton>
             </Box>
           </Box>

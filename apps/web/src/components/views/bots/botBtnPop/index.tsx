@@ -7,13 +7,15 @@ import { BotStatus, IBotOperate, SUCCESS } from '@/common/constants';
 import { CSSProperties, useContext } from 'react';
 import { ToastContext, ToastType } from '@/components/basics/toast/toastContext';
 import { sleep } from '@/common';
+import { useTranslation } from 'react-i18next';
 
-const StyledContent = styled(Content)(`
+export const StyledPopoverContent = styled(Content)(`
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 90px;
+    min-width: 160px;
     border-radius: 6px;
     background: ${mainTheme[106]};
     padding: 0 10px;
@@ -29,38 +31,8 @@ interface IBotBtnPop {
 }
 
 export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, children, callBack }: IBotBtnPop) => {
+  const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
-
-  const onOperate2 = async () => {
-    if (bot.status === BotStatus.Running) {
-
-      stopBotUtil(bot.id)
-    } else if (bot.status === BotStatus.Stopped) {
-
-      runBotUtil({
-        botId: bot.id,
-        runnerId: bot.params.runnerId,
-        bot: null,
-        isRestart: false
-      }, BotStatus.Stopped)
-    } else if (bot.status === BotStatus.Offline) {
-      if (type === 'restart') {
-
-        restartBotUtil(bot)
-      } else if (type === 'stop') {
-
-        stopBotUtil(bot.id)
-      } else if (type === 'run') {
-
-        runBotUtil({
-          botId: bot.id,
-          runnerId: bot.params.runnerId,
-          bot: null,
-          isRestart: false
-        })
-      }
-    }
-  }
 
   const onOperate = async () => {
     if (type === 'restart') {
@@ -79,7 +51,6 @@ export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, childr
       }, BotStatus.Stopped)
     }
   }
-
 
   const stopBotUtil = async (botId: string, type = BotHandleEnum.normal) => {
     const res = await stopBot(botId, type)
@@ -137,13 +108,13 @@ export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, childr
       </TriggerBtn>
     </Trigger>
     <Portal>
-      <StyledContent sideOffset={5}>
+      <StyledPopoverContent sideOffset={5}>
         <Box sx={{
           fontWeight: 700,
           fontSize: '14px',
           color: '#FFF'
         }}>
-          Are you sure to &nbsp;{type}&nbsp;this strategy?
+          {t('botBtnTips', { type: { type: t(type) } })}
         </Box>
         <Box sx={{
           display: 'flex',
@@ -154,16 +125,16 @@ export const BotBtnPop = ({ type, bot, padding = '2px 10px', customStyle, childr
           mt: '10px',
         }}>
           <CloseBtn padding='2px 10px' aria-label="Close" bg={mainTheme[100]} width='auto'>
-            Cancel
+            {t('cancel')}
           </CloseBtn>
 
           <CloseBtn padding='2px 10px' aria-label="Close" onClick={() => onOperate()} bg={mainTheme[102]} width='auto'>
-            Confirm
+            {t('confirm')}
           </CloseBtn>
         </Box>
 
         <Arrow fill={mainTheme[106]} />
-      </StyledContent>
+      </StyledPopoverContent>
     </Portal>
   </Root>
 }

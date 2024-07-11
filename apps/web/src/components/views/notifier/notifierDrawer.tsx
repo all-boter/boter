@@ -9,19 +9,20 @@ import { Button } from "@/components/basics/button"
 import { SUCCESS } from "@/common/constants"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
+import { useTranslation } from "react-i18next"
 
 interface Props {
   onClose?: () => void
   notifier: INotifier
 }
 
-const notifierTypeMap = new Map<NotifierType, { label: string, keyLabel: string }>([
+export const notifierTypeMap = new Map<NotifierType, { label: string, keyLabel: string }>([
   [NotifierType.Feishu, {
-    label: 'Webhook',
+    label: 'Webhook:',
     keyLabel: 'KeyWords',
   }],
   [NotifierType.Telegram, {
-    label: 'Webhook',
+    label: 'Webhook:',
     keyLabel: 'ChatId',
   }],
   [NotifierType.Discord, {
@@ -29,11 +30,11 @@ const notifierTypeMap = new Map<NotifierType, { label: string, keyLabel: string 
     keyLabel: '',
   }],
   [NotifierType.Slack, {
-    label: 'Webhook',
+    label: 'Webhook:',
     keyLabel: '',
   }],
   [NotifierType.Dingtalk, {
-    label: 'Webhook access_token',
+    label: 'Webhook access_token:',
     keyLabel: 'KeyWords',
   }],
 ]);
@@ -82,6 +83,7 @@ const initialFormState: FormState = {
 };
 
 export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
+  const { t } = useTranslation();
   const { closeDrawer, drawers } = useDrawerContext();
   const { showToast } = useContext(ToastContext)!;
   const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -172,7 +174,8 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
   return (
     <Box sx={{ color: mainTheme.white, pt: '10px', mx: '20px' }}>
       <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>
-        Add notification channel
+        {/* Add notification channel */}
+        {t('createNoti')}
       </Box>
 
       <FormField
@@ -213,7 +216,7 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
 
       {
         (formState.type !== NotifierType.Discord && formState.type !== NotifierType.Slack)  && <FormField
-          label={notifierTypeMap.get(formState.type!)?.keyLabel || "KeyWords:"}
+          label={`${notifierTypeMap.get(formState.type!)?.keyLabel || "KeyWords"}:`}
           component={
             <Input
               value={formState.keyWords}
@@ -236,13 +239,9 @@ export const NotifierDrawer: React.FC<Props> = ({ onClose, notifier }) => {
         }
       />
 
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        pt: '20px'
-      }}>
-        <Button padding='6px 20px' onClick={onSubmit}>Submit</Button>
-      </Box>
+      <Button padding='6px 20px' onClick={onSubmit}>
+        {t('save')}
+      </Button>
     </Box>
   );
 };

@@ -11,6 +11,7 @@ import { ToastContext, ToastType } from "../basics/toast/toastContext"
 import { useNavigate } from "react-router-dom"
 import { Languages } from "lucide-react"
 import { useTranslation } from 'react-i18next';
+import { SocketConnector } from "@/common/socketConnector"
 
 
 const MenuItem = styled(Close)(`
@@ -34,7 +35,7 @@ export const UserMenu = () => {
   const { showToast } = useContext(ToastContext)!;
   const user = useAppSelector(userState)
   const dispatch: AppDispatch = useDispatch();
-  const { i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const onMenu = async (type: number) => {
     if (type === 1) {
@@ -42,14 +43,11 @@ export const UserMenu = () => {
       if (res.code === SUCCESS) {
         showToast(`Logout ${res.msg}`, { type: ToastType.success, duration: 2000 })
         localStorage.removeItem('botUser');
+        SocketConnector.getInstance().disconnect()
         navigate('/');
       } else {
         showToast(`Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
       }
-    } else if (type === 2) {
-      i18n.changeLanguage('en');
-    } else if (type === 3) {
-      i18n.changeLanguage('zh');
     }
   }
 
@@ -59,33 +57,10 @@ export const UserMenu = () => {
     }
   }, [user.id])
 
+  console.log('%c=urser','color:red',user)
+
   return <Box sx={{ display: 'flex', alignItems: 'center', height: '60px', color: '#FFF', }}>
-    <Root>
-      <Trigger asChild>
-        <Box component={Languages} size={20} sx={{ mr: '8px', cursor: 'pointer' }} />
-      </Trigger>
-      <Portal>
-        <Box
-          component={Content}
-          sideOffset={6}
-          sx={{
-            outline: 'none',
-            background: mainTheme.darkBule,
-            border: '1px solid #343e4f',
-            borderRadius: '6px',
-          }}
-        >
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px', height: '80px', color: '#FFF' }}>
-            <MenuItem aria-label="Close" onClick={() => onMenu(2)}>
-              English
-            </MenuItem>
-            <MenuItem aria-label="Close" onClick={() => onMenu(3)}>
-              中文
-            </MenuItem>
-          </Box>
-        </Box>
-      </Portal>
-    </Root>
+    <I18n />
 
     {user.username}
     <Root>
@@ -96,10 +71,11 @@ export const UserMenu = () => {
           alt="icon"
           sx={{
             cursor: 'pointer',
-            width: '32px',
-            height: '32px',
+            width: '34px',
+            height: '34px',
             borderRadius: '50%',
-            ml: '6px'
+            ml: '6px',
+            background: '#1e5953'
           }}
         />
       </Trigger>
@@ -116,11 +92,50 @@ export const UserMenu = () => {
         >
           <Box sx={{ width: '80px', height: '40px', color: '#FFF', display: 'flex', alignItems: 'center' }}>
             <MenuItem aria-label="Close" onClick={() => onMenu(1)}>
-              Logout
+              {t('logout')}
             </MenuItem>
           </Box>
         </Box>
       </Portal>
     </Root>
   </Box>
+}
+
+export const I18n = () => {
+  const { i18n } = useTranslation();
+
+  const onMenu = async (type: number) => {
+    if (type === 2) {
+      i18n.changeLanguage('en');
+    } else if (type === 3) {
+      i18n.changeLanguage('zh');
+    }
+  }
+
+  return <Root>
+    <Trigger asChild>
+      <Box component={Languages} size={20} sx={{ mr: '8px', cursor: 'pointer' }} />
+    </Trigger>
+    <Portal>
+      <Box
+        component={Content}
+        sideOffset={6}
+        sx={{
+          outline: 'none',
+          background: mainTheme.darkBule,
+          border: '1px solid #343e4f',
+          borderRadius: '6px',
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px', height: '80px', color: '#FFF' }}>
+          <MenuItem aria-label="Close" onClick={() => onMenu(2)}>
+            English
+          </MenuItem>
+          <MenuItem aria-label="Close" onClick={() => onMenu(3)}>
+            中文
+          </MenuItem>
+        </Box>
+      </Box>
+    </Portal>
+  </Root>
 }

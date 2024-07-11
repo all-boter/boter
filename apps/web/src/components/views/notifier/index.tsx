@@ -4,8 +4,10 @@ import { mainTheme } from "@/components/basics/mainColor"
 import { Box } from "@mui/system"
 import { NotifierList, NotifierListRef } from "./notifierList"
 import { UserMenu } from "../userMenu"
+import { useTranslation } from "react-i18next"
 
 export const Notifier = () => {
+  const { t } = useTranslation();
   const notifierListRef = useRef<NotifierListRef>(null);
 
   const onCreate = () => {
@@ -20,10 +22,12 @@ export const Notifier = () => {
     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       <Box sx={{ mt: '14px', fontWeight: '700', fontSize: '20px' }}>
         <Box component={'span'} sx={{ mr: '10px', color: mainTheme.white }}>
-          Notification channels
+          {t('notiC')}
         </Box>
 
-        <Button onClick={() => onCreate()} padding='6px 8px'>Create channel</Button>
+        <Button onClick={() => onCreate()} padding='6px 8px'>
+          {t('createNoti')}
+        </Button>
       </Box>
 
       <UserMenu />

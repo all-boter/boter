@@ -9,27 +9,19 @@ import { mainTheme } from "@/components/basics/mainColor"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 import { IJsonValue, SUCCESS } from "@/common/constants"
 import { getValidInterval } from "@/common"
+import { useTranslation } from "react-i18next"
 
 export const botFormSchemaDefault: FormSchema[] = [
   {
     type: 'Select',
     id: 'runnerId',
-    label: 'Runner:',
+    label: 'Runner server:',
     dataSourceFn: getRunners,
     value: '',
     placeholder: 'Type name',
     controlId: 'id',
     controlLabel: 'name',
   },
-  // {
-  //   type: 'Input',
-  //   id: 'name',
-  //   label: 'bot name',
-  //   value: '',
-  //   defaultValue: '',
-  //   placeholder: 'Type name',
-  //   width: 200,
-  // },
 ]
 
 export interface BotFormValues {
@@ -56,6 +48,7 @@ interface Props {
 }
 
 export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) => {
+  const { t } = useTranslation();
   const { closeDrawer } = useDrawerContext();
   const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<BotFormValues>({})
@@ -128,7 +121,7 @@ export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) 
 
   return <Box sx={{ p: '20px' }}>
     <Box sx={{ mb: '10px', fontWeight: '500', color: mainTheme.golden }}>
-      Edit params schema
+      {t('editStgParam')}
     </Box>
     <form onSubmit={handleSubmit(onSubmit)}>
       {formSchema.map((formItem, index) => {
@@ -140,7 +133,9 @@ export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) 
         )
       })}
 
-      <StyledButton padding='6px 8px' type='submit'>Save</StyledButton>
+      <StyledButton padding='6px 20px' type='submit'>
+        {t('save')}
+      </StyledButton>
     </form>
   </Box>
 }

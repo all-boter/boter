@@ -11,9 +11,10 @@ import feishu from "@assets/channel/feishu.svg"
 import slack from "@assets/channel/slack.svg"
 import telegram from "@assets/channel/telegram.svg"
 import { Drawer } from "@/components/basics/drawer"
-import { NotifierDrawer } from "./notifierDrawer"
+import { NotifierDrawer, notifierTypeMap } from "./notifierDrawer"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 import { DeletePop } from "./deletePop"
+import { useTranslation } from "react-i18next"
 
 const notifierTypeToImage: { [key in NotifierType]: string } = {
   [NotifierType.Telegram]: telegram,
@@ -44,6 +45,7 @@ const initialNotifier: INotifier = {
 interface Props { }
 
 export const NotifierList = forwardRef<NotifierListRef, Props>((props, ref) => {
+  const { t } = useTranslation();
   const [notifiers, setNotifiers] = useState<INotifier[]>([])
   const { showToast } = useContext(ToastContext)!;
   const { toggleDrawer } = useDrawerContext();
@@ -115,15 +117,19 @@ export const NotifierList = forwardRef<NotifierListRef, Props>((props, ref) => {
               </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', pb: '10px' }}>
-              key: &nbsp;<Box>{(item.config as any)?.keyWords}</Box>
-            </Box>
+            {
+              <Box sx={{ display: 'flex', alignItems: 'center', height: '30px' }}>
+                {(item.type !== NotifierType.Slack && item.type !== NotifierType.Discord) && <>
+                  {t(notifierTypeMap.get(item.type!)?.keyLabel!)}
+                  {/* {notifierTypeMap.get(item.type!)?.keyLabel} */}
+                  &nbsp;<Box>{(item.config as any)?.keyWords}</Box> </>}
+              </Box>}
 
             {/* <Box sx={{ display: 'flex', alignItems: 'center', pb: '10px' }}>
               WebhookUrl: &nbsp;<Box>{(item.config as any)?.webhookUrl}</Box>
             </Box> */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              Info: &nbsp;<Box>{item.description || 'none'}</Box>
+              {t('info')}&nbsp;<Box>{item.description || 'none'}</Box>
             </Box>
           </Box>
         ))

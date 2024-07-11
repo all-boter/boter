@@ -8,24 +8,25 @@ import { SUCCESS } from "@/common/constants"
 import { ToastContext, ToastType } from "@/components/basics/toast/toastContext"
 import { mainTheme } from "@/components/basics/mainColor"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
+import { useTranslation } from "react-i18next"
 
 export const botFormSchemaDefault: FormSchema[] = [
   {
     type: 'Select',
     id: 'runnerId',
-    label: 'Runner:',
+    label: 'Runner server:',
     dataSourceFn: getRunners,
     value: '',
     placeholder: 'Type name',
     controlId: 'id',
     controlLabel: 'name',
   },
-  {
-    type: 'Notifier',
-    id: 'notifier',
-    label: 'Notification (optional):',
-    value: [],
-  },
+  // {
+  //   type: 'Notifier',
+  //   id: 'notifier',
+  //   label: 'Notification (optional):',
+  //   value: [],
+  // },
   {
     type: 'Input',
     id: 'name',
@@ -49,6 +50,7 @@ interface Props {
 }
 
 export const StgDrawer = ({ stg, onClose }: Props) => {
+  const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
   const [formValues, setFormValuesState] = useState<BotFormValues>({})
   const { drawers, closeDrawer } = useDrawerContext();
@@ -112,7 +114,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
 
   return <Box sx={{ p: '20px' }}>
     <Box sx={{ mb: '10px', fontWeight: '500', color: mainTheme.golden }}>
-      Create <span>{stg.name}</span> Bot
+      {t('creatBotName', { stg: { name: stg.name } })}
     </Box>
     <form onSubmit={handleSubmit(onSubmit)}>
       {formSchema.map((formItem, index) => {
@@ -124,7 +126,11 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
         )
       })}
 
-      <StyledButton padding='6px 8px' type='submit'>Create bot</StyledButton>
+      <Box className='xy-center' sx={{ width: '100%' }}>
+        <StyledButton padding='6px 8px' type='submit'>
+          {t('createBot')}
+        </StyledButton>
+      </Box>
     </form>
   </Box>
 }

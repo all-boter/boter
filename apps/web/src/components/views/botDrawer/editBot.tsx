@@ -9,6 +9,7 @@ import { botFormSchemaDefault, BotFormValues, StyledButton } from "../stgDrawer"
 import { useForm } from "react-hook-form"
 import { editBot } from "@/services/botApi"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
+import { useTranslation } from "react-i18next"
 
 interface Props {
   bot: Bot
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const EditBot = ({ bot, onClose }: Props) => {
+  const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
   const [botFormSchema, setBotFormSchema] = useState<FormSchema[]>([])
   const [botFormValues, setbotFormValues] = useState<BotFormValues>({})
@@ -73,11 +75,10 @@ export const EditBot = ({ bot, onClose }: Props) => {
 
   return <Box sx={{ color: mainTheme.white, pt: '10px', mx: '20px' }}>
     <Box sx={{ mb: '16px', fontSize: '20px', fontWeight: '500px' }}>
-      Edit&nbsp;
-      <Box component={'span'} sx={{ color: mainTheme.golden, fontSize: '22px' }}>
+      {t('edit')}&nbsp;<Box component={'span'} sx={{ color: mainTheme.golden, fontSize: '22px' }}>
         {bot?.name}
       </Box>
-      &nbsp;bot
+      &nbsp;{t('bot')}
     </Box>
 
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +91,9 @@ export const EditBot = ({ bot, onClose }: Props) => {
         )
       })}
 
-      <StyledButton type='submit' padding="6px 10px">Edit bot</StyledButton>
+      <StyledButton type='submit' padding="6px 20px">
+        {t('editBot')}
+      </StyledButton>
     </form>
   </Box>
 }

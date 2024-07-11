@@ -11,6 +11,7 @@ import { Pencil } from "lucide-react"
 import { Drawer } from "@/components/basics/drawer"
 import { EditBot } from "../botDrawer/editBot"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
+import { useTranslation } from "react-i18next"
 
 interface IBotList {
   bots: Bot[]
@@ -25,6 +26,7 @@ enum EditerType {
 const StyledButton = styled(Button)(`margin-left: 6px;`)
 
 export const BotList = ({ bots, refreshList }: IBotList) => {
+  const { t } = useTranslation();
   const [confirmStopOpen, setConfirmStopOpen] = useState(false);
   const [selectBotId, setSelectBotId] = useState<string>('');
   const { toggleDrawer } = useDrawerContext();
@@ -118,39 +120,42 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
                     color: mainTheme.golden
                   }
                 }}>
-                  Strategy: {item.stgName}
+                  {t('strategy')} {item.stgName}
                 </Box>
               </Box>
 
               <Box component={'span'} sx={{
                 color: item.status === BotStatus.Offline ? 'red' :
                   item.status === BotStatus.Running ? 'green' :
+                  item.status === BotStatus.Stopped ? 'red' :
                     '#9ca3af',
               }}>
                 {item.status}
               </Box>
             </Box>
 
-            <StyledButton padding='6px 8px' onClick={() => onClick(item, EditerType.viewStg)} color={'#fff1f1'} bg={muiGreen.seaFoam}>detail</StyledButton>
+            <StyledButton padding='6px 8px' onClick={() => onClick(item, EditerType.viewStg)} color={'#fff1f1'} bg={muiGreen.seaFoam}>
+              {t('detail')}
+            </StyledButton>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box sx={{ color: mainTheme.white }}>interval: {item.params.interval}</Box>
+            <Box sx={{ color: mainTheme.white }}>{t('interval')}{item.params.interval}s</Box>
             <Box>
               {item.status === BotStatus.Stopped ? <BotBtnPop type='run' bot={item} callBack={btnPopCallback}>
-                Run
+                {t('run')}
               </BotBtnPop> : null}
 
               {item.status === BotStatus.Offline ? <>
                 <BotBtnPop type='restart' bot={item} callBack={btnPopCallback}>
-                  Restart
+                  {t('restart')}
                 </BotBtnPop>
                 <BotBtnPop customStyle={{ marginLeft: '10px' }} type='stop' bot={item} callBack={btnPopCallback}>
-                  Stop
+                  {t('stop')}
                 </BotBtnPop>
               </> : null}
               {item.status === BotStatus.Running ? <BotBtnPop type='stop' bot={item} callBack={btnPopCallback}>
-                Stop
+                {t('stop')}
               </BotBtnPop> : null}
             </Box>
           </Box>

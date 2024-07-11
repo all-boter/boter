@@ -12,6 +12,7 @@ import { BotBtnPop } from "@/components/views/bots/botBtnPop";
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext";
 import { Drawer } from "@/components/basics/drawer";
 import { EditBot } from "@/components/views/botDrawer/editBot";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   botId: string
@@ -19,7 +20,8 @@ interface Props {
   refreshBot: () => void
 }
 
-export const BotMenubar = ({ botId, bot,refreshBot }: Props) => {
+export const BotMenubar = ({ botId, bot, refreshBot }: Props) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { toggleDrawer } = useDrawerContext();
   const activeBots = useAppSelector(activeBotsState)
@@ -53,7 +55,7 @@ export const BotMenubar = ({ botId, bot,refreshBot }: Props) => {
     }
   }, [activeBots, botId])
 
-  const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => {}
+  const btnPopCallback = (botId: string, type: BotHandleEnum, botStatus = BotStatus.Running) => { }
 
   return <Box component={'div'}
     sx={{
@@ -71,20 +73,20 @@ export const BotMenubar = ({ botId, bot,refreshBot }: Props) => {
 
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Params)}>
       <Box component={Play} size={20} sx={{ mr: '4px' }} />
-      Bot Params
+      {t('botParams')}
     </MenubarItem>
 
     <BotBtnPop type={botStatus.botOperate} padding='0px 0px' bot={bot} callBack={btnPopCallback}>
       <MenubarItem >
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
-        {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)}
+        {t(botStatus.botOperate)}
       </MenubarItem>
     </BotBtnPop>
 
     {botStatus.status === BotStatus.Running && <BotBtnPop type='restart' padding='0px 0px' bot={bot} callBack={btnPopCallback}>
       <MenubarItem >
         <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />
-        Restart
+        {t('restart')}
       </MenubarItem>
     </BotBtnPop>
     }
