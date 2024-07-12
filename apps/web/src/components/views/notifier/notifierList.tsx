@@ -102,8 +102,9 @@ export const NotifierList = forwardRef<NotifierListRef, Props>((props, ref) => {
             height: '100px',
             borderRadius: '4px',
             p: '20px',
-            background: '#334155',
-            color: mainTheme.white
+            color: mainTheme.white,
+            background: '#282d34',
+            // background: '#334155',
           }}>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '20px' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', fontSize: '20px', fontWeight: 700 }}>

@@ -80,7 +80,8 @@ export const StgList = () => {
           height: '100px',
           borderRadius: '4px',
           p: '20px',
-          background: '#334155'
+          background: '#282d34'
+          // background: '#334155'
         }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '20px' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

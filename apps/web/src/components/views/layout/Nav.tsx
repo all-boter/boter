@@ -14,6 +14,7 @@ export const Nav = ({ isMobile }: { isMobile: boolean }) => {
     justifyContent: 'space-between',
     height: '42px',
     width: '100%',
+    boxSizing: 'border-box',
   }}>
     <Box sx={{ display: 'flex', alignItems: 'center', ml: '20px' }}>
       {isMobile && <Box

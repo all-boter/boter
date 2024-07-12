@@ -102,7 +102,7 @@ export const BotList = ({ bots, refreshList }: IBotList) => {
           height: '100px',
           borderRadius: '4px',
           p: '20px',
-          background: '#334155'
+          background: '#282d34',
         }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '20px' }}>
 
