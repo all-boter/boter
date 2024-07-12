@@ -9,6 +9,7 @@ interface IDrawer {
   children: React.ReactNode;
   onClose?: () => void
   id: string
+  width?: number
 }
 
 const renderAnchor = (anchor: 'left' | 'right') => {
@@ -22,7 +23,7 @@ const renderAnchor = (anchor: 'left' | 'right') => {
   }
 };
 
-export const Drawer = ({ onClose, anchor, id,children }: IDrawer) => {
+export const Drawer = ({ onClose, anchor, id, children, width }: IDrawer) => {
   const { drawers, closeDrawer } = useDrawerContext();
   const visible = drawers[id];
   const [opened, setOpened] = useState(visible);
@@ -56,7 +57,7 @@ export const Drawer = ({ onClose, anchor, id,children }: IDrawer) => {
       <div className={'drawer-mask'} onClick={onCloseDrawer} />
       <Box sx={{
         position: 'relative',
-        width: '340px',
+        width: `${width}px` || '340px',
         height: '100%',
         backgroundColor: '#1f2937',
         borderRight: '1px solid #151e22'

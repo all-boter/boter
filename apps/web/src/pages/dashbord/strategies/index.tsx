@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box } from "@mui/system"
+import { Box, styled } from "@mui/system"
 import { CreateStg } from '@/components/views/modal/createStg';
 import { fetchStrategies } from '@/store/appSlice';
 import { AppDispatch, socketConnectStatusState, useAppSelector } from '@/store';
@@ -10,6 +10,10 @@ import { mainTheme } from '@/components/basics/mainColor';
 import { DrawerProvider } from '@/components/basics/drawer/drawerContext';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '@/components/views/layout';
+
+const styledButton = styled(Button)(`
+  margin-right: 8px;
+`)
 
 export const Dashbord = () => {
   const { t } = useTranslation();
@@ -43,12 +47,11 @@ export const Dashbord = () => {
         {t('myStg')}
       </Box>
 
-      <Button onClick={() => onCreateStg()} padding='6px 8px'>
+      <Box component={styledButton} onClick={() => onCreateStg()} padding='6px 8px'>
         {t('createStg')}
-      </Button>
+      </Box>
 
       <Box sx={{
-        ml: '8px',
         flex: '1 1 auto',
         color: socketConnectStatus?.type === 8 ? 'green' : 'red'
       }}>

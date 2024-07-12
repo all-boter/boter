@@ -11,9 +11,11 @@ function App() {
   return (
     <Box sx={{ bgcolor: '#111827', height: '100%' }}>
       <Box>
-        <Box component={'nav'} className='y-center' sx={{ height: '68px', pl: 1, justifyContent: 'space-between', color: '#FFF' }}>
-          <Logo />
-          <Box sx={{mr: '20px'}}>
+        <Box component={'nav'} className='y-center' sx={{ height: '68px', justifyContent: 'space-between', color: '#FFF' }}>
+          <Box sx={{ ml: '20px' }}>
+            <Logo />
+          </Box>
+          <Box sx={{ mr: '20px' }}>
             <I18n />
           </Box>
         </Box>

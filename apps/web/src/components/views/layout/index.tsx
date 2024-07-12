@@ -2,12 +2,16 @@ import Box from "@mui/system/Box"
 import { ReactNode } from "react";
 import { Nav } from "./Nav";
 import { Sidebar } from "./Sidebar";
+import { useMediaQuery } from "@mui/system";
+import { DrawerProvider } from "@/components/basics/drawer/drawerContext";
 
 interface Props {
   children: ReactNode;
 }
 
 export const Layout = ({ children }: Props) => {
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down('tablet'));
+
   return <Box sx={{
     display: 'flex',
     flexDirection: 'column',
@@ -15,9 +19,11 @@ export const Layout = ({ children }: Props) => {
     minHeight: '100vh',
     width: '100%',
   }}>
-    <Nav />
+    <DrawerProvider>
+      <Nav isMobile={isMobile} />
+    </DrawerProvider>
 
-    <Box id='root-container' sx={{
+    <Box sx={{
       display: 'flex',
       flexGrow: '1',
       flexShrink: '1',
@@ -25,7 +31,7 @@ export const Layout = ({ children }: Props) => {
       height: '100%',
       width: '100%',
     }}>
-      <Sidebar />
+      {!isMobile && <Sidebar />}
 
       <Box
         sx={{

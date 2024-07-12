@@ -18,7 +18,7 @@ const StyledBox = styled(Box, {
   color: isActive ? '#FCD535' : '#FFF'
 }));
 
-export const Sidebar = () => {
+export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -26,7 +26,7 @@ export const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const SIDEBAR_WIDTH = isOpen ? '10%' : '0px';
+  const SIDEBAR_WIDTH = isMobile ? '100%' : isOpen ? '10%' : '0px';
 
   return <Box
     sx={{
@@ -36,12 +36,18 @@ export const Sidebar = () => {
       width: SIDEBAR_WIDTH,
       minWidth: isOpen ? '190px' : SIDEBAR_WIDTH,
       transition: 'width 0.3s',
+      height: '100%',
+      paddingTop: {
+        mobile: '20px',
+        tablet: '0px',
+        desktop: '0px'
+      },
     }}>
 
-    <Box sx={{ position: 'absolute', zIndex: 1, left: '2px', bottom: '0px', cursor: 'pointer' }}
+    {!isMobile && <Box sx={{ position: 'absolute', zIndex: 1, left: '2px', bottom: '0px', cursor: 'pointer' }}
       onClick={handleToggleSidebar}>
       {isOpen ? <ChevronLeft color="#FFF" /> : <ChevronRight color="#FFF" />}
-    </Box>
+    </Box>}
 
     {isOpen && <>
       <NavLink
