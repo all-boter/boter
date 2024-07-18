@@ -93,6 +93,22 @@ export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
           </>
         )}
       </NavLink>
+
+      <NavLink
+        className="navLink"
+        to="/dashbord/backtest"
+      >
+        {({ isActive }) => (
+          <>
+            <Box component={BellRing} size={20} sx={{
+              color: isActive ? mainTheme.golden : '#FFF'
+            }} />
+            <StyledBox component='span' isActive={isActive}>
+              {t('backtest')}
+            </StyledBox>
+          </>
+        )}
+      </NavLink>
     </>}
   </Box>
 }

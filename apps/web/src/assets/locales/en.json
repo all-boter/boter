@@ -13,7 +13,8 @@
   "launchApp": "Launch App",
   "delTips": "Are you sure to delete this strategy?",
   "delNotiTips": "Are you sure to delete this channel?",
-  "botBtnTips": "Are you sure to {{type.type}} this strategy?",
+  "botBtnTips": "Are you sure to {{type.type}} this bot?",
+  "stgBtnTips": "Are you sure to {{type.type}} this strategy?",
   "runStgTips": "Please select a runner server in the Strategy Params settings",
   "editStgParam": "Edit strategy params",
   "interval": "Interval:",
@@ -37,5 +38,6 @@
   "editBot": "Edit bot",
   "notiC": "Notif Channels",
   "createNoti": "Create channel",
-  "codeTest": "Code test:"
+  "codeTest": "Code test:",
+  "backtest": "Back test"
 }

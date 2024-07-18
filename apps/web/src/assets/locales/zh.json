@@ -38,5 +38,6 @@
   "editBot": "编辑机器人",
   "notiC": "通知渠道",
   "createNoti": "创建渠道",
-  "codeTest": "代码测试:"
+  "codeTest": "代码测试:",
+  "backtest": "回测"
 }

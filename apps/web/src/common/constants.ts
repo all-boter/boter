@@ -61,3 +61,8 @@ export type IJsonValue =
   | IJsonValue[]
   | { [key: string]: IJsonValue };
 
+  export const ONE_SECOND = 1000 // 一秒
+  export const ONE_MINUTE = ONE_SECOND * 60 // 一分钟
+  export const ONE_HOUR = ONE_MINUTE * 60 // 一小时
+  export const ONE_DAY = ONE_HOUR * 24 // 一天
+  export const ONE_YEAR = ONE_DAY * 365 // 一年
