@@ -79,7 +79,7 @@ export const FinancialChart = ({ candles, orders, chartConfig }: Props) => {
       const markers = orders.map(
         (o) =>
         ({
-          time: (new Date(o.orderTime).valueOf() + ONE_HOUR * 8) / 1000,
+          time: (new Date(o.time).valueOf() + ONE_HOUR * 8) / 1000,
           position: 'aboveBar',
           color: o.side === 'BUY' ? 'green' : 'red',
           shape: 'arrowDown',

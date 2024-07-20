@@ -186,8 +186,8 @@ export interface ChartConfig {
   kdj?: number;
 }
 
-export async function getCandles(symbol: string): Promise<ResType<ICandle[]>> {
-  const url = `${botApi.getCandles}?symbol=${symbol}`
+export async function getCandles(symbol: string, period: string): Promise<ResType<ICandle[]>> {
+  const url = `${botApi.getCandles}?symbol=${symbol}&period=${period}`
 
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
@@ -235,9 +235,8 @@ export type IOrder = {
   /** Order data ID */
   orderDataId?: Maybe<Scalars['String']>;
   /** Exchange order ID */
-  orderId?: Maybe<Scalars['String']>;
-  /** Order time */
-  orderTime?: Maybe<Scalars['DateTime']>;
+  orderId?: string | number;
+  time: number;
   /** Executed price */
   price?: Maybe<Scalars['Float']>;
   /** Executed quantity */
