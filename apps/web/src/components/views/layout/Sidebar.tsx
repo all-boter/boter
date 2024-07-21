@@ -96,7 +96,7 @@ export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
 
       <NavLink
         className="navLink"
-        to="/dashbord/backtest"
+        to="/dashbord/aitrader"
       >
         {({ isActive }) => (
           <>
@@ -104,7 +104,7 @@ export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
               color: isActive ? mainTheme.golden : '#FFF'
             }} />
             <StyledBox component='span' isActive={isActive}>
-              {t('backtest')}
+              {t('aiTrader')}
             </StyledBox>
           </>
         )}

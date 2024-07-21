@@ -39,5 +39,6 @@
   "notiC": "Notif Channels",
   "createNoti": "Create channel",
   "codeTest": "Code test:",
-  "backtest": "Back test"
+  "runningStatus": "Running Status:",
+  "aiTrader": "Ai trader"
 }

@@ -1,6 +1,7 @@
 import { FormSchema } from '@/components/basics/DynamicFormProvider'
 import { ResType, ResTypeNoData, fetchWithAuth } from './base'
 import { BotStatus, IJsonValue } from '@/common/constants'
+import { EditParamsType } from '@/components/views/stgDrawer/editStgParms'
 
 interface ApiConfig {
   createStg: string
@@ -73,6 +74,7 @@ export async function editStg(params: IStrategy): Promise<ResTypeNoData> {
 
 interface IEditParams {
   id: string
+  editType: EditParamsType
   runnerId: string;
   paramsSchema: FormSchema[]
 }

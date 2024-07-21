@@ -39,5 +39,6 @@
   "notiC": "通知渠道",
   "createNoti": "创建渠道",
   "codeTest": "代码测试:",
-  "backtest": "回测"
+  "runningStatus": "运行状态:",
+  "aiTrader": "Ai 信号"
 }

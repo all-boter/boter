@@ -11,7 +11,7 @@ import { MenubarItem } from "@/components/views/menubarItem"
 import { EditorPop } from "@/components/views/btnPop/editorPop"
 import { activeBotsState, useAppSelector } from "@/store"
 import { Drawer } from "@/components/basics/drawer"
-import { EditStgParms } from "@/components/views/stgDrawer/editStgParms"
+import { EditParamsType, EditStgParms } from "@/components/views/stgDrawer/editStgParms"
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext"
 import { useTranslation } from "react-i18next"
 
@@ -137,7 +137,7 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
     </Box>
 
     <Drawer anchor={"left"} id="BotDrawer">
-      <EditStgParms paramsSchema={stgParams.schema} stgId={id} runnerId={stgParams.runnerId} onClose={() => menubarCallback()} />
+      <EditStgParms paramsSchema={stgParams.schema} stgId={id} editType={EditParamsType.stgParams} runnerId={stgParams.runnerId} onClose={() => menubarCallback()} />
     </Drawer>
   </Box>
 }

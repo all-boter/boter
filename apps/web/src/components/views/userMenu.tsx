@@ -128,6 +128,7 @@ export const I18n = () => {
           background: mainTheme.darkBule,
           border: '1px solid #343e4f',
           borderRadius: '6px',
+          zIndex: 99,
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80px', height: '80px', color: '#FFF' }}>

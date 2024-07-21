@@ -19,6 +19,7 @@ export const StyledPopoverContent = styled(Content)(`
     border-radius: 6px;
     background: ${mainTheme[106]};
     padding: 0 10px;
+    z-index: 99
 `)
 
 interface IBotBtnPop {

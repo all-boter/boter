@@ -13,6 +13,7 @@ interface ApiConfig {
   getNotifiers: string
   deleteNotifier: string
   getCandles: string
+  getAiTrader: string
 }
 
 export const botApi: ApiConfig = {
@@ -28,6 +29,8 @@ export const botApi: ApiConfig = {
   deleteNotifier: '/api/notifier/delete',
 
   getCandles: '/api/candle/query',
+  // getAiTrader: '/api/code/byStgId',
+  getAiTrader: '/api/aiTrader/q',
 }
 
 interface IEditBot {
@@ -258,6 +261,17 @@ export type IOrder = {
   userId?: Maybe<Scalars['Int']>;
 };
 
+export interface IAiTraderParams {
+  id: string
+  runnerId: string;
+  paramsSchema: IJsonValue[];
+}
+
+export async function getAiTrader(): Promise<ResType<IAiTraderParams>> {
+  const url = `${botApi.getAiTrader}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
 /**
  * Candle end
  * Candle end

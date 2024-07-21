@@ -40,14 +40,20 @@ function updateParamsSchema(form: BotFormValues, paramsSchema: FormSchema[]) {
   });
 }
 
+export enum EditParamsType {
+  stgParams = 1,
+  aiParams = 2
+}
+
 interface Props {
   paramsSchema: IJsonValue[]
   stgId: string
   runnerId: string
+  editType: EditParamsType
   onClose?: () => void
 }
 
-export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) => {
+export const EditStgParms = ({ paramsSchema, runnerId, stgId, editType, onClose }: Props) => {
   const { t } = useTranslation();
   const { closeDrawer } = useDrawerContext();
   const { showToast } = useContext(ToastContext)!;
@@ -98,6 +104,7 @@ export const EditStgParms = ({ paramsSchema, runnerId, stgId, onClose }: Props) 
     const res = await stgEditParams({
       id: stgId,
       runnerId,
+      editType,
       paramsSchema: updatedParamsSchema
     })
     if (res.code === SUCCESS) {

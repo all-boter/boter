@@ -7,7 +7,7 @@ import { Bots } from "@/pages/dashbord/bots";
 import PageNotFound from "@/pages/pageNotFound";
 import { BotDetail } from "@/pages/bot-detail";
 import { NotifierPage } from "@/pages/notifier";
-import { Backtest } from "@/pages/backtest";
+import { AiTrader } from "@/pages/ai-trader";
 
 export default function AppRouter() {
   return (
@@ -24,7 +24,7 @@ export default function AppRouter() {
             <Route path="/dashbord/strategies" element={<Dashbord />} />
             <Route path="bots" element={<Bots />} />
             <Route path="notifier" element={<NotifierPage />} />
-            <Route path="backtest" element={<Backtest />} />
+            <Route path="aiTrader" element={<AiTrader />} />
           </Route>
         </Route>
         <Route path='*' element={<PageNotFound />} />
