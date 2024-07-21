@@ -44,7 +44,6 @@ export const AiTrader = () => {
   useEffect(() => {
     getCandles('BTCUSDT', '1h').then((res) => {
       if (res.code === SUCCESS) {
-        // TODO 
         let candleData = res.data.map((i) => {
           return {
             ...i,

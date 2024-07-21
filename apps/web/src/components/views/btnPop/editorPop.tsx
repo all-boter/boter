@@ -12,16 +12,20 @@ import { AppDispatch } from '@/store';
 import { editorSlice } from '@/store/editorSlice';
 import { StyledPopoverContent } from '../bots/botBtnPop';
 import { useTranslation } from 'react-i18next';
+import { BotHandleEnum, BotType, createBot, stopBot } from '@/services/stgApi';
 
 interface IEditorPop {
   stgId: string
+  botId?: string
   runnerId: string
   children: React.ReactNode
   type: IBotOperate
   schema: IJsonValue[],
+  botType: BotType
+  callback?: () => void
 }
 
-export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPop) => {
+export const EditorPop = ({ children, type, botType, stgId, botId, schema, runnerId, callback }: IEditorPop) => {
   const { t } = useTranslation();
   const { showToast } = useContext(ToastContext)!;
   const dispatch: AppDispatch = useDispatch();
@@ -53,18 +57,59 @@ export const EditorPop = ({ children, type, stgId, schema, runnerId }: IEditorPo
         return
       }
 
-      const res = await runTempBot({ stgId, runnerId, type, params })
-      if (res.code === SUCCESS) {
-        showToast(`Test Bot: ${res.msg}`, { type: ToastType.success, duration: 2000 })
+      if (botType === BotType.normal) {
+        const res = await runTempBot({ stgId, runnerId, type, params })
+        if (res.code === SUCCESS) {
+          showToast(`Test Bot: ${res.msg}`, { type: ToastType.success, duration: 2000 })
 
-        sleep(1000)
+          sleep(1000)
 
-        dispatch(editorSlice.actions.setRunBotSuccess(true))
-      } else {
-        showToast(`Test Bot Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+          dispatch(editorSlice.actions.setRunBotSuccess(true))
+        } else {
+          showToast(`Test Bot Error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+        }
+      } else if (botType === BotType.ai_trader) {
+        if (type === 2) {
+          if (botId) {
+            stopBotUtil(botId)
+          } else {
+            throw new Error('botId not null');
+          }
+        } else {
+          const stgName = 'Ai trader'
+          const res = await createBot({
+            strategyId: stgId,
+            stgName,
+            params: {
+              ...params,
+              runnerId,
+              name: stgName
+            },
+            botType
+          })
+
+          if (res.code === SUCCESS) {
+            showToast(`Run ${stgName} ${res.msg}`, { type: ToastType.success, duration: 2000 })
+            if (!botId) {
+              callback && callback()
+            }
+          } else {
+            showToast(`Error: Run ${stgName} error: ${res.msg}`, { type: ToastType.error, duration: 2000 })
+          }
+        }
       }
     } catch (error) {
       showToast(`Error: ${error}`, { type: ToastType.error, duration: 2000 })
+    }
+  }
+
+  const stopBotUtil = async (botId: string, type = BotHandleEnum.normal) => {
+    const stgName = 'Ai trader'
+    const res = await stopBot(botId, type)
+    if (res.code === SUCCESS) {
+      showToast(`Stop ${stgName} bot ok`, { type: ToastType.success, duration: 2000 })
+    } else {
+      showToast(`Error: Stop ${stgName} bot ok`, { type: ToastType.success, duration: 2000 })
     }
   }
 

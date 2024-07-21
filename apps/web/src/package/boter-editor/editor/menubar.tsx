@@ -1,5 +1,5 @@
 import { BotStatus, IBotOperate, IJsonValue, SUCCESS } from "@/common/constants"
-import { editCodeByStgId } from "@/services/stgApi"
+import { BotType, editCodeByStgId } from "@/services/stgApi"
 import { Box } from "@mui/system"
 import { ArrowLeft, Play, Save, Settings, RotateCcw, Power } from "lucide-react"
 import { getModulesBySourceId } from "../boter-db/db-util"
@@ -107,7 +107,13 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
       {t('save')}
     </MenubarItem>
 
-    <EditorPop schema={stgParams.schema} type={botStatus.botOperate} stgId={id} runnerId={stgParams.runnerId}>
+    <EditorPop
+      schema={stgParams.schema}
+      type={botStatus.botOperate}
+      stgId={id}
+      runnerId={stgParams.runnerId}
+      botType={BotType.normal}
+    >
       <MenubarItem>
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
         {/* {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)} */}
@@ -115,7 +121,13 @@ export const EditorMenubar = ({ id, stgParams, menubarCallback }: IMenubar) => {
       </MenubarItem>
     </EditorPop>
 
-    {botStatus.status === BotStatus.Running && <EditorPop schema={stgParams.schema} type={'restart'} stgId={id} runnerId={stgParams.runnerId}>
+    {botStatus.status === BotStatus.Running && <EditorPop
+      schema={stgParams.schema}
+      type={'restart'}
+      stgId={id}
+      runnerId={stgParams.runnerId}
+      botType={BotType.normal}
+    >
       <MenubarItem>
         <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />
         {t('restart')}

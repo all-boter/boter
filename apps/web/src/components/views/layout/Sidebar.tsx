@@ -6,6 +6,7 @@ import { BotIcon } from "../../icon/botIcon";
 import { BellRing, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { AiIcon } from "@/components/icon/aiIcon";
 
 interface StyledBoxProps {
   isActive: boolean;
@@ -80,6 +81,20 @@ export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
 
       <NavLink
         className="navLink"
+        to="/dashbord/aitrader"
+      >
+        {({ isActive }) => (
+          <>
+            <AiIcon fill={isActive ? mainTheme.golden : '#FFF'} />
+            <StyledBox component='span' isActive={isActive}>
+              {t('aiTrader')}
+            </StyledBox>
+          </>
+        )}
+      </NavLink>
+
+      <NavLink
+        className="navLink"
         to="/dashbord/notifier"
       >
         {({ isActive }) => (
@@ -89,22 +104,6 @@ export const Sidebar = ({ isMobile = false }: { isMobile?: boolean }) => {
             }} />
             <StyledBox component='span' isActive={isActive}>
               {t('notiC')}
-            </StyledBox>
-          </>
-        )}
-      </NavLink>
-
-      <NavLink
-        className="navLink"
-        to="/dashbord/aitrader"
-      >
-        {({ isActive }) => (
-          <>
-            <Box component={BellRing} size={20} sx={{
-              color: isActive ? mainTheme.golden : '#FFF'
-            }} />
-            <StyledBox component='span' isActive={isActive}>
-              {t('aiTrader')}
             </StyledBox>
           </>
         )}

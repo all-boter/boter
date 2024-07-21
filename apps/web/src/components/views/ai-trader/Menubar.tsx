@@ -9,8 +9,11 @@ import { useEffect, useMemo, useState } from "react";
 import { getAiTrader, IAiTraderParams } from "@/services/botApi";
 import { BotStatus, IBotOperate, SUCCESS } from "@/common/constants";
 import { EditParamsType, EditStgParms } from "../stgDrawer/editStgParms";
-import { activeBotsState, useAppSelector } from "@/store";
+import { activeBotsState, AppDispatch, useAppSelector } from "@/store";
 import { EditorPop } from "../btnPop/editorPop";
+import { BotType } from "@/services/stgApi";
+import { useDispatch } from "react-redux";
+import { appSlice } from "@/store/appSlice";
 
 interface Props {
   isMobile: boolean
@@ -28,12 +31,16 @@ export const Menubar = ({ isMobile }: Props) => {
   const { toggleDrawer } = useDrawerContext();
   const [aiTraderParams, setAiTraderParams] = useState<IAiTraderParams>({
     id: '',
+    botId: '',
     runnerId: '',
+    status: BotStatus.Stopped,
     paramsSchema: []
   })
+  const dispatch: AppDispatch = useDispatch();
 
   const botStatus = useMemo<{ status: BotStatus, botOperate: IBotOperate }>(() => {
-    const bot = activeBots[aiTraderParams.id]
+    console.log('activeBots===>', activeBots)
+    const bot = activeBots[aiTraderParams.botId]
     if (bot) {
       let text: IBotOperate = 'run'
       if (bot.status === BotStatus.Running) {
@@ -62,6 +69,8 @@ export const Menubar = ({ isMobile }: Props) => {
     const res = await getAiTrader()
     if (res.code === SUCCESS) {
       setAiTraderParams(res.data)
+      const { botId, status } = res.data
+      dispatch(appSlice.actions.setBotStatus({ id: botId, status }));
     }
   }
 
@@ -84,10 +93,13 @@ export const Menubar = ({ isMobile }: Props) => {
       schema={aiTraderParams.paramsSchema}
       type={botStatus.botOperate}
       stgId={aiTraderParams.id}
-      runnerId={aiTraderParams.runnerId}>
+      botId={aiTraderParams.botId}
+      runnerId={aiTraderParams.runnerId}
+      botType={BotType.ai_trader}
+      callback={() => getAiTraderUtil()}
+    >
       <MenubarItem>
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
-        {/* {botStatus.botOperate.charAt(0).toUpperCase() + botStatus.botOperate.slice(1)} */}
         {t(botStatus.botOperate)}
       </MenubarItem>
     </EditorPop>
@@ -96,7 +108,9 @@ export const Menubar = ({ isMobile }: Props) => {
       schema={aiTraderParams.paramsSchema}
       type={'restart'}
       stgId={aiTraderParams.id}
+      botId={aiTraderParams.botId}
       runnerId={aiTraderParams.runnerId}
+      botType={BotType.ai_trader}
     >
       <MenubarItem>
         <Box component={RotateCcw} size={20} sx={{ mr: '4px' }} />

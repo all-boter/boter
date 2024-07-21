@@ -126,7 +126,7 @@ export const StgDrawer = ({ stg, onClose }: Props) => {
         )
       })}
 
-      <Box className='xy-center' sx={{ width: '100%' }}>
+      <Box className='y-center' sx={{ width: '100%' }}>
         <StyledButton padding='6px 8px' type='submit'>
           {t('createBot')}
         </StyledButton>

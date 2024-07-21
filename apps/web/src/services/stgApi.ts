@@ -157,10 +157,17 @@ export async function getBotById(botId: string): Promise<ResType<Bot>> {
   return await fetchWithAuth<any>(url, { data: {} }, 'GET');
 }
 
+export enum BotType {
+  normal = 1,
+  ai_trader = 2,
+  candle_crawler = 3,
+}
+
 interface ICreateBot {
   strategyId: string;
   stgName: string;
   params: any;
+  botType?: BotType;
   apiId?: number;
 }
 

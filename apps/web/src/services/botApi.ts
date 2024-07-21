@@ -1,4 +1,4 @@
-import { IJsonValue } from "@/common/constants";
+import { BotStatus, IJsonValue } from "@/common/constants";
 import { fetchWithAuth, ResType, ResTypeNoData } from "./base";
 
 interface ApiConfig {
@@ -263,7 +263,9 @@ export type IOrder = {
 
 export interface IAiTraderParams {
   id: string
+  botId: string
   runnerId: string;
+  status: BotStatus;
   paramsSchema: IJsonValue[];
 }
 
