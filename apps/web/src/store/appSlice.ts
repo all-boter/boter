@@ -67,6 +67,11 @@ interface InitialState {
     [botId: string]: {
       status: BotStatus
     }
+  },
+  botStorage: {
+    [botId: string]: {
+      data: any
+    }
   }
 }
 
@@ -82,7 +87,8 @@ const initialState: InitialState = {
   githubRepository: null,
   stgList: [],
   socketConnectStatus: { type: 1, msg: '' },
-  activeBots: {}
+  activeBots: {},
+  botStorage: {}
 }
 
 const loadStatePersiste = () => {
@@ -127,6 +133,13 @@ export const appSlice = createSlice({
     setBotStatus: (state, action: PayloadAction<INotifyBotMsg>) => {
       if (action.payload) {
         state.activeBots[action.payload.id] = action.payload
+      }
+
+      return state
+    },
+    setBotStorage: (state, action: PayloadAction<{id: string,data: any}>) => {
+      if (action.payload) {
+        state.botStorage[action.payload.id] = action.payload.data
       }
 
       return state

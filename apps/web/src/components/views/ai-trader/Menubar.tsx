@@ -5,18 +5,17 @@ import { MenubarItem } from "../menubarItem";
 import { useDrawerContext } from "@/components/basics/drawer/drawerContext";
 import { Drawer } from "@/components/basics/drawer";
 import { mainTheme } from "@/components/basics/mainColor";
-import { useEffect, useMemo, useState } from "react";
-import { getAiTrader, IAiTraderParams } from "@/services/botApi";
-import { BotStatus, IBotOperate, SUCCESS } from "@/common/constants";
+import { useMemo } from "react";
+import { IAiTraderParams } from "@/services/botApi";
+import { BotStatus, IBotOperate } from "@/common/constants";
 import { EditParamsType, EditStgParms } from "../stgDrawer/editStgParms";
-import { activeBotsState, AppDispatch, useAppSelector } from "@/store";
+import { activeBotsState, useAppSelector } from "@/store";
 import { EditorPop } from "../btnPop/editorPop";
 import { BotType } from "@/services/stgApi";
-import { useDispatch } from "react-redux";
-import { appSlice } from "@/store/appSlice";
 
 interface Props {
   isMobile: boolean
+  aiTraderParams: IAiTraderParams
   menubarCallback: () => void
 }
 
@@ -25,21 +24,12 @@ export enum MenubarEvent {
   Params = 4
 }
 
-export const Menubar = ({ isMobile }: Props) => {
+export const Menubar = ({ isMobile, aiTraderParams, menubarCallback }: Props) => {
   const { t } = useTranslation();
   const activeBots = useAppSelector(activeBotsState)
   const { toggleDrawer } = useDrawerContext();
-  const [aiTraderParams, setAiTraderParams] = useState<IAiTraderParams>({
-    id: '',
-    botId: '',
-    runnerId: '',
-    status: BotStatus.Stopped,
-    paramsSchema: []
-  })
-  const dispatch: AppDispatch = useDispatch();
 
   const botStatus = useMemo<{ status: BotStatus, botOperate: IBotOperate }>(() => {
-    console.log('activeBots===>', activeBots)
     const bot = activeBots[aiTraderParams.botId]
     if (bot) {
       let text: IBotOperate = 'run'
@@ -65,18 +55,6 @@ export const Menubar = ({ isMobile }: Props) => {
     }
   }
 
-  const getAiTraderUtil = async () => {
-    const res = await getAiTrader()
-    if (res.code === SUCCESS) {
-      setAiTraderParams(res.data)
-      const { botId, status } = res.data
-      dispatch(appSlice.actions.setBotStatus({ id: botId, status }));
-    }
-  }
-
-  useEffect(() => {
-    getAiTraderUtil()
-  }, [])
 
   return <Box sx={{
     display: 'flex',
@@ -96,7 +74,7 @@ export const Menubar = ({ isMobile }: Props) => {
       botId={aiTraderParams.botId}
       runnerId={aiTraderParams.runnerId}
       botType={BotType.ai_trader}
-      callback={() => getAiTraderUtil()}
+      callback={() => menubarCallback()}
     >
       <MenubarItem>
         <Box component={botStatus.status === BotStatus.Running ? Power : Play} size={20} sx={{ mr: '4px' }} />
@@ -138,7 +116,7 @@ export const Menubar = ({ isMobile }: Props) => {
         editType={EditParamsType.aiParams}
         stgId={aiTraderParams.id}
         runnerId={aiTraderParams.runnerId}
-        onClose={() => getAiTraderUtil()}
+        onClose={() => menubarCallback()}
       />
     </Drawer>
   </Box>

@@ -11,6 +11,7 @@ enum ConnectStatusType {
 
 enum MessageType {
   BOT_STATUS = 100,
+  DATA_TO_WEB = 200,
 }
 
 export interface ConnectStatus {
@@ -61,11 +62,21 @@ export class SocketConnector {
   }
 
   private setupListeners() {
-    this.socket.on('private-msg', (data) => {
+    this.socket.on('private-msg', (data: {
+      from: string,
+      type: MessageType,
+      data: any,
+    }) => {
       console.log('%c=Received private messageType:', 'color:cyan', data.type, data)
       switch (data.type) {
         case MessageType.BOT_STATUS:
           store.dispatch(appSlice.actions.setBotStatus(data?.data));
+
+          break
+
+        case MessageType.DATA_TO_WEB:
+          console.log('%c=Received MessageType.DATA_TO_WEB:', 'color:cyan', data)
+          store.dispatch(appSlice.actions.setBotStorage({ id: data.from, data }));
 
           break
         default:
