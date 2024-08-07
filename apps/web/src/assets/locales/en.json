@@ -40,5 +40,6 @@
   "createNoti": "Create channel",
   "codeTest": "Code test:",
   "runningStatus": "Running Status:",
-  "aiTrader": "Ai trader"
+  "aiTrader": "Ai trader",
+  "addSymbol": "Add Symbol"
 }

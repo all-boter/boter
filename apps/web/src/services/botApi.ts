@@ -14,6 +14,8 @@ interface ApiConfig {
   deleteNotifier: string
   getCandles: string
   getAiTrader: string
+  addSymbol: string
+  getSymbols: string
 }
 
 export const botApi: ApiConfig = {
@@ -29,8 +31,10 @@ export const botApi: ApiConfig = {
   deleteNotifier: '/api/notifier/delete',
 
   getCandles: '/api/candle/query',
-  // getAiTrader: '/api/code/byStgId',
   getAiTrader: '/api/aiTrader/q',
+
+  addSymbol: '/api/symbol/add',
+  getSymbols: '/api/symbol/list',
 }
 
 interface IEditBot {
@@ -278,3 +282,27 @@ export async function getAiTrader(): Promise<ResType<IAiTraderParams>> {
  * Candle end
  * Candle end
 */
+
+/**
+ * symbols start
+ */
+export interface ISymbol {
+  id?: string
+  name: string;
+  symbol: string;
+}
+
+export async function addSymbol(args: ISymbol): Promise<ResTypeNoData> {
+  const url = `${botApi.addSymbol}`
+
+  return await fetchWithAuth<any>(url, { data: args }, 'POST');
+}
+
+export async function getSymbols(): Promise<ResType<ISymbol[]>> {
+  const url = `${botApi.getSymbols}`
+
+  return await fetchWithAuth<any>(url, { data: {} }, 'GET');
+}
+/**
+ * symbols end
+ */

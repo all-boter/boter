@@ -30,7 +30,7 @@ const formValuesInit = {
 
 const StyledButton = styled(Button)(`margin-top: 10px;`)
 
-export const CreateStg = (props: IModal) => {
+export const CreateStg = ({isOpen,handleClose}: IModal) => {
   const { t } = useTranslation();
   const [formValues, setFormValuesState] = useState<{ name: string }>(formValuesInit)
 
@@ -56,19 +56,19 @@ export const CreateStg = (props: IModal) => {
 
     const res = await createStg(formValues)
     if (res.code === SUCCESS) {
-      props.handleClose()
+      handleClose()
     } else {
       console.error(res.msg)
     }
   }
 
   useEffect(() => {
-    if (props.isOpen && formValues.name) {
+    if (isOpen && formValues.name) {
       setFormValuesState(formValuesInit)
     }
-  }, [props.isOpen])
+  }, [isOpen])
 
-  return <Modal {...props}>
+  return <Modal isOpen={isOpen} handleClose={handleClose}>
     <ModalContent sx={{ width: 400 }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         {formSchema.map((formItem, index) => {

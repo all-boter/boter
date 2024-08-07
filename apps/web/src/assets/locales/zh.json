@@ -40,5 +40,6 @@
   "createNoti": "创建渠道",
   "codeTest": "代码测试:",
   "runningStatus": "运行状态:",
-  "aiTrader": "Ai 信号"
+  "aiTrader": "Ai 信号",
+  "addSymbol": "添加交易对"
 }

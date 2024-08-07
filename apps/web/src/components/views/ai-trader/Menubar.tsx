@@ -55,7 +55,6 @@ export const Menubar = ({ isMobile, aiTraderParams, menubarCallback }: Props) =>
     }
   }
 
-
   return <Box sx={{
     display: 'flex',
     height: '40px',

@@ -23,7 +23,7 @@ export const InputF = forwardRef<HTMLInputElement, Props>((props, ref) => {
   }
 
   return <>
-    <Box sx={{ my: '8px', color: '#FFF' }}>{props.label}</Box>
+    <Box sx={{ my: '8px' }}>{props.label}</Box>
     <Controller
       name={id}
       control={controlF}

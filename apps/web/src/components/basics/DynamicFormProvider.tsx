@@ -1,10 +1,11 @@
 import { InputF } from "../form/inputF"
 import { NotifierF } from "../form/NotifierF"
 import { SelectF } from "../form/selectF"
+import { SymbolSelect } from "../form/symbolSelect"
 
 export interface FormItem extends Control {
   id: string
-  type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Notifier' | 'Switch' | 'Checkbox' | 'Upload' | 'textArea'
+  type: 'Input' | 'Number' | 'Radio' | 'Select' | 'Notifier' | 'Switch' | 'Checkbox' | 'Upload' | 'textArea' | 'Symbol'
   label?: string
   dataSourceFn?: () => Promise<any>;
 }
@@ -22,6 +23,7 @@ export enum FormItemType {
   Checkbox = 'Checkbox',
   Upload = 'Upload',
   TextArea = 'textArea',
+  Symbol = 'Symbol',
 }
 
 interface Control {
@@ -46,6 +48,10 @@ export class DynamicFormProvider {
 
       case FormItemType.Notifier:
         return <NotifierF {...formItem} values={values} setFormValuesState={setFormValuesState} />
+
+      case FormItemType.Symbol:
+        // return <div>test</div>
+        return <SymbolSelect {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       default:
         return <div>Unknow component:{formItem.type}</div>

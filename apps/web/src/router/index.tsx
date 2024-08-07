@@ -8,6 +8,7 @@ import PageNotFound from "@/pages/pageNotFound";
 import { BotDetail } from "@/pages/bot-detail";
 import { NotifierPage } from "@/pages/notifier";
 import { AiTrader } from "@/pages/ai-trader";
+import { Symbol } from "@/pages/symbol";
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/editor/:source?/:stgId" element={<Editor />} />
+          <Route path="/symbol" element={<Symbol />} />
           <Route path="/bot/:botId" element={<BotDetail />} />
           <Route path="/dashbord" element={<Outlet />}>
             <Route index element={<Dashbord />} />

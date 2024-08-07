@@ -69,6 +69,7 @@
     "postcss-normalize": "^10.0.1",
     "postcss-preset-env": "^7.0.1",
     "prompts": "^2.4.2",
+    "rc-table": "^7.47.1",
     "re-resizable": "^6.9.17",
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",

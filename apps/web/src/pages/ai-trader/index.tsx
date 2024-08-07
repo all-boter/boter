@@ -77,7 +77,7 @@ export const AiTrader = () => {
   useEffect(() => {
     getCandles('BTCUSDT', '1h').then((res) => {
       if (res.code === SUCCESS) {
-        let candleData = res.data.map((i) => {
+        const candleData = res.data.map((i) => {
           return {
             ...i,
             time: (i.openTime + ONE_HOUR * 8) / 1000,
@@ -90,7 +90,6 @@ export const AiTrader = () => {
 
     getAiTraderUtil()
   }, [])
-
 
   return <Layout>
     <DrawerProvider>

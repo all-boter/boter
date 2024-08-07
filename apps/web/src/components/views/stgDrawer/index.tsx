@@ -27,6 +27,18 @@ export const botFormSchemaDefault: FormSchema[] = [
   //   label: 'Notification (optional):',
   //   value: [],
   // },
+  // TODO: test symbol component
+  /*
+  {
+    type: 'Symbol',
+    id: 'symbol',
+    label: 'Symbol:',
+    value: '',
+    placeholder: 'Type name',
+    controlId: 'id',
+    controlLabel: 'symbol',
+  },
+  */
   {
     type: 'Input',
     id: 'name',
