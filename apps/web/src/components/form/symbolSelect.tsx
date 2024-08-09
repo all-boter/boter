@@ -1,25 +1,18 @@
 import { FormItem } from "../basics/DynamicFormProvider";
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { SUCCESS } from "@/common/constants";
 import { useForm, Controller } from "react-hook-form"
 import { BoterSelect, SelectItem } from "../basics/select";
 import { ItemText } from "@radix-ui/react-select";
-import { mainTheme } from "../basics/mainColor";
 import { useDrawerContext } from "../basics/drawer/drawerContext";
 import { getSymbols } from "@/services/botApi";
+import { SelectItemContainer } from "./selectF";
 
 interface Props extends FormItem {
   values: any
   setFormValuesState: (val: any) => void
 }
-
-export const SelectItemContainer = styled('div') <{ status: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  cursor: ${props => props.status ? 'pointer' : 'not-allowed'};
-  height: 100%;
-`
 
 export const SymbolSelect = (props: Props) => {
   const { id, setFormValuesState } = props
@@ -30,7 +23,6 @@ export const SymbolSelect = (props: Props) => {
 
   const dataSourceFnUtil = async () => {
     const res = await getSymbols()
-    console.log('%c=getSymbols','color:red',res)
     if (res.code === SUCCESS) {
       setOptions(res.data)
     } else {
@@ -38,8 +30,7 @@ export const SymbolSelect = (props: Props) => {
     }
   }
 
-  const handleChange = (value: any) => {
-    setFormValuesState({
+  const handleChange = (value: any) => { setFormValuesState({
       ...props.values,
       [id]: value
     })

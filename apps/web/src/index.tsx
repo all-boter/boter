@@ -9,6 +9,7 @@ import { ToastProvider } from './components/basics/toast/toastContext';
 import { Toast } from './components/basics/toast';
 import './i18n';
 import './index.css';
+import 'react-datepicker/dist/react-datepicker.css'
 
 declare module '@mui/system' {
   interface BreakpointOverrides {

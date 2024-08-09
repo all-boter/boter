@@ -3,11 +3,12 @@ import { DrawerProvider } from "@/components/basics/drawer/drawerContext"
 import { FinancialChart } from "@/components/views/ai-trader/FinancialChart"
 import { Menubar } from "@/components/views/ai-trader/Menubar"
 import { Layout } from "@/components/views/layout"
-import { CandleForChart, ChartConfig, getAiTrader, getCandles, IAiTraderParams, IOrder, OperationType, OrderStatus } from "@/services/botApi"
+import { CandleForChart, ChartConfig, getAiTrader, getCandles, getSymbols, IAiTraderParams, IOrder } from "@/services/botApi"
 import { useEffect, useMemo, useState } from "react"
 import { AppDispatch, botStorageState, useAppSelector } from "@/store"
 import { useDispatch } from "react-redux"
 import { appSlice } from "@/store/appSlice"
+import { SymbolSelect } from "./symbolSelect"
 
 const defaultChartConfig: ChartConfig = {
   candle: true,
@@ -92,6 +93,7 @@ export const AiTrader = () => {
   }, [])
 
   return <Layout>
+    <SymbolSelect />
     <DrawerProvider>
       <Menubar
         isMobile={false}

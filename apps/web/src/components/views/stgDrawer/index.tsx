@@ -39,6 +39,16 @@ export const botFormSchemaDefault: FormSchema[] = [
     controlLabel: 'symbol',
   },
   */
+  /*
+  {
+    type: 'TimePicker',
+    id: 'startTime',
+    label: 'Start Time:',
+    value: "2024-07-19 00:00:00",
+    value: "2024-07-21 00:00:00",
+    placeholder: "20xx-xx-xx 00:00:00"
+  },
+  */
   {
     type: 'Input',
     id: 'name',

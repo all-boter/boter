@@ -34,6 +34,7 @@ const StyledButton = styled(ButtonOrgin)(
   cursor: pointer;
   border: 0px;
   box-shadow: 0 2px 1px ${theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(45, 45, 60, 0.2)'}, inset 0 1.5px 1px ${bg || mainTheme.golden}, inset 0 -2px 1px ${bg || mainTheme.golden};
+  box-sizing: border-box;
 
   &:hover {
     opacity: .8;
@@ -46,7 +47,7 @@ const StyledButton = styled(ButtonOrgin)(
   }
 
   &:focus {
-    box-shadow: 0 0 0 4px ${theme.palette.mode === 'dark' ? muiBlue[300] : muiBlue[200]};
+    // box-shadow: 0 0 0 1px ${theme.palette.mode === 'dark' ? muiBlue[300] : muiBlue[200]};
     outline: none;
   }
 

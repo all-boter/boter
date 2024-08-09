@@ -53,3 +53,30 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.react-datepicker__triangle::before {
+  border-color: transparent !important;
+}
+
+.react-datepicker__triangle::after {
+  border: none !important;
+}
+
+.react-datepicker-popper {
+  z-index: 1000;
+  /* left: 25px!important; */
+}
+
+.react-datepicker { 
+  left: 83px;
+}
+
+
+.fomir-date-picker {
+  border: 1px solid #ddd;
+  padding: 0px 6px;
+  height: 40px;
+  border-radius: 6px;
+  width: 100%;
+}
+

@@ -61,6 +61,7 @@ export const Menubar = ({ isMobile, aiTraderParams, menubarCallback }: Props) =>
     background: mainTheme.blackBg,
     color: '#fff'
   }}>
+
     <MenubarItem onClick={() => onMenubar(MenubarEvent.Params)}>
       <Box component={Settings} size={20} sx={{ mr: '4px' }} />
       {t('stgParams')}
