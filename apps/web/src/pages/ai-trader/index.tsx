@@ -3,7 +3,7 @@ import { DrawerProvider } from "@/components/basics/drawer/drawerContext"
 import { FinancialChart } from "@/components/views/ai-trader/FinancialChart"
 import { Menubar } from "@/components/views/ai-trader/Menubar"
 import { Layout } from "@/components/views/layout"
-import { CandleForChart, ChartConfig, getAiTrader, getCandles, getSymbols, IAiTraderParams, IOrder } from "@/services/botApi"
+import { CandleForChart, ChartConfig, getAiTrader, getCandles, IAiTraderParams, IOrder } from "@/services/botApi"
 import { useEffect, useMemo, useState } from "react"
 import { AppDispatch, botStorageState, useAppSelector } from "@/store"
 import { useDispatch } from "react-redux"
@@ -43,9 +43,19 @@ const defaultChartConfig: ChartConfig = {
   }
 */
 
+export interface IQueryArgs {
+  interval: string,
+  symbol: string
+}
+
 export const AiTrader = () => {
   const [candles, setCandles] = useState<CandleForChart[]>([])
   const botStorage = useAppSelector(botStorageState)
+
+  const [queryArgs, setQueryArgs] = useState<IQueryArgs>({
+    interval: '1h',
+    symbol: 'BTCUSDT'
+  })
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -66,17 +76,8 @@ export const AiTrader = () => {
     }
   }
 
-  const orders = useMemo<IOrder[]>(() => {
-    if (aiTraderParams.botId) {
-      const bot = botStorage[aiTraderParams.botId]
-      return Array.isArray(bot?.data) ? bot.data : []
-    } else {
-      return []
-    }
-  }, [aiTraderParams, botStorage])
-
-  useEffect(() => {
-    getCandles('BTCUSDT', '1h').then((res) => {
+  const getCandlesUtil = ({ symbol, interval }: IQueryArgs) => {
+    getCandles(symbol, interval).then((res) => {
       if (res.code === SUCCESS) {
         const candleData = res.data.map((i) => {
           return {
@@ -88,12 +89,37 @@ export const AiTrader = () => {
         setCandles(candleData)
       }
     })
+  }
 
+
+  const orders = useMemo<IOrder[]>(() => {
+    if (aiTraderParams.botId) {
+      const bot = botStorage[aiTraderParams.botId]
+      return Array.isArray(bot?.data) ? bot.data : []
+    } else {
+      return []
+    }
+  }, [aiTraderParams, botStorage])
+
+  const onQuery = (symbol: string, interval: string) => {
+    setQueryArgs({
+      symbol,
+      interval
+    })
+
+    getCandlesUtil({
+      symbol,
+      interval
+    })
+  }
+
+  useEffect(() => {
+    getCandlesUtil(queryArgs)
     getAiTraderUtil()
   }, [])
 
   return <Layout>
-    <SymbolSelect />
+    <SymbolSelect callback={onQuery} queryArgs={queryArgs} />
     <DrawerProvider>
       <Menubar
         isMobile={false}
