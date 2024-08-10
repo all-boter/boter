@@ -1,5 +1,6 @@
 import { InputF } from "../form/inputF"
 import { NotifierF } from "../form/NotifierF"
+import { PeriodS } from "../form/PeriodS"
 import { SelectF } from "../form/selectF"
 import { SymbolSelect } from "../form/symbolSelect"
 import { TimePicker } from "../form/TimePicker"
@@ -8,7 +9,7 @@ export interface FormItem extends Control {
   id: string
   type: 'Input' | 'Number' | 'Radio' | 'Select' | 
   'Notifier' | 'Switch' | 'Checkbox' | 'Upload' | 
-  'textArea' | 'Symbol' | 'TimePicker'
+  'textArea' | 'Symbol' | 'TimePicker' | 'Period'
   label?: string
   dataSourceFn?: () => Promise<any>;
 }
@@ -28,6 +29,7 @@ export enum FormItemType {
   TextArea = 'textArea',
   Symbol = 'Symbol',
   TimePicker = 'TimePicker',
+  Period = 'Period',
 }
 
 interface Control {
@@ -58,6 +60,9 @@ export class DynamicFormProvider {
 
       case FormItemType.TimePicker:
         return <TimePicker {...formItem} values={values} setFormValuesState={setFormValuesState} />
+
+      case FormItemType.Period:
+        return <PeriodS {...formItem} values={values} setFormValuesState={setFormValuesState} />
 
       default:
         return <div>Unknow component:{formItem.type}</div>

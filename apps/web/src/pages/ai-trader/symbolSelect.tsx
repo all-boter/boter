@@ -6,16 +6,7 @@ import { getSymbols } from "@/services/botApi"
 import { Box } from "@mui/system"
 import { useContext, useEffect, useState } from "react"
 import { IQueryArgs } from "."
-
-const intervals = [
-  // '1m',
-  { id: '3m' },
-  { id: '5m' },
-  { id: '15m' },
-  { id: '1h' },
-  { id: '1d' },
-  { id: '1w' },
-]
+import { intervals } from "@/components/form/PeriodS"
 
 interface Props {
   callback: (symbol: string, interval: string) => void
