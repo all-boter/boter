@@ -90,7 +90,7 @@ export const Editor = ({ codeFile }: Props) => {
   >
     <MonacoEditor
       loading={<Box >Loading editor...</Box>}
-      // language={'js'}
+      language={'javascript'}
       options={options}
       value={codeFile?.content}
       theme={editorSettings.darkMode ? 'vs-dark' : 'vs-light'}
